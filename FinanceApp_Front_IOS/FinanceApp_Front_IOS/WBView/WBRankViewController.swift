@@ -213,7 +213,6 @@ extension WBRankViewController: UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
-        
         // 왼쪽 tableView
         if tableView.tag == 0 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "WBRankTableViewCell", for: indexPath) as? WBRankTableViewCell else { return UITableViewCell() }
@@ -234,13 +233,34 @@ extension WBRankViewController: UITableViewDataSource {
 extension WBRankViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
      
-//        let url = urlsArr[indexPath.row]
-//        let vc = ShowDataViewController()
-//        vc.setup(apiUrl: url)
-//        navigationController?.pushViewController(vc, animated: true)
-
-        //TODO: 여기서 채팅창에 url을 넘겨줘야함
-
+        if tableView.tag == 0 {
+            let wbTradeViewController = WBTradeViewController()
+            wbTradeViewController.modalPresentationStyle = .pageSheet
+            
+            if let sheet = wbTradeViewController.sheetPresentationController {
+                sheet.detents = [.medium(), .large()]
+                sheet.delegate = self
+                sheet.prefersGrabberVisible = true
+                sheet.selectedDetentIdentifier = .medium
+            }
+            
+            wbTradeViewController.setup(security: nowTop12[indexPath.row])
+            self.present(wbTradeViewController, animated: true)
+        }
+        else {
+            let wbTradeViewController = WBTradeViewController()
+            wbTradeViewController.modalPresentationStyle = .formSheet
+            
+            if let sheet = wbTradeViewController.sheetPresentationController {
+                sheet.detents = [.medium(), .large()]
+                sheet.delegate = self
+                sheet.prefersGrabberVisible = true
+                sheet.selectedDetentIdentifier = .medium
+            }
+            
+            wbTradeViewController.setup(security: futureTop12[indexPath.row])
+            self.present(wbTradeViewController, animated: true)
+        }
     }
 }
 
@@ -266,5 +286,11 @@ extension WBRankViewController: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 60.0, height: 30.0)
+    }
+}
+
+extension WBRankViewController: UISheetPresentationControllerDelegate{
+    func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
+        print(sheetPresentationController.selectedDetentIdentifier == .large ? "large" : "medium")
     }
 }

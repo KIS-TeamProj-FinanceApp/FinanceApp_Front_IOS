@@ -59,6 +59,7 @@
 		A557E496297D568400A40EEE /* SecurityForRecommendDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E495297D568400A40EEE /* SecurityForRecommendDto.swift */; };
 		A557E499297D597C00A40EEE /* NowFutureLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E498297D597C00A40EEE /* NowFutureLabelView.swift */; };
 		A557E49B297D626200A40EEE /* SectorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E49A297D626200A40EEE /* SectorCollectionViewCell.swift */; };
+		A557E49E297D699500A40EEE /* WBTradeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E49D297D699500A40EEE /* WBTradeViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -114,6 +115,7 @@
 		A557E495297D568400A40EEE /* SecurityForRecommendDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityForRecommendDto.swift; sourceTree = "<group>"; };
 		A557E498297D597C00A40EEE /* NowFutureLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowFutureLabelView.swift; sourceTree = "<group>"; };
 		A557E49A297D626200A40EEE /* SectorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectorCollectionViewCell.swift; sourceTree = "<group>"; };
+		A557E49D297D699500A40EEE /* WBTradeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WBTradeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -368,6 +370,7 @@
 			isa = PBXGroup;
 			children = (
 				A557E47D297D023000A40EEE /* WBRankViewController.swift */,
+				A557E49D297D699500A40EEE /* WBTradeViewController.swift */,
 				A557E48C297D231C00A40EEE /* SubComponents */,
 				A557E494297D566F00A40EEE /* Dto */,
 				A557E497297D568600A40EEE /* Entity */,
@@ -546,6 +549,7 @@
 				A557E48E297D2BFF00A40EEE /* WBRankTableViewCell.swift in Sources */,
 				A557E4432977AE7500A40EEE /* GetERNetwork.swift in Sources */,
 				A557E4212977A99A00A40EEE /* AddHeaderViewCell.swift in Sources */,
+				A557E49E297D699500A40EEE /* WBTradeViewController.swift in Sources */,
 				A557E45C2977B2BB00A40EEE /* ProfileDataView.swift in Sources */,
 				A557E47E297D023000A40EEE /* WBRankViewController.swift in Sources */,
 				A557E4672978201900A40EEE /* AppkeyExistenceViewController.swift in Sources */,
