@@ -356,7 +356,7 @@
 			isa = PBXGroup;
 			children = (
 				A557E47D297D023000A40EEE /* WBRankViewController.swift */,
-				A557E48A297D114400A40EEE /* WBRankHeaderView.swift */,
+				A557E48C297D231C00A40EEE /* SubComponents */,
 			);
 			path = WBView;
 			sourceTree = "<group>";
@@ -375,6 +375,14 @@
 				A557E483297D025F00A40EEE /* MyAccountViewController.swift */,
 			);
 			path = MyAccountView;
+			sourceTree = "<group>";
+		};
+		A557E48C297D231C00A40EEE /* SubComponents */ = {
+			isa = PBXGroup;
+			children = (
+				A557E48A297D114400A40EEE /* WBRankHeaderView.swift */,
+			);
+			path = SubComponents;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -9,11 +9,25 @@ import UIKit
 
 class WBRankHeaderView: UIView {
     
+    // ----------------------------------------- Variables ---------------------------------------- //
+    
+    // 우리가 제공할 투자자들의 목록
+    private let investorList: [String] = ["Berkshire hathaway", "Ray Dalio", "Goldman Sachs", "Black Rock"]
+    // 지금 선택한 투자자를 담을 변수
+    private var selectedInvestor: String = ""
+    
+    // ----------------------------------------- Variables ---------------------------------------- //
+    
+    
+    
+    // ------------------------------------------------------- UI Components ------------------------------------------------------ //
+    
+    
     private lazy var investorTextField: UITextField = {
         let tf = UITextField()
         tf.layer.borderWidth = 3.0
         tf.layer.borderColor = UIColor(red: 0/255, green: 192/255, blue: 235/255, alpha: 1).cgColor
-        tf.layer.cornerRadius = 8.0
+        tf.layer.cornerRadius = 10.0
         tf.backgroundColor = .systemBackground
         tf.placeholder = "투자자 선택"
         //textField 앞에 inset을 줘서 text가 자연스럽게 보이도록
@@ -30,11 +44,27 @@ class WBRankHeaderView: UIView {
         return label
     }()
     
+    private lazy var investorPicker: UIPickerView = {
+        let pv = UIPickerView()
+        pv.frame = CGRect(x: 2000, y: 2000, width: 200, height: 200)
+        //숨겨놔야함
+//        pv.isHidden = true
+        pv.delegate = self
+        pv.dataSource = self
+
+        return pv
+    }()
+    
+    
+    
+    // ------------------------------------------------------- UI Components ------------------------------------------------------ //
+    
     
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .brown
+        self.investorTextField.inputView = self.investorPicker
         layout()
     }
     
@@ -62,5 +92,28 @@ class WBRankHeaderView: UIView {
             $0.centerY.equalToSuperview()
             $0.leading.equalTo(investorTextField.snp.trailing)
         }
+    }
+}
+
+
+
+extension WBRankHeaderView: UIPickerViewDelegate, UIPickerViewDataSource{
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return investorList.count
+    }
+
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return investorList[row]
+    }
+
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        print("select\(investorList[row])")
+        self.selectedInvestor = investorList[row]
+        investorTextField.text = investorList[row]
     }
 }
