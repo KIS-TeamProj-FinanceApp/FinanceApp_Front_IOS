@@ -17,6 +17,8 @@ class WBRankViewController: UIViewController {
     // 투자자'S Future에 들어갈 Data를 담을 배열
     private var futureTop12: [String] = ["Future 1위", "Future 2위", "Future 3위", "Future 4위", "Future 5위", "Future 6위", "Future 7위", "Future 8위", "Future 9위", "Future 10위", "Future 11위", "Future 12위"]
     
+    private var sectorArr: [String] = ["업종1", "업종2", "업종3", "업종4", "업종5", "업종6", "업종7"]
+    
     // ------------------------------------------------------- variables ------------------------------------------------------ //
     
     

@@ -55,6 +55,8 @@
 		A557E48B297D114400A40EEE /* WBRankHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E48A297D114400A40EEE /* WBRankHeaderView.swift */; };
 		A557E48E297D2BFF00A40EEE /* WBRankTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E48D297D2BFF00A40EEE /* WBRankTableViewCell.swift */; };
 		A557E491297D2C1600A40EEE /* WBRankTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E490297D2C1600A40EEE /* WBRankTableView.swift */; };
+		A557E493297D566C00A40EEE /* SecurityForRecommend.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E492297D566C00A40EEE /* SecurityForRecommend.swift */; };
+		A557E496297D568400A40EEE /* SecurityForRecommendDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E495297D568400A40EEE /* SecurityForRecommendDto.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -106,6 +108,8 @@
 		A557E48A297D114400A40EEE /* WBRankHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WBRankHeaderView.swift; sourceTree = "<group>"; };
 		A557E48D297D2BFF00A40EEE /* WBRankTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WBRankTableViewCell.swift; sourceTree = "<group>"; };
 		A557E490297D2C1600A40EEE /* WBRankTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WBRankTableView.swift; sourceTree = "<group>"; };
+		A557E492297D566C00A40EEE /* SecurityForRecommend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityForRecommend.swift; sourceTree = "<group>"; };
+		A557E495297D568400A40EEE /* SecurityForRecommendDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityForRecommendDto.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -361,6 +365,8 @@
 			children = (
 				A557E47D297D023000A40EEE /* WBRankViewController.swift */,
 				A557E48C297D231C00A40EEE /* SubComponents */,
+				A557E494297D566F00A40EEE /* Dto */,
+				A557E497297D568600A40EEE /* Entity */,
 			);
 			path = WBView;
 			sourceTree = "<group>";
@@ -397,6 +403,22 @@
 				A557E48D297D2BFF00A40EEE /* WBRankTableViewCell.swift */,
 			);
 			path = WBRankTableView;
+			sourceTree = "<group>";
+		};
+		A557E494297D566F00A40EEE /* Dto */ = {
+			isa = PBXGroup;
+			children = (
+				A557E495297D568400A40EEE /* SecurityForRecommendDto.swift */,
+			);
+			path = Dto;
+			sourceTree = "<group>";
+		};
+		A557E497297D568600A40EEE /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				A557E492297D566C00A40EEE /* SecurityForRecommend.swift */,
+			);
+			path = Entity;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -503,6 +525,7 @@
 				A557E4352977ACCD00A40EEE /* ExchangeRate.swift in Sources */,
 				A557E4022977891B00A40EEE /* SceneDelegate.swift in Sources */,
 				A557E4312977AC9600A40EEE /* ButtonListViewCell.swift in Sources */,
+				A557E496297D568400A40EEE /* SecurityForRecommendDto.swift in Sources */,
 				A557E4512977B22C00A40EEE /* SecurityDataCellData.swift in Sources */,
 				A557E48E297D2BFF00A40EEE /* WBRankTableViewCell.swift in Sources */,
 				A557E4432977AE7500A40EEE /* GetERNetwork.swift in Sources */,
@@ -518,6 +541,7 @@
 				A557E42C2977AC4D00A40EEE /* ButtonListViewCellCell.swift in Sources */,
 				A557E4492977B03D00A40EEE /* SiteView.swift in Sources */,
 				A557E44C2977B05E00A40EEE /* SwiftUIChartView.swift in Sources */,
+				A557E493297D566C00A40EEE /* SecurityForRecommend.swift in Sources */,
 				A557E473297A528500A40EEE /* MyAccountDto.swift in Sources */,
 				A557E4382977ACF800A40EEE /* ExchangeRateCellData.swift in Sources */,
 				A557E4252977AA0F00A40EEE /* ShowDataViewController.swift in Sources */,
