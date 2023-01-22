@@ -58,6 +58,7 @@
 		A557E493297D566C00A40EEE /* SecurityForRecommend.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E492297D566C00A40EEE /* SecurityForRecommend.swift */; };
 		A557E496297D568400A40EEE /* SecurityForRecommendDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E495297D568400A40EEE /* SecurityForRecommendDto.swift */; };
 		A557E499297D597C00A40EEE /* NowFutureLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E498297D597C00A40EEE /* NowFutureLabelView.swift */; };
+		A557E49B297D626200A40EEE /* SectorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E49A297D626200A40EEE /* SectorCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -112,6 +113,7 @@
 		A557E492297D566C00A40EEE /* SecurityForRecommend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityForRecommend.swift; sourceTree = "<group>"; };
 		A557E495297D568400A40EEE /* SecurityForRecommendDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityForRecommendDto.swift; sourceTree = "<group>"; };
 		A557E498297D597C00A40EEE /* NowFutureLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowFutureLabelView.swift; sourceTree = "<group>"; };
+		A557E49A297D626200A40EEE /* SectorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectorCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -394,6 +396,7 @@
 			children = (
 				A557E48A297D114400A40EEE /* WBRankHeaderView.swift */,
 				A557E48F297D2C0400A40EEE /* WBRankTableView */,
+				A557E49C297D626700A40EEE /* SectorCollectionView */,
 			);
 			path = SubComponents;
 			sourceTree = "<group>";
@@ -422,6 +425,14 @@
 				A557E492297D566C00A40EEE /* SecurityForRecommend.swift */,
 			);
 			path = Entity;
+			sourceTree = "<group>";
+		};
+		A557E49C297D626700A40EEE /* SectorCollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				A557E49A297D626200A40EEE /* SectorCollectionViewCell.swift */,
+			);
+			path = SectorCollectionView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -502,6 +513,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A557E49B297D626200A40EEE /* SectorCollectionViewCell.swift in Sources */,
 				A557E491297D2C1600A40EEE /* WBRankTableView.swift in Sources */,
 				A557E48B297D114400A40EEE /* WBRankHeaderView.swift in Sources */,
 				A557E499297D597C00A40EEE /* NowFutureLabelView.swift in Sources */,

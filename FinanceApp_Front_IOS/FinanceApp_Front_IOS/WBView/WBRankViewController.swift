@@ -69,10 +69,22 @@ class WBRankViewController: UIViewController {
     
     // 섹터 선택을 위한 collectionView
     private lazy var sectorCollectionView: UICollectionView = {
-        let cv = UICollectionView()
+        let layout = UICollectionViewFlowLayout()
+        //layout.sectionInset = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
+        layout.minimumLineSpacing = 10
+        layout.minimumInteritemSpacing = 10
+        layout.scrollDirection = .horizontal
+
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.register(SectorCollectionViewCell.self, forCellWithReuseIdentifier: "SectorCollectionViewCell")
+        collectionView.dataSource = self
+        collectionView.delegate = self
+//        collectionView.isPagingEnabled = true
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.backgroundColor = .systemBackground
         
-        
-        return cv
+//        collectionView.isScrollEnabled = false
+        return collectionView
     }()
     
     
@@ -137,7 +149,7 @@ class WBRankViewController: UIViewController {
     
 
     private func layout(){
-        [ header, nowLabel, futureLabel, rankTableView, rankTableView2].forEach{
+        [ header, nowLabel, futureLabel, sectorCollectionView, rankTableView, rankTableView2].forEach{
             view.addSubview($0)
         }
 
@@ -161,8 +173,15 @@ class WBRankViewController: UIViewController {
             $0.leading.equalTo(nowLabel.snp.trailing)
         }
         
-        rankTableView.snp.makeConstraints{
+        sectorCollectionView.snp.makeConstraints{
             $0.top.equalTo(nowLabel.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(34)
+        }
+        
+        
+        rankTableView.snp.makeConstraints{
+            $0.top.equalTo(sectorCollectionView.snp.bottom)
             $0.width.equalTo(UIScreen.main.bounds.size.width  / 2)
             $0.leading.equalToSuperview()
 //            $0.trailing.equalToSuperview().inset(UIScreen.main.bounds.size.width  / 2)
@@ -171,7 +190,7 @@ class WBRankViewController: UIViewController {
         }
         
         rankTableView2.snp.makeConstraints{
-            $0.top.equalTo(nowLabel.snp.bottom)
+            $0.top.equalTo(sectorCollectionView.snp.bottom)
             $0.width.equalTo(UIScreen.main.bounds.size.width  / 2)
             $0.leading.equalTo(rankTableView.snp.trailing)
             $0.bottom.equalTo(view.safeAreaLayoutGuide)
@@ -222,5 +241,30 @@ extension WBRankViewController: UITableViewDelegate{
 
         //TODO: 여기서 채팅창에 url을 넘겨줘야함
 
+    }
+}
+
+
+extension WBRankViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+//        return records.count
+        return 1
+    }
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        return records[section].count
+        return self.sectorArr.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SectorCollectionViewCell", for: indexPath) as? SectorCollectionViewCell else { return UICollectionViewCell() }
+        
+        cell.setup( title: sectorArr[indexPath.row], isClicked: sectorCheckArr[indexPath.row])
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 60.0, height: 30.0)
     }
 }
