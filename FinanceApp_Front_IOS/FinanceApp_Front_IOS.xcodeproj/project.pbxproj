@@ -53,6 +53,8 @@
 		A557E484297D025F00A40EEE /* MyAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E483297D025F00A40EEE /* MyAccountViewController.swift */; };
 		A557E489297D0B0C00A40EEE /* KeywordScoreGraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E488297D0B0C00A40EEE /* KeywordScoreGraphViewController.swift */; };
 		A557E48B297D114400A40EEE /* WBRankHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E48A297D114400A40EEE /* WBRankHeaderView.swift */; };
+		A557E48E297D2BFF00A40EEE /* WBRankTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E48D297D2BFF00A40EEE /* WBRankTableViewCell.swift */; };
+		A557E491297D2C1600A40EEE /* WBRankTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E490297D2C1600A40EEE /* WBRankTableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -102,6 +104,8 @@
 		A557E483297D025F00A40EEE /* MyAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountViewController.swift; sourceTree = "<group>"; };
 		A557E488297D0B0C00A40EEE /* KeywordScoreGraphViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordScoreGraphViewController.swift; sourceTree = "<group>"; };
 		A557E48A297D114400A40EEE /* WBRankHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WBRankHeaderView.swift; sourceTree = "<group>"; };
+		A557E48D297D2BFF00A40EEE /* WBRankTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WBRankTableViewCell.swift; sourceTree = "<group>"; };
+		A557E490297D2C1600A40EEE /* WBRankTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WBRankTableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -381,8 +385,18 @@
 			isa = PBXGroup;
 			children = (
 				A557E48A297D114400A40EEE /* WBRankHeaderView.swift */,
+				A557E48F297D2C0400A40EEE /* WBRankTableView */,
 			);
 			path = SubComponents;
+			sourceTree = "<group>";
+		};
+		A557E48F297D2C0400A40EEE /* WBRankTableView */ = {
+			isa = PBXGroup;
+			children = (
+				A557E490297D2C1600A40EEE /* WBRankTableView.swift */,
+				A557E48D297D2BFF00A40EEE /* WBRankTableViewCell.swift */,
+			);
+			path = WBRankTableView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -463,6 +477,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A557E491297D2C1600A40EEE /* WBRankTableView.swift in Sources */,
 				A557E48B297D114400A40EEE /* WBRankHeaderView.swift in Sources */,
 				A557E471297A369200A40EEE /* AccountNumInputViewController.swift in Sources */,
 				A557E41F2977A98B00A40EEE /* HomeViewController.swift in Sources */,
@@ -489,6 +504,7 @@
 				A557E4022977891B00A40EEE /* SceneDelegate.swift in Sources */,
 				A557E4312977AC9600A40EEE /* ButtonListViewCell.swift in Sources */,
 				A557E4512977B22C00A40EEE /* SecurityDataCellData.swift in Sources */,
+				A557E48E297D2BFF00A40EEE /* WBRankTableViewCell.swift in Sources */,
 				A557E4432977AE7500A40EEE /* GetERNetwork.swift in Sources */,
 				A557E4212977A99A00A40EEE /* AddHeaderViewCell.swift in Sources */,
 				A557E45C2977B2BB00A40EEE /* ProfileDataView.swift in Sources */,

@@ -56,6 +56,10 @@ class WBRankHeaderView: UIView {
     }()
     
     
+    private lazy var halfTableView: UITableView = {
+        
+    }
+    
     
     // ------------------------------------------------------- UI Components ------------------------------------------------------ //
     
