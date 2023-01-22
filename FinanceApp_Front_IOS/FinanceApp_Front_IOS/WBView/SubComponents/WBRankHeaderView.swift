@@ -56,19 +56,27 @@ class WBRankHeaderView: UIView {
     }()
     
     
-    private lazy var halfTableView: UITableView = {
-        
-    }
-    
     
     // ------------------------------------------------------- UI Components ------------------------------------------------------ //
     
+    func createToolBar(){
+        let toolBar = UIToolbar()
+        toolBar.sizeToFit()
+        let doneBtn = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(self.dismissKeyboard))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        toolBar.setItems([flexibleSpace,doneBtn], animated: false)
+        investorTextField.inputAccessoryView = toolBar
+    }
     
+    @objc private func dismissKeyboard(){
+        self.investorTextField.endEditing(true)
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .brown
         self.investorTextField.inputView = self.investorPicker
+        createToolBar()
         layout()
     }
     

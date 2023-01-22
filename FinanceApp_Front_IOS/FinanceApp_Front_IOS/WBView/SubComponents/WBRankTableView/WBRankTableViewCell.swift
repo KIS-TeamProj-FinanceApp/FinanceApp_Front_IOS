@@ -62,4 +62,9 @@ final class WBRankTableViewCell: UITableViewCell {
             $0.trailing.equalToSuperview().inset(10)
         }
     }
+    
+    func setup(rank: Int, securityName: String){
+        securityLabel.text = String(rank) + securityName
+        
+    }
 }
