@@ -12,12 +12,38 @@ class WBRankViewController: UIViewController {
     // ------------------------------------------------------- variables ------------------------------------------------------ //
     
     // 투자자'S now에 들어갈 Data를 담을 배열
-    private var nowTop12: [String] = ["현재 1위", "현재 2위", "현재 3위", "현재 4위", "현재 5위", "현재 6위", "현재 7위", "현재 8위", "현재 9위", "현재 10위", "현재 11위", "현재 12위"]
+    private var nowTop12: [SecurityForRecommend] = [
+        SecurityForRecommend(securityName: "현재 1위", sector: "업종1"),
+        SecurityForRecommend(securityName: "현재 2위", sector: "업종2"),
+        SecurityForRecommend(securityName: "현재 3위", sector: "업종3"),
+        SecurityForRecommend(securityName: "현재 4위", sector: "업종1"),
+        SecurityForRecommend(securityName: "현재 5위", sector: "업종3"),
+        SecurityForRecommend(securityName: "현재 6위", sector: "업종1"),
+        SecurityForRecommend(securityName: "현재 7위", sector: "업종1"),
+        SecurityForRecommend(securityName: "현재 8위", sector: "업종2"),
+        SecurityForRecommend(securityName: "현재 9위", sector: "업종5"),
+        SecurityForRecommend(securityName: "현재 10위", sector: "업종6"),
+        SecurityForRecommend(securityName: "현재 11위", sector: "업종7"),
+        SecurityForRecommend(securityName: "현재 12위", sector: "업종4"),
+           ]
     
     // 투자자'S Future에 들어갈 Data를 담을 배열
-    private var futureTop12: [String] = ["Future 1위", "Future 2위", "Future 3위", "Future 4위", "Future 5위", "Future 6위", "Future 7위", "Future 8위", "Future 9위", "Future 10위", "Future 11위", "Future 12위"]
+    private var futureTop12: [SecurityForRecommend] = [
+        SecurityForRecommend(securityName: "Future 1위", sector: "업종1"),
+        SecurityForRecommend(securityName: "Future 2위", sector: "업종1"),
+        SecurityForRecommend(securityName: "Future 3위", sector: "업종2"),
+        SecurityForRecommend(securityName: "Future 4위", sector: "업종3"),
+        SecurityForRecommend(securityName: "Future 5위", sector: "업종2"),
+        SecurityForRecommend(securityName: "Future 6위", sector: "업종2"),
+        SecurityForRecommend(securityName: "Future 7위", sector: "업종1"),
+        SecurityForRecommend(securityName: "Future 8위", sector: "업종3"),
+        SecurityForRecommend(securityName: "Future 9위", sector: "업종4"),
+        SecurityForRecommend(securityName: "Future 10위", sector: "업종6"),
+        SecurityForRecommend(securityName: "Future 11위", sector: "업종7"),
+        SecurityForRecommend(securityName: "Future 12위", sector: "업종5")]
     
     private var sectorArr: [String] = ["업종1", "업종2", "업종3", "업종4", "업종5", "업종6", "업종7"]
+    private var sectorCheckArr: [Bool] = [true, true, true, true, true, true, true]
     
     // ------------------------------------------------------- variables ------------------------------------------------------ //
     
@@ -27,6 +53,28 @@ class WBRankViewController: UIViewController {
     
     
     let header = WBRankHeaderView()
+    
+    //여기에 ""'s NOW를 앞,뒤 나누어 addSubview해야함
+    private lazy var nowLabel: UIView = {
+        let uiview = UIView()
+        uiview.backgroundColor = .green
+        return uiview
+    }()
+    //여기에 ""'s Future를 앞,뒤 나누어 addSubview해야함
+    private lazy var futureLabel: UIView = {
+        let uiview = UIView()
+        uiview.backgroundColor = .blue
+        return uiview
+    }()
+    
+    // 섹터 선택을 위한 collectionView
+    private lazy var sectorCollectionView: UICollectionView = {
+        let cv = UICollectionView()
+        
+        
+        return cv
+    }()
+    
     
     private lazy var rankTableView: UITableView = {
         let tableView = UITableView()
@@ -89,7 +137,7 @@ class WBRankViewController: UIViewController {
     
 
     private func layout(){
-        [ header, rankTableView, rankTableView2].forEach{
+        [ header, nowLabel, futureLabel, rankTableView, rankTableView2].forEach{
             view.addSubview($0)
         }
 
@@ -99,8 +147,22 @@ class WBRankViewController: UIViewController {
             $0.leading.trailing.equalToSuperview()
         }
         
-        rankTableView.snp.makeConstraints{
+        nowLabel.snp.makeConstraints{
             $0.top.equalTo(header.snp.bottom)
+            $0.width.equalTo(UIScreen.main.bounds.size.width  / 2)
+            $0.height.equalTo(40)
+            $0.leading.equalToSuperview()
+        }
+        
+        futureLabel.snp.makeConstraints{
+            $0.top.equalTo(header.snp.bottom)
+            $0.width.equalTo(UIScreen.main.bounds.size.width  / 2)
+            $0.height.equalTo(40)
+            $0.leading.equalTo(nowLabel.snp.trailing)
+        }
+        
+        rankTableView.snp.makeConstraints{
+            $0.top.equalTo(nowLabel.snp.bottom)
             $0.width.equalTo(UIScreen.main.bounds.size.width  / 2)
             $0.leading.equalToSuperview()
 //            $0.trailing.equalToSuperview().inset(UIScreen.main.bounds.size.width  / 2)
@@ -109,7 +171,7 @@ class WBRankViewController: UIViewController {
         }
         
         rankTableView2.snp.makeConstraints{
-            $0.top.equalTo(header.snp.bottom)
+            $0.top.equalTo(nowLabel.snp.bottom)
             $0.width.equalTo(UIScreen.main.bounds.size.width  / 2)
             $0.leading.equalTo(rankTableView.snp.trailing)
             $0.bottom.equalTo(view.safeAreaLayoutGuide)
@@ -136,14 +198,14 @@ extension WBRankViewController: UITableViewDataSource {
         // 왼쪽 tableView
         if tableView.tag == 0 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "WBRankTableViewCell", for: indexPath) as? WBRankTableViewCell else { return UITableViewCell() }
-            cell.setup(rank: indexPath.row, securityName: nowTop12[indexPath.row])
+            cell.setup(rank: indexPath.row, securityName: nowTop12[indexPath.row].securityName)
             cell.selectionStyle = .none
             return cell
         }
         //오른쪽 tableView
         else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "WBRankTableViewCell", for: indexPath) as? WBRankTableViewCell else { return UITableViewCell() }
-            cell.setup(rank: indexPath.row, securityName: futureTop12[indexPath.row])
+            cell.setup(rank: indexPath.row, securityName: futureTop12[indexPath.row].securityName)
             cell.selectionStyle = .none
             return cell
         }

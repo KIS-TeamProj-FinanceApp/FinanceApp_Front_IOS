@@ -57,6 +57,7 @@
 		A557E491297D2C1600A40EEE /* WBRankTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E490297D2C1600A40EEE /* WBRankTableView.swift */; };
 		A557E493297D566C00A40EEE /* SecurityForRecommend.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E492297D566C00A40EEE /* SecurityForRecommend.swift */; };
 		A557E496297D568400A40EEE /* SecurityForRecommendDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E495297D568400A40EEE /* SecurityForRecommendDto.swift */; };
+		A557E499297D597C00A40EEE /* NowFutureLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E498297D597C00A40EEE /* NowFutureLabelView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -110,6 +111,7 @@
 		A557E490297D2C1600A40EEE /* WBRankTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WBRankTableView.swift; sourceTree = "<group>"; };
 		A557E492297D566C00A40EEE /* SecurityForRecommend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityForRecommend.swift; sourceTree = "<group>"; };
 		A557E495297D568400A40EEE /* SecurityForRecommendDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityForRecommendDto.swift; sourceTree = "<group>"; };
+		A557E498297D597C00A40EEE /* NowFutureLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowFutureLabelView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -399,6 +401,7 @@
 		A557E48F297D2C0400A40EEE /* WBRankTableView */ = {
 			isa = PBXGroup;
 			children = (
+				A557E498297D597C00A40EEE /* NowFutureLabelView.swift */,
 				A557E490297D2C1600A40EEE /* WBRankTableView.swift */,
 				A557E48D297D2BFF00A40EEE /* WBRankTableViewCell.swift */,
 			);
@@ -501,6 +504,7 @@
 			files = (
 				A557E491297D2C1600A40EEE /* WBRankTableView.swift in Sources */,
 				A557E48B297D114400A40EEE /* WBRankHeaderView.swift in Sources */,
+				A557E499297D597C00A40EEE /* NowFutureLabelView.swift in Sources */,
 				A557E471297A369200A40EEE /* AccountNumInputViewController.swift in Sources */,
 				A557E41F2977A98B00A40EEE /* HomeViewController.swift in Sources */,
 				A557E484297D025F00A40EEE /* MyAccountViewController.swift in Sources */,

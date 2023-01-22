@@ -10,7 +10,7 @@ import Foundation
 struct SecurityForRecommendDto: Decodable {
     let securityName: String?
     let securitySector: String?
-    ㅑ쇼
+    
     enum CodingKeys: String, CodingKey{
         case securityName = "securityName"
         case securitySector = "securitySector"
