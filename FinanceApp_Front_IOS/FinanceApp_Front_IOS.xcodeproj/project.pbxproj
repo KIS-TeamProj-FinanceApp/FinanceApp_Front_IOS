@@ -49,7 +49,7 @@
 		A557E477297A7D3300A40EEE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E476297A7D3300A40EEE /* MainViewController.swift */; };
 		A557E47B297D020900A40EEE /* KeywordRankViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E47A297D020900A40EEE /* KeywordRankViewController.swift */; };
 		A557E47E297D023000A40EEE /* WBRankViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E47D297D023000A40EEE /* WBRankViewController.swift */; };
-		A557E481297D024600A40EEE /* TradingViewcontroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E480297D024600A40EEE /* TradingViewcontroller.swift */; };
+		A557E481297D024600A40EEE /* TradingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E480297D024600A40EEE /* TradingViewController.swift */; };
 		A557E484297D025F00A40EEE /* MyAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E483297D025F00A40EEE /* MyAccountViewController.swift */; };
 		A557E489297D0B0C00A40EEE /* KeywordScoreGraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E488297D0B0C00A40EEE /* KeywordScoreGraphViewController.swift */; };
 		A557E48B297D114400A40EEE /* WBRankHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E48A297D114400A40EEE /* WBRankHeaderView.swift */; };
@@ -60,6 +60,7 @@
 		A557E499297D597C00A40EEE /* NowFutureLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E498297D597C00A40EEE /* NowFutureLabelView.swift */; };
 		A557E49B297D626200A40EEE /* SectorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E49A297D626200A40EEE /* SectorCollectionViewCell.swift */; };
 		A557E49E297D699500A40EEE /* WBTradeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E49D297D699500A40EEE /* WBTradeViewController.swift */; };
+		A557E4A0297D7E6300A40EEE /* TradingGraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E49F297D7E6300A40EEE /* TradingGraphViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -105,7 +106,7 @@
 		A557E476297A7D3300A40EEE /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		A557E47A297D020900A40EEE /* KeywordRankViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordRankViewController.swift; sourceTree = "<group>"; };
 		A557E47D297D023000A40EEE /* WBRankViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WBRankViewController.swift; sourceTree = "<group>"; };
-		A557E480297D024600A40EEE /* TradingViewcontroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingViewcontroller.swift; sourceTree = "<group>"; };
+		A557E480297D024600A40EEE /* TradingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingViewController.swift; sourceTree = "<group>"; };
 		A557E483297D025F00A40EEE /* MyAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountViewController.swift; sourceTree = "<group>"; };
 		A557E488297D0B0C00A40EEE /* KeywordScoreGraphViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordScoreGraphViewController.swift; sourceTree = "<group>"; };
 		A557E48A297D114400A40EEE /* WBRankHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WBRankHeaderView.swift; sourceTree = "<group>"; };
@@ -116,6 +117,7 @@
 		A557E498297D597C00A40EEE /* NowFutureLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowFutureLabelView.swift; sourceTree = "<group>"; };
 		A557E49A297D626200A40EEE /* SectorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectorCollectionViewCell.swift; sourceTree = "<group>"; };
 		A557E49D297D699500A40EEE /* WBTradeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WBTradeViewController.swift; sourceTree = "<group>"; };
+		A557E49F297D7E6300A40EEE /* TradingGraphViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingGraphViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -381,7 +383,8 @@
 		A557E482297D024B00A40EEE /* TradingView */ = {
 			isa = PBXGroup;
 			children = (
-				A557E480297D024600A40EEE /* TradingViewcontroller.swift */,
+				A557E480297D024600A40EEE /* TradingViewController.swift */,
+				A557E49F297D7E6300A40EEE /* TradingGraphViewController.swift */,
 			);
 			path = TradingView;
 			sourceTree = "<group>";
@@ -539,11 +542,12 @@
 				A557E41A2977A87200A40EEE /* MainTabBarController.swift in Sources */,
 				A557E4282977AB6C00A40EEE /* ShowDataViewCollectionViewCell.swift in Sources */,
 				A557E477297A7D3300A40EEE /* MainViewController.swift in Sources */,
-				A557E481297D024600A40EEE /* TradingViewcontroller.swift in Sources */,
+				A557E481297D024600A40EEE /* TradingViewController.swift in Sources */,
 				A557E4332977ACB500A40EEE /* ButtonListViewLayout.swift in Sources */,
 				A557E4352977ACCD00A40EEE /* ExchangeRate.swift in Sources */,
 				A557E4022977891B00A40EEE /* SceneDelegate.swift in Sources */,
 				A557E4312977AC9600A40EEE /* ButtonListViewCell.swift in Sources */,
+				A557E4A0297D7E6300A40EEE /* TradingGraphViewController.swift in Sources */,
 				A557E496297D568400A40EEE /* SecurityForRecommendDto.swift in Sources */,
 				A557E4512977B22C00A40EEE /* SecurityDataCellData.swift in Sources */,
 				A557E48E297D2BFF00A40EEE /* WBRankTableViewCell.swift in Sources */,
