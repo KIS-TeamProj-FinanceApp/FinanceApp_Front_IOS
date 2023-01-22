@@ -38,6 +38,20 @@
 		A557E45A2977B2AA00A40EEE /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E4592977B2AA00A40EEE /* SettingsViewController.swift */; };
 		A557E45C2977B2BB00A40EEE /* ProfileDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E45B2977B2BB00A40EEE /* ProfileDataView.swift */; };
 		A557E4602977B2DA00A40EEE /* ProfileCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E45F2977B2DA00A40EEE /* ProfileCollectionViewCell.swift */; };
+		A557E4652977D12400A40EEE /* AccountExistenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E4642977D12400A40EEE /* AccountExistenceViewController.swift */; };
+		A557E4672978201900A40EEE /* AppkeyExistenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E4662978201900A40EEE /* AppkeyExistenceViewController.swift */; };
+		A557E4692978226900A40EEE /* AppkeyInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E4682978226900A40EEE /* AppkeyInputViewController.swift */; };
+		A557E46B297A18C500A40EEE /* AccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E46A297A18C500A40EEE /* AccessToken.swift */; };
+		A557E46F297A215400A40EEE /* AccessTokenDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E46E297A215400A40EEE /* AccessTokenDto.swift */; };
+		A557E471297A369200A40EEE /* AccountNumInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E470297A369200A40EEE /* AccountNumInputViewController.swift */; };
+		A557E473297A528500A40EEE /* MyAccountDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E472297A528500A40EEE /* MyAccountDto.swift */; };
+		A557E475297A529500A40EEE /* MyAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E474297A529500A40EEE /* MyAccount.swift */; };
+		A557E477297A7D3300A40EEE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E476297A7D3300A40EEE /* MainViewController.swift */; };
+		A557E47B297D020900A40EEE /* KeywordRankViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E47A297D020900A40EEE /* KeywordRankViewController.swift */; };
+		A557E47E297D023000A40EEE /* WBRankViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E47D297D023000A40EEE /* WBRankViewController.swift */; };
+		A557E481297D024600A40EEE /* TradingViewcontroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E480297D024600A40EEE /* TradingViewcontroller.swift */; };
+		A557E484297D025F00A40EEE /* MyAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E483297D025F00A40EEE /* MyAccountViewController.swift */; };
+		A557E489297D0B0C00A40EEE /* KeywordScoreGraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E488297D0B0C00A40EEE /* KeywordScoreGraphViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +86,20 @@
 		A557E4592977B2AA00A40EEE /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		A557E45B2977B2BB00A40EEE /* ProfileDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDataView.swift; sourceTree = "<group>"; };
 		A557E45F2977B2DA00A40EEE /* ProfileCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCollectionViewCell.swift; sourceTree = "<group>"; };
+		A557E4642977D12400A40EEE /* AccountExistenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountExistenceViewController.swift; sourceTree = "<group>"; };
+		A557E4662978201900A40EEE /* AppkeyExistenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppkeyExistenceViewController.swift; sourceTree = "<group>"; };
+		A557E4682978226900A40EEE /* AppkeyInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppkeyInputViewController.swift; sourceTree = "<group>"; };
+		A557E46A297A18C500A40EEE /* AccessToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessToken.swift; sourceTree = "<group>"; };
+		A557E46E297A215400A40EEE /* AccessTokenDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokenDto.swift; sourceTree = "<group>"; };
+		A557E470297A369200A40EEE /* AccountNumInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountNumInputViewController.swift; sourceTree = "<group>"; };
+		A557E472297A528500A40EEE /* MyAccountDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountDto.swift; sourceTree = "<group>"; };
+		A557E474297A529500A40EEE /* MyAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccount.swift; sourceTree = "<group>"; };
+		A557E476297A7D3300A40EEE /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		A557E47A297D020900A40EEE /* KeywordRankViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordRankViewController.swift; sourceTree = "<group>"; };
+		A557E47D297D023000A40EEE /* WBRankViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WBRankViewController.swift; sourceTree = "<group>"; };
+		A557E480297D024600A40EEE /* TradingViewcontroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingViewcontroller.swift; sourceTree = "<group>"; };
+		A557E483297D025F00A40EEE /* MyAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountViewController.swift; sourceTree = "<group>"; };
+		A557E488297D0B0C00A40EEE /* KeywordScoreGraphViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordScoreGraphViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,12 +141,13 @@
 				A557E40A2977891E00A40EEE /* LaunchScreen.storyboard */,
 				A557E40D2977891E00A40EEE /* Info.plist */,
 				A557E4192977A87200A40EEE /* MainTabBarController.swift */,
-				A557E41D2977A94400A40EEE /* HomeView */,
-				A557E4262977AA2F00A40EEE /* ShowDataView */,
-				A557E43F2977AE1600A40EEE /* TestView */,
-				A557E4472977AEB600A40EEE /* ChartView */,
-				A557E4552977B26500A40EEE /* MyFilesView */,
-				A557E4582977B28B00A40EEE /* SettingsView */,
+				A557E478297A7D3E00A40EEE /* BeforeScenes */,
+				A557E4632977D10800A40EEE /* LogIn */,
+				A557E479297A7D5000A40EEE /* MainView */,
+				A557E47C297D020C00A40EEE /* KeywordView */,
+				A557E482297D024B00A40EEE /* TradingView */,
+				A557E47F297D023300A40EEE /* WBView */,
+				A557E485297D026200A40EEE /* MyAccountView */,
 			);
 			path = FinanceApp_Front_IOS;
 			sourceTree = "<group>";
@@ -260,6 +289,91 @@
 			path = SettingsView;
 			sourceTree = "<group>";
 		};
+		A557E4632977D10800A40EEE /* LogIn */ = {
+			isa = PBXGroup;
+			children = (
+				A557E4642977D12400A40EEE /* AccountExistenceViewController.swift */,
+				A557E4662978201900A40EEE /* AppkeyExistenceViewController.swift */,
+				A557E4682978226900A40EEE /* AppkeyInputViewController.swift */,
+				A557E470297A369200A40EEE /* AccountNumInputViewController.swift */,
+				A557E46D297A212500A40EEE /* Dto */,
+				A557E46C297A18C800A40EEE /* Entity */,
+			);
+			path = LogIn;
+			sourceTree = "<group>";
+		};
+		A557E46C297A18C800A40EEE /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				A557E46A297A18C500A40EEE /* AccessToken.swift */,
+				A557E474297A529500A40EEE /* MyAccount.swift */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
+		A557E46D297A212500A40EEE /* Dto */ = {
+			isa = PBXGroup;
+			children = (
+				A557E46E297A215400A40EEE /* AccessTokenDto.swift */,
+				A557E472297A528500A40EEE /* MyAccountDto.swift */,
+			);
+			path = Dto;
+			sourceTree = "<group>";
+		};
+		A557E478297A7D3E00A40EEE /* BeforeScenes */ = {
+			isa = PBXGroup;
+			children = (
+				A557E41D2977A94400A40EEE /* HomeView */,
+				A557E4262977AA2F00A40EEE /* ShowDataView */,
+				A557E43F2977AE1600A40EEE /* TestView */,
+				A557E4472977AEB600A40EEE /* ChartView */,
+				A557E4552977B26500A40EEE /* MyFilesView */,
+				A557E4582977B28B00A40EEE /* SettingsView */,
+			);
+			path = BeforeScenes;
+			sourceTree = "<group>";
+		};
+		A557E479297A7D5000A40EEE /* MainView */ = {
+			isa = PBXGroup;
+			children = (
+				A557E476297A7D3300A40EEE /* MainViewController.swift */,
+			);
+			path = MainView;
+			sourceTree = "<group>";
+		};
+		A557E47C297D020C00A40EEE /* KeywordView */ = {
+			isa = PBXGroup;
+			children = (
+				A557E47A297D020900A40EEE /* KeywordRankViewController.swift */,
+				A557E488297D0B0C00A40EEE /* KeywordScoreGraphViewController.swift */,
+			);
+			path = KeywordView;
+			sourceTree = "<group>";
+		};
+		A557E47F297D023300A40EEE /* WBView */ = {
+			isa = PBXGroup;
+			children = (
+				A557E47D297D023000A40EEE /* WBRankViewController.swift */,
+			);
+			path = WBView;
+			sourceTree = "<group>";
+		};
+		A557E482297D024B00A40EEE /* TradingView */ = {
+			isa = PBXGroup;
+			children = (
+				A557E480297D024600A40EEE /* TradingViewcontroller.swift */,
+			);
+			path = TradingView;
+			sourceTree = "<group>";
+		};
+		A557E485297D026200A40EEE /* MyAccountView */ = {
+			isa = PBXGroup;
+			children = (
+				A557E483297D025F00A40EEE /* MyAccountViewController.swift */,
+			);
+			path = MyAccountView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -338,7 +452,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A557E471297A369200A40EEE /* AccountNumInputViewController.swift in Sources */,
 				A557E41F2977A98B00A40EEE /* HomeViewController.swift in Sources */,
+				A557E484297D025F00A40EEE /* MyAccountViewController.swift in Sources */,
 				A557E4412977AE6A00A40EEE /* GetERAPI.swift in Sources */,
 				A557E42A2977AB8100A40EEE /* GridCollectionViewLayout.swift in Sources */,
 				A557E43E2977ADF700A40EEE /* TestViewController.swift in Sources */,
@@ -346,9 +462,16 @@
 				A557E4462977AEB100A40EEE /* ChartViewController.swift in Sources */,
 				A557E4542977B25800A40EEE /* MyFilesViewController.swift in Sources */,
 				A557E4002977891B00A40EEE /* AppDelegate.swift in Sources */,
+				A557E475297A529500A40EEE /* MyAccount.swift in Sources */,
+				A557E47B297D020900A40EEE /* KeywordRankViewController.swift in Sources */,
 				A557E45A2977B2AA00A40EEE /* SettingsViewController.swift in Sources */,
+				A557E46F297A215400A40EEE /* AccessTokenDto.swift in Sources */,
+				A557E46B297A18C500A40EEE /* AccessToken.swift in Sources */,
+				A557E489297D0B0C00A40EEE /* KeywordScoreGraphViewController.swift in Sources */,
 				A557E41A2977A87200A40EEE /* MainTabBarController.swift in Sources */,
 				A557E4282977AB6C00A40EEE /* ShowDataViewCollectionViewCell.swift in Sources */,
+				A557E477297A7D3300A40EEE /* MainViewController.swift in Sources */,
+				A557E481297D024600A40EEE /* TradingViewcontroller.swift in Sources */,
 				A557E4332977ACB500A40EEE /* ButtonListViewLayout.swift in Sources */,
 				A557E4352977ACCD00A40EEE /* ExchangeRate.swift in Sources */,
 				A557E4022977891B00A40EEE /* SceneDelegate.swift in Sources */,
@@ -357,12 +480,17 @@
 				A557E4432977AE7500A40EEE /* GetERNetwork.swift in Sources */,
 				A557E4212977A99A00A40EEE /* AddHeaderViewCell.swift in Sources */,
 				A557E45C2977B2BB00A40EEE /* ProfileDataView.swift in Sources */,
+				A557E47E297D023000A40EEE /* WBRankViewController.swift in Sources */,
+				A557E4672978201900A40EEE /* AppkeyExistenceViewController.swift in Sources */,
+				A557E4652977D12400A40EEE /* AccountExistenceViewController.swift in Sources */,
+				A557E4692978226900A40EEE /* AppkeyInputViewController.swift in Sources */,
 				A557E4602977B2DA00A40EEE /* ProfileCollectionViewCell.swift in Sources */,
 				A557E43B2977AD5500A40EEE /* JsonParser.swift in Sources */,
 				A557E44F2977B21500A40EEE /* SecurityResponse.swift in Sources */,
 				A557E42C2977AC4D00A40EEE /* ButtonListViewCellCell.swift in Sources */,
 				A557E4492977B03D00A40EEE /* SiteView.swift in Sources */,
 				A557E44C2977B05E00A40EEE /* SwiftUIChartView.swift in Sources */,
+				A557E473297A528500A40EEE /* MyAccountDto.swift in Sources */,
 				A557E4382977ACF800A40EEE /* ExchangeRateCellData.swift in Sources */,
 				A557E4252977AA0F00A40EEE /* ShowDataViewController.swift in Sources */,
 			);

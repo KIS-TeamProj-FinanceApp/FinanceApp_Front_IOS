@@ -237,7 +237,7 @@ class ShowDataViewController: UIViewController {
         
         let fileManager = FileManager.default
         
-        let folderName = "KIS_Finance_Info"
+        let folderName = "FinanceApp"
 //        let csvFileName = "myCSVFile.csv"
         
         // 폴더 생성 documentDirectory userDomainMask

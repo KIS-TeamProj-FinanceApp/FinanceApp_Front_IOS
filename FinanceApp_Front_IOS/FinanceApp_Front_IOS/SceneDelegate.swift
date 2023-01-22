@@ -17,6 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = UIWindow(windowScene: windowScene)
         
         window?.backgroundColor = .systemBackground
+//        window?.rootViewController = UINavigationController(rootViewController: AccountExistenceViewController())
         window?.rootViewController = MainTabBarController()
         window?.makeKeyAndVisible()
     }

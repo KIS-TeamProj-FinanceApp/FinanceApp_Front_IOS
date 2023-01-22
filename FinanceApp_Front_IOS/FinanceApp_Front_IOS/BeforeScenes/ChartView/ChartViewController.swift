@@ -254,6 +254,7 @@ class ChartViewController: UIViewController {
         return btn
     }()
     
+    
 //    let purchaseDateLabel: UILabel = {
 //        let label = UILabel()
 //        label.backgroundColor = .systemBackground
