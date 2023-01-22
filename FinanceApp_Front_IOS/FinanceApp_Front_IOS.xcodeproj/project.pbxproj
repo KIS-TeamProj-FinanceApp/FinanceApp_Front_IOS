@@ -52,6 +52,7 @@
 		A557E481297D024600A40EEE /* TradingViewcontroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E480297D024600A40EEE /* TradingViewcontroller.swift */; };
 		A557E484297D025F00A40EEE /* MyAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E483297D025F00A40EEE /* MyAccountViewController.swift */; };
 		A557E489297D0B0C00A40EEE /* KeywordScoreGraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E488297D0B0C00A40EEE /* KeywordScoreGraphViewController.swift */; };
+		A557E48B297D114400A40EEE /* WBRankHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E48A297D114400A40EEE /* WBRankHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -100,6 +101,7 @@
 		A557E480297D024600A40EEE /* TradingViewcontroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingViewcontroller.swift; sourceTree = "<group>"; };
 		A557E483297D025F00A40EEE /* MyAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountViewController.swift; sourceTree = "<group>"; };
 		A557E488297D0B0C00A40EEE /* KeywordScoreGraphViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordScoreGraphViewController.swift; sourceTree = "<group>"; };
+		A557E48A297D114400A40EEE /* WBRankHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WBRankHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -354,6 +356,7 @@
 			isa = PBXGroup;
 			children = (
 				A557E47D297D023000A40EEE /* WBRankViewController.swift */,
+				A557E48A297D114400A40EEE /* WBRankHeaderView.swift */,
 			);
 			path = WBView;
 			sourceTree = "<group>";
@@ -452,6 +455,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A557E48B297D114400A40EEE /* WBRankHeaderView.swift in Sources */,
 				A557E471297A369200A40EEE /* AccountNumInputViewController.swift in Sources */,
 				A557E41F2977A98B00A40EEE /* HomeViewController.swift in Sources */,
 				A557E484297D025F00A40EEE /* MyAccountViewController.swift in Sources */,

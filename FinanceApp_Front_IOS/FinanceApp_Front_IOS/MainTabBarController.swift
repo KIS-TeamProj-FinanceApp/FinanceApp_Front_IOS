@@ -38,8 +38,8 @@ class MainTabBarController: UITabBarController{
     }()
     
     private lazy var fourthViewController: UIViewController = {
-        let vc = MyFilesViewController()
-        let tabBarItem = UITabBarItem(title: "워렌버핏", image: UIImage(systemName: "folder.fill"), tag: 0)
+        let vc = WBRankViewController()
+        let tabBarItem = UITabBarItem(title: "WB 따라잡기", image: UIImage(systemName: "folder.fill"), tag: 0)
         
         vc.tabBarItem = tabBarItem
         return vc
