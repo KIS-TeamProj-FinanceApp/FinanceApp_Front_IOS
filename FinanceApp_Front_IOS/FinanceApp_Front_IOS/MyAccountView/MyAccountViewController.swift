@@ -31,11 +31,57 @@ class MyAccountViewController: UIViewController {
         return btn
     }()
     
+    //주식 잔고
+    private lazy var balanceButton: UIButton = {
+        let btn = UIButton()
+        btn.backgroundColor = .white
+        btn.setTitleColor(.black, for: .normal)
+        btn.setTitle("주식잔고", for: .normal)
+        btn.titleLabel?.font = .systemFont(ofSize: 20.0, weight: .bold)
+        btn.addTarget(self, action: #selector(balanceButtonClicked), for: .touchUpInside)
+        return btn
+    }()
+    
+    // 체결 내역
+    private lazy var agreementButton: UIButton = {
+        let btn = UIButton()
+        btn.backgroundColor = .white
+        btn.setTitleColor(.black, for: .normal)
+        btn.setTitle("체결내역", for: .normal)
+        btn.titleLabel?.font = .systemFont(ofSize: 20.0, weight: .bold)
+        btn.addTarget(self, action: #selector(agreementButtonClicked), for: .touchUpInside)
+        return btn
+    }()
+    
+    private lazy var balanceButtonBottom: UIButton = {
+        let btn = UIButton()
+        btn.backgroundColor = .darkGray
+        return btn
+    }()
+    
+    private lazy var agreementButtonBottom: UIButton = {
+        let btn = UIButton()
+        btn.backgroundColor = .white
+        return btn
+    }()
+    
     // ------------------------------------------------------- UI Components ------------------------------------------------------ //
     
     
     @objc func accountNumClicked(){
         print("accountNumClicked button clicked")
+    }
+    
+    @objc func balanceButtonClicked(){
+        print("balanceButtonClicked button clicked")
+        self.balanceButtonBottom.backgroundColor = .darkGray
+        self.agreementButtonBottom.backgroundColor = .white
+    }
+    
+    @objc func agreementButtonClicked(){
+        print("agreementButtonClicked button clicked")
+        self.balanceButtonBottom.backgroundColor = .white
+        self.agreementButtonBottom.backgroundColor = .darkGray
     }
     
    
@@ -65,7 +111,7 @@ class MyAccountViewController: UIViewController {
     
 
     private func layout(){
-        [ myAccountHeader, accountNumButton].forEach{
+        [ myAccountHeader, accountNumButton, balanceButton, agreementButton,balanceButtonBottom, agreementButtonBottom].forEach{
             view.addSubview($0)
         }
 
@@ -79,6 +125,34 @@ class MyAccountViewController: UIViewController {
             $0.top.equalTo(myAccountHeader.snp.bottom).offset(2)
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(48)
+        }
+        
+        balanceButton.snp.makeConstraints{
+            $0.top.equalTo(accountNumButton.snp.bottom).offset(10)
+            $0.width.equalTo(UIScreen.main.bounds.width / 2)
+            $0.leading.equalToSuperview()
+            $0.height.equalTo(60)
+        }
+        
+        agreementButton.snp.makeConstraints{
+            $0.top.equalTo(accountNumButton.snp.bottom).offset(10)
+            $0.width.equalTo(UIScreen.main.bounds.width / 2)
+            $0.trailing.equalToSuperview()
+            $0.height.equalTo(60)
+        }
+        
+        balanceButtonBottom.snp.makeConstraints{
+            $0.top.equalTo(balanceButton.snp.bottom)
+            $0.width.equalTo(UIScreen.main.bounds.width / 2)
+            $0.leading.equalToSuperview()
+            $0.height.equalTo(2)
+        }
+        
+        agreementButtonBottom.snp.makeConstraints{
+            $0.top.equalTo(agreementButton.snp.bottom)
+            $0.width.equalTo(UIScreen.main.bounds.width / 2)
+            $0.trailing.equalToSuperview()
+            $0.height.equalTo(2)
         }
     }
 }
