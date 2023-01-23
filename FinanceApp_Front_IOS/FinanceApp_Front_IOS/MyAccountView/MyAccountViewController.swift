@@ -78,6 +78,45 @@ class MyAccountViewController: UIViewController {
         return stackView
     }()
     
+    private let glView = GainsAndLossesView()
+    
+    // 종목별
+    private lazy var stockButton: UIButton = {
+        let btn = UIButton()
+        btn.backgroundColor = .white
+        btn.layer.borderWidth = 1.0
+        btn.layer.borderColor = UIColor.magenta.cgColor
+        btn.layer.cornerRadius = 6.0
+        btn.setTitleColor(.black, for: .normal)
+        btn.setTitle("종목별", for: .normal)
+        btn.titleLabel?.font = .systemFont(ofSize: 16.0, weight: .bold)
+        btn.addTarget(self, action: #selector(stockButtonClicked), for: .touchUpInside)
+        return btn
+    }()
+    
+    // 업종별
+    private lazy var sectorButton: UIButton = {
+        let btn = UIButton()
+        btn.backgroundColor = .white
+        btn.layer.borderWidth = 1.0
+        btn.layer.borderColor = UIColor.magenta.cgColor
+        btn.layer.cornerRadius = 6.0
+        btn.setTitleColor(.black, for: .normal)
+        btn.setTitle("업종별", for: .normal)
+        btn.titleLabel?.font = .systemFont(ofSize: 16.0, weight: .bold)
+        btn.addTarget(self, action: #selector(sectorButtonClicked), for: .touchUpInside)
+        return btn
+    }()
+    
+    private lazy var stack2View: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fill
+        stackView.spacing = 0.0
+        stackView.backgroundColor = .yellow
+        return stackView
+    }()
+    
     // ------------------------------------------------------- UI Components ------------------------------------------------------ //
     
     
@@ -95,6 +134,14 @@ class MyAccountViewController: UIViewController {
         print("agreementButtonClicked button clicked")
         self.balanceButtonBottom.backgroundColor = .white
         self.agreementButtonBottom.backgroundColor = .darkGray
+    }
+    
+    @objc func stockButtonClicked(){
+        print("stockButtonClicked button clicked")
+    }
+    
+    @objc func sectorButtonClicked(){
+        print("sectorButtonClicked button clicked")
     }
     
    
@@ -187,9 +234,42 @@ class MyAccountViewController: UIViewController {
             $0.edges.equalToSuperview()
         }
         
-//        [ ].forEach{
-//            stackView.addArrangedSubview($0)
-//        }
+        [ stockButton, sectorButton].forEach {
+            stack2View.addArrangedSubview($0)
+        }
+        
+        stockButton.snp.makeConstraints{
+            $0.top.equalToSuperview()
+            $0.width.equalTo(UIScreen.main.bounds.width / 2)
+            $0.leading.equalToSuperview()
+            $0.height.equalTo(50)
+        }
+        
+        sectorButton.snp.makeConstraints{
+            $0.top.equalToSuperview()
+            $0.width.equalTo(UIScreen.main.bounds.width / 2)
+            $0.trailing.equalToSuperview()
+            $0.height.equalTo(50)
+        }
+        
+        
+        [ glView, stack2View].forEach{
+            stackView.addArrangedSubview($0)
+        }
+        
+        glView.snp.makeConstraints{
+            $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalTo(200)
+        }
+        
+        stack2View.snp.makeConstraints{
+            $0.top.equalTo(glView.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(50)
+        }
+        
+        
+       
 
     }
 }
