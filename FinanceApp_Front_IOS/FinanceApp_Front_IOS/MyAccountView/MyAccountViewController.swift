@@ -117,6 +117,14 @@ class MyAccountViewController: UIViewController {
         return stackView
     }()
     
+    private let portfolioView = PortfolioView()
+    
+    let blankView: UIView = {
+        let v = UIView()
+        v.backgroundColor = .yellow
+        return v
+    }()
+    
     // ------------------------------------------------------- UI Components ------------------------------------------------------ //
     
     
@@ -253,7 +261,7 @@ class MyAccountViewController: UIViewController {
         }
         
         
-        [ glView, stack2View].forEach{
+        [ glView, stack2View, portfolioView, blankView].forEach{
             stackView.addArrangedSubview($0)
         }
         
@@ -266,6 +274,17 @@ class MyAccountViewController: UIViewController {
             $0.top.equalTo(glView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(50)
+        }
+        
+        portfolioView.snp.makeConstraints{
+            $0.top.equalTo(stack2View.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(400)
+        }
+        
+        blankView.snp.makeConstraints{
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(200)
         }
         
         
