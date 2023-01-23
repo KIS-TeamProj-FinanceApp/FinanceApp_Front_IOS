@@ -15,7 +15,7 @@ class MainViewController: UIViewController {
     private lazy var tempLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.text = "병신은 무시하자"
+        label.text = "병무"
         
         return label
     }()

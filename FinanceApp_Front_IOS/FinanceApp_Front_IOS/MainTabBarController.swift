@@ -23,7 +23,7 @@ class MainTabBarController: UITabBarController{
     
     private lazy var secondViewController: UIViewController = {
         let vc = KeywordRankViewController()
-        let tabBarItem = UITabBarItem(title: "Keywords", image: UIImage(systemName: "keyboard"), tag: 0)
+        let tabBarItem = UITabBarItem(title: "Keywords", image: UIImage(systemName: "character"), tag: 0)
         
         vc.tabBarItem = tabBarItem
         return vc
@@ -39,15 +39,15 @@ class MainTabBarController: UITabBarController{
     
     private lazy var fourthViewController: UIViewController = {
         let vc = WBRankViewController()
-        let tabBarItem = UITabBarItem(title: "WB 따라잡기", image: UIImage(systemName: "folder.fill"), tag: 0)
+        let tabBarItem = UITabBarItem(title: "WB 따라잡기", image: UIImage(systemName: "infinity"), tag: 0)
         
         vc.tabBarItem = tabBarItem
         return vc
     }()
     
     private lazy var fifthViewController: UIViewController = {
-        let vc = SettingsViewController()
-        let tabBarItem = UITabBarItem(title: "내 계좌", image: UIImage(systemName: "gearshape.fill"), tag: 0)
+        let vc = MyAccountViewController()
+        let tabBarItem = UITabBarItem(title: "내 계좌", image: UIImage(systemName: "wallet.pass"), tag: 0)
         
         vc.tabBarItem = tabBarItem
         return vc
