@@ -65,6 +65,19 @@ class MyAccountViewController: UIViewController {
         return btn
     }()
     
+    //scrollView
+    private let scrollView = UIScrollView()
+    private let contentView = UIView()
+
+    private lazy var stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .fill
+        stackView.spacing = 0.0
+        stackView.backgroundColor = .yellow
+        return stackView
+    }()
+    
     // ------------------------------------------------------- UI Components ------------------------------------------------------ //
     
     
@@ -98,6 +111,8 @@ class MyAccountViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        scrollView.backgroundColor = .magenta
+        contentView.backgroundColor = .cyan
         self.navigationController?.isNavigationBarHidden = true
         attribute()
         layout()
@@ -111,7 +126,7 @@ class MyAccountViewController: UIViewController {
     
 
     private func layout(){
-        [ myAccountHeader, accountNumButton, balanceButton, agreementButton,balanceButtonBottom, agreementButtonBottom].forEach{
+        [ myAccountHeader, accountNumButton, balanceButton, agreementButton,balanceButtonBottom, agreementButtonBottom, scrollView].forEach{
             view.addSubview($0)
         }
 
@@ -154,5 +169,27 @@ class MyAccountViewController: UIViewController {
             $0.trailing.equalToSuperview()
             $0.height.equalTo(2)
         }
+        
+        scrollView.snp.makeConstraints{
+            $0.top.equalTo(balanceButtonBottom.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+        scrollView.addSubview(contentView)
+        
+        contentView.snp.makeConstraints{
+            $0.edges.equalToSuperview()
+            //가로를 고정시켜주어 세로스크롤 뷰가 된다.
+            $0.width.equalToSuperview()
+        }
+        contentView.addSubview(stackView)
+        stackView.snp.makeConstraints{
+            $0.edges.equalToSuperview()
+        }
+        
+//        [ ].forEach{
+//            stackView.addArrangedSubview($0)
+//        }
+
     }
 }
