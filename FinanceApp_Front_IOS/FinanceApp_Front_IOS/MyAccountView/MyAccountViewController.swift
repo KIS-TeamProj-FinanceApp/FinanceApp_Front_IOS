@@ -154,13 +154,13 @@ class MyAccountViewController: UIViewController {
     //collectionView 2개를 써야한다.
     
     
-    
-    private let cvScrollView = UIScrollView()
-    private let cvContentView = UIView()
-    
+//
+//    private let cvScrollView = UIScrollView()
+//    private let cvContentView = UIView()
+//
     private lazy var cvStackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.axis = .vertical
+        stackView.axis = .horizontal
         stackView.distribution = .fill
         stackView.spacing = 0.0
         stackView.backgroundColor = .red
@@ -243,6 +243,17 @@ class MyAccountViewController: UIViewController {
         self.balanceButtonBottom.backgroundColor = .white
         self.agreementButtonBottom.backgroundColor = .darkGray
         
+        self.securities.append(SecurityForRecommend(securityName: "셀바스AI11", sector: "AI/IT"))
+        self.securities.append(SecurityForRecommend(securityName: "셀바스AI12", sector: "AI/IT"))
+        self.securityNameCollectionView.reloadData()
+        self.securityCollectionView.reloadData()
+        self.cvStackView.snp.updateConstraints{
+            $0.height.equalTo(44 * (self.securities.count + 1) )
+        }
+        //            headerView.snp.updateConstraints { make in
+        //                  make.height.equalTo(height)
+        //              }
+        
     }
     
     @objc func stockButtonClicked(){
@@ -270,7 +281,7 @@ class MyAccountViewController: UIViewController {
         scrollView.backgroundColor = .systemBackground
         contentView.backgroundColor = .systemBackground
         self.navigationController?.isNavigationBarHidden = true
-        cvScrollView.backgroundColor = .magenta
+//        cvScrollView.backgroundColor = .magenta
         attribute()
         layout()
     }
@@ -382,7 +393,7 @@ class MyAccountViewController: UIViewController {
         
         
         
-        [ glView, glStackView, borderView, stack2View, portfolioView, cvScrollView, blankView].forEach{
+        [ glView, glStackView, borderView, stack2View, portfolioView, cvStackView, blankView].forEach{
             stackView.addArrangedSubview($0)
         }
         
@@ -415,30 +426,49 @@ class MyAccountViewController: UIViewController {
             $0.height.equalTo(60)
         }
         
-        cvScrollView.snp.makeConstraints{
+//        cvScrollView.snp.makeConstraints{
+//            $0.top.equalTo(portfolioView.snp.bottom)
+//            $0.leading.trailing.equalToSuperview()
+//            $0.height.equalTo(500)
+//        }
+//        cvScrollView.addSubview(cvContentView)
+//        cvContentView.snp.makeConstraints{
+//            $0.edges.equalToSuperview()
+//            //가로를 고정시켜주어 세로스크롤 뷰가 된다.
+//            $0.width.equalToSuperview()
+//        }
+//        cvContentView.addSubview(cvStackView)
+//
+        cvStackView.snp.makeConstraints{
             $0.top.equalTo(portfolioView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(500)
+            //총 12종목만 보여줌
+            $0.height.equalTo(44 * (self.securities.count + 1))
         }
-        cvScrollView.addSubview(cvContentView)
-        cvContentView.snp.makeConstraints{
-            $0.edges.equalToSuperview()
-            //가로를 고정시켜주어 세로스크롤 뷰가 된다.
-            $0.width.equalToSuperview()
-        }
-        cvContentView.addSubview(cvStackView)
-        
-        cvStackView.snp.makeConstraints{
-            $0.edges.equalToSuperview()
+//
+        [securityNameCollectionView, securityCollectionView].forEach{
+            cvStackView.addArrangedSubview($0)
         }
         
-//        [getDataButton, tableView].forEach{
-//            stackView.addArrangedSubview($0)
-//        }
-        
-        
-        
-        
+        securityNameCollectionView.snp.makeConstraints{
+//            $0.top.equalTo(portfolioView.snp.bottom)
+            $0.top.bottom.equalToSuperview()
+            $0.leading.equalToSuperview()
+            $0.width.equalTo(UIScreen.main.bounds.width  / 3)
+//            $0.height.equalTo(44 * (self.securities.count + 1))
+//            $0.height.equalTo(300)
+        }
+
+        securityCollectionView.snp.makeConstraints{
+//            $0.top.equalTo(portfolioView.snp.bottom)
+            $0.top.bottom.equalToSuperview()
+            $0.leading.equalTo(securityNameCollectionView.snp.trailing)
+//            $0.trailing.equalToSuperview()
+            $0.width.equalTo(UIScreen.main.bounds.width * 2 / 3)
+//            $0.height.equalTo(44 * (self.securities.count + 1))
+//            $0.height.equalToSuperview()
+        }
+
 //
 //        cvScrollView.snp.makeConstraints{
 //            $0.top.equalTo(portfolioView.snp.bottom)
