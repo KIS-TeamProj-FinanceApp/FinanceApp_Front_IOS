@@ -101,4 +101,6 @@ class MyAccountHeaderView: UIView {
 
 extension Notification.Name {
     static let refreshMyAccount = Notification.Name("refreshMyAccount")
+    //국내 -> 해외 / 해외 -> 국내
+    static let changeMarket = Notification.Name("changeMarket")
 }
