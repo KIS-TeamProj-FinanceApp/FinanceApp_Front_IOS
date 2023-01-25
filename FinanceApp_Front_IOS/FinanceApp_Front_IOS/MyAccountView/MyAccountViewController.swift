@@ -11,7 +11,18 @@ import UIKit
 class MyAccountViewController: UIViewController {
     
     
-    
+    private var securities: [SecurityForRecommend] = [
+        SecurityForRecommend(securityName: "셀바스AI", sector: "AI/IT"),
+        SecurityForRecommend(securityName: "셀바스AI2", sector: "AI/IT"),
+        SecurityForRecommend(securityName: "셀바스AI3", sector: "AI/IT"),
+        SecurityForRecommend(securityName: "셀바스AI4", sector: "AI/IT"),
+        SecurityForRecommend(securityName: "셀바스AI5", sector: "AI/IT"),
+        SecurityForRecommend(securityName: "셀바스AI6", sector: "AI/IT"),
+        SecurityForRecommend(securityName: "셀바스AI7", sector: "AI/IT"),
+        SecurityForRecommend(securityName: "셀바스AI8", sector: "AI/IT"),
+        SecurityForRecommend(securityName: "셀바스AI9", sector: "AI/IT"),
+        SecurityForRecommend(securityName: "셀바스AI10", sector: "AI/IT"),
+        ]
     // --------------------------------------------------------- Variables -------------------------------------------------------- //
     
     // ------------------------------------------------------- UI Components ------------------------------------------------------ //
@@ -80,6 +91,27 @@ class MyAccountViewController: UIViewController {
     
     private let glView = GainsAndLossesView()
     
+    
+    
+    private lazy var glStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        stackView.spacing = 20.0
+        stackView.backgroundColor = UIColor.lightGray
+        return stackView
+    }()
+    
+    private let glLeftHalf = glHalfView()
+    
+    private let glRightHalf = glHalfView()
+    
+    let borderView: UIView = {
+        let v = UIView()
+        v.backgroundColor = .green
+        return v
+    }()
+    
     // 종목별
     private lazy var stockButton: UIButton = {
         let btn = UIButton()
@@ -118,6 +150,65 @@ class MyAccountViewController: UIViewController {
     }()
     
     private let portfolioView = PortfolioView()
+    
+    //collectionView 2개를 써야한다.
+    
+    
+    private lazy var cvStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fill
+        stackView.spacing = 0.0
+        stackView.backgroundColor = .cyan
+        return stackView
+    }()
+    
+    
+    private lazy var securityNameCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        //layout.sectionInset = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        layout.scrollDirection = .vertical
+
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.tag = 0
+        
+        collectionView.register(SecurityNameCollectionViewCell.self, forCellWithReuseIdentifier: "SecurityNameCollectionViewCell")
+        collectionView.dataSource = self
+        collectionView.delegate = self
+//        collectionView.isPagingEnabled = true
+        collectionView.showsVerticalScrollIndicator = false
+
+        collectionView.backgroundColor = .lightGray
+//        collectionView.isScrollEnabled = false
+        return collectionView
+    }()
+    
+    private lazy var securityCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        //layout.sectionInset = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        layout.scrollDirection = .horizontal
+
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.tag = 1
+        
+        collectionView.register(SecurityCollectionViewCell.self, forCellWithReuseIdentifier: "SecurityCollectionViewCell")
+        collectionView.dataSource = self
+        collectionView.delegate = self
+//        collectionView.isPagingEnabled = true
+        collectionView.showsHorizontalScrollIndicator = true
+
+        collectionView.backgroundColor = .lightGray
+//        collectionView.isScrollEnabled = false
+        
+        return collectionView
+    }()
+    
+    
+    
     
     let blankView: UIView = {
         let v = UIView()
@@ -166,8 +257,8 @@ class MyAccountViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        scrollView.backgroundColor = .magenta
-        contentView.backgroundColor = .cyan
+        scrollView.backgroundColor = .systemBackground
+        contentView.backgroundColor = .systemBackground
         self.navigationController?.isNavigationBarHidden = true
         attribute()
         layout()
@@ -261,17 +352,67 @@ class MyAccountViewController: UIViewController {
         }
         
         
-        [ glView, stack2View, portfolioView, blankView].forEach{
+        [glLeftHalf, glRightHalf].forEach{
+            glStackView.addArrangedSubview($0)
+        }
+        glLeftHalf.snp.makeConstraints{
+            $0.top.bottom.equalToSuperview().inset(20)
+//            $0.width.equalTo(UIScreen.main.bounds.width / 2 - 30)
+//            $0.width.equalTo(150)
+//            $0.leading.equalToSuperview().inset(10)
+        }
+        
+        glRightHalf.snp.makeConstraints{
+            $0.top.bottom.equalToSuperview().inset(20)
+//            $0.width.equalTo(UIScreen.main.bounds.width / 2 - 30)
+//            $0.width.equalTo(150)
+//            $0.trailing.equalToSuperview().inset(20)
+        }
+        
+        [securityNameCollectionView, securityCollectionView].forEach{
+            cvStackView.addArrangedSubview($0)
+        }
+        
+        securityNameCollectionView.snp.makeConstraints{
+//            $0.top.equalTo(portfolioView.snp.bottom)
+            $0.top.bottom.equalToSuperview()
+//            $0.leading.equalToSuperview()
+            $0.width.equalTo(UIScreen.main.bounds.width * 7 / 24)
+            $0.height.equalTo(420)
+        }
+        
+        securityCollectionView.snp.makeConstraints{
+//            $0.top.equalTo(portfolioView.snp.bottom)
+            $0.top.bottom.equalToSuperview()
+//            $0.leading.equalTo(securityNameCollectionView.snp.trailing)
+//            $0.trailing.equalToSuperview()
+            $0.width.equalTo(UIScreen.main.bounds.width * 17 / 24)
+            $0.height.equalTo(420)
+        }
+        
+        [ glView, glStackView, borderView, stack2View, portfolioView, cvStackView, cvStackView, blankView].forEach{
             stackView.addArrangedSubview($0)
         }
         
         glView.snp.makeConstraints{
             $0.top.leading.trailing.equalToSuperview()
-            $0.height.equalTo(200)
+            $0.height.equalTo(60)
+        }
+        
+        glStackView.snp.makeConstraints{
+            $0.top.equalTo(glView.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(120)
+        }
+
+        borderView.snp.makeConstraints{
+            $0.top.equalTo(glStackView.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(20)
         }
         
         stack2View.snp.makeConstraints{
-            $0.top.equalTo(glView.snp.bottom)
+            $0.top.equalTo(borderView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(50)
         }
@@ -279,16 +420,54 @@ class MyAccountViewController: UIViewController {
         portfolioView.snp.makeConstraints{
             $0.top.equalTo(stack2View.snp.bottom)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(400)
+            $0.height.equalTo(60)
+        }
+        
+        cvStackView.snp.makeConstraints{
+            $0.top.equalTo(portfolioView.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.width.equalToSuperview()
+            $0.height.equalTo(420)
         }
         
         blankView.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(200)
         }
-        
-        
-       
-
     }
 }
+
+
+
+extension MyAccountViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+//        return records.count
+        //Header까지 포함해야하므로 1을 더해줌
+        if collectionView.tag == 0{
+            return self.securities.count + 1
+        }
+        return self.securities.count + 1
+    }
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        // 평가손익, 수익률 ..... 등을 보여줘야함
+        return 13
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if collectionView.tag == 0 {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SecurityNameCollectionViewCell", for: indexPath) as? SecurityNameCollectionViewCell else { return UICollectionViewCell() }
+            
+            cell.setup(title: String(indexPath.section) + String(indexPath.row))
+            return cell
+        }
+        else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SecurityCollectionViewCell", for: indexPath) as? SecurityCollectionViewCell else { return UICollectionViewCell() }
+            
+            cell.setup(title: String(indexPath.section) + String(indexPath.row))
+            return cell
+        }
+    }
+       
+}
+

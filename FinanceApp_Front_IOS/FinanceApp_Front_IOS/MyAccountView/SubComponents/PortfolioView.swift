@@ -30,7 +30,7 @@ class PortfolioView: UIView {
         btn.layer.borderColor = UIColor.lightGray.cgColor
         btn.backgroundColor = .systemBackground
         btn.setTitleColor(.black, for: .normal)
-        btn.setTitle("일괄매도", for: .normal)
+        btn.setTitle(" 일괄매도 ", for: .normal)
         btn.titleLabel?.font = .systemFont(ofSize: 16.0, weight: .semibold)
         btn.addTarget(self, action: #selector(sellAllButtonClicked), for: .touchUpInside)
         return btn
@@ -60,15 +60,16 @@ class PortfolioView: UIView {
         }
         
         titleLabel.snp.makeConstraints{
-            $0.top.equalToSuperview().inset(20)
+            $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().inset(20)
 //            $0.height.equalToSuperview().inset(4)
 //            $0.width.equalTo(120)
         }
         
         sellAllButton.snp.makeConstraints{
-            $0.top.trailing.equalToSuperview().inset(20)
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(20)
+//            $0.width.equalTo(80)
         }
-    
     }
 }
