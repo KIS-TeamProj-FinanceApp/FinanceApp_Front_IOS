@@ -161,10 +161,10 @@ class MyAccountMoneyView: UIView {
         }
     }
     
-    func setupValue(value1: String, value2: String, value3: String, value4: String) {
-        self.pyunggagumTotalValueLabel.text = value1
-        self.maeipgumValueLabel.text = value2
-        self.yesugumTotalValueLabel.text = value3
-        self.D2YesugumValueLabel.text = value4
+    func setupValue(pyunggagumTotal: String, maeipgum: String, yesugumTotal: String, D2Yesugum: String) {
+        self.pyunggagumTotalValueLabel.text = pyunggagumTotal
+        self.maeipgumValueLabel.text = maeipgum
+        self.yesugumTotalValueLabel.text = yesugumTotal
+        self.D2YesugumValueLabel.text = D2Yesugum
     }
 }

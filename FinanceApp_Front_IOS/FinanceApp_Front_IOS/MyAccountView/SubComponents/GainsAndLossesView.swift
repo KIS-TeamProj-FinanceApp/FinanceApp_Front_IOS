@@ -78,6 +78,10 @@ class GainsAndLossesView: UIView {
             $0.centerY.equalToSuperview()
             $0.trailing.equalTo(percentLabel.snp.leading).offset(-20)
         }
-        
+    }
+    
+    func setup(totalRevenue: String, totalRevenueRate: String){
+        self.wonLabel.text = totalRevenue
+        self.percentLabel.text = totalRevenueRate
     }
 }

@@ -71,6 +71,7 @@
 		A5B77E3629810C30006D754F /* MyAccountSecurities.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E3529810C30006D754F /* MyAccountSecurities.swift */; };
 		A5B77E3829810D07006D754F /* MyAccountMoneyDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E3729810D07006D754F /* MyAccountMoneyDto.swift */; };
 		A5B77E3A29810D66006D754F /* MyAccountMoney.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E3929810D66006D754F /* MyAccountMoney.swift */; };
+		A5B77E3E2981672F006D754F /* MyAccountTotalDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E3D2981672F006D754F /* MyAccountTotalDto.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -138,6 +139,7 @@
 		A5B77E3529810C30006D754F /* MyAccountSecurities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountSecurities.swift; sourceTree = "<group>"; };
 		A5B77E3729810D07006D754F /* MyAccountMoneyDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountMoneyDto.swift; sourceTree = "<group>"; };
 		A5B77E3929810D66006D754F /* MyAccountMoney.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountMoney.swift; sourceTree = "<group>"; };
+		A5B77E3D2981672F006D754F /* MyAccountTotalDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountTotalDto.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -482,6 +484,7 @@
 			children = (
 				A5B77E3329810C20006D754F /* MyAccountSecuritiesDto.swift */,
 				A5B77E3729810D07006D754F /* MyAccountMoneyDto.swift */,
+				A5B77E3D2981672F006D754F /* MyAccountTotalDto.swift */,
 			);
 			path = Dto;
 			sourceTree = "<group>";
@@ -609,6 +612,7 @@
 				A557E4A0297D7E6300A40EEE /* TradingGraphViewController.swift in Sources */,
 				A5398BFD297E51190062A24A /* MyAccountHeaderView.swift in Sources */,
 				A557E496297D568400A40EEE /* SecurityForRecommendDto.swift in Sources */,
+				A5B77E3E2981672F006D754F /* MyAccountTotalDto.swift in Sources */,
 				A557E4512977B22C00A40EEE /* SecurityDataCellData.swift in Sources */,
 				A557E48E297D2BFF00A40EEE /* WBRankTableViewCell.swift in Sources */,
 				A557E4432977AE7500A40EEE /* GetERNetwork.swift in Sources */,

@@ -285,7 +285,4 @@ extension AccountNumInputViewController {
         }.resume()
         
     }
-    
-
-
 }
