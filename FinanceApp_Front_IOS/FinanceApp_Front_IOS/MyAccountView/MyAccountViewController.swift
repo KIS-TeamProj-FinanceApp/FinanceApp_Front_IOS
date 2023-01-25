@@ -105,24 +105,11 @@ class MyAccountViewController: UIViewController {
     
     private let glView = GainsAndLossesView()
     
-    
-    
-    private lazy var glStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.distribution = .fillEqually
-        stackView.spacing = 20.0
-        stackView.backgroundColor = UIColor.lightGray
-        return stackView
-    }()
-    
-    private let glLeftHalf = glHalfView()
-    
-    private let glRightHalf = glHalfView()
-    
+    private let moneyHorizontalView = MyAccountMoneyView()
+       
     let borderView: UIView = {
         let v = UIView()
-        v.backgroundColor = .green
+        v.backgroundColor = .systemBackground
         return v
     }()
     
@@ -154,7 +141,7 @@ class MyAccountViewController: UIViewController {
         return btn
     }()
     
-    private lazy var stack2View: UIStackView = {
+    private lazy var stockSectorStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.distribution = .fill
@@ -371,7 +358,7 @@ class MyAccountViewController: UIViewController {
         }
         
         [ stockButton, sectorButton].forEach {
-            stack2View.addArrangedSubview($0)
+            stockSectorStackView.addArrangedSubview($0)
         }
         
         stockButton.snp.makeConstraints{
@@ -389,26 +376,9 @@ class MyAccountViewController: UIViewController {
         }
         
         
-        [glLeftHalf, glRightHalf].forEach{
-            glStackView.addArrangedSubview($0)
-        }
-        glLeftHalf.snp.makeConstraints{
-            $0.top.bottom.equalToSuperview().inset(20)
-//            $0.width.equalTo(UIScreen.main.bounds.width / 2 - 30)
-//            $0.width.equalTo(150)
-//            $0.leading.equalToSuperview().inset(10)
-        }
-        
-        glRightHalf.snp.makeConstraints{
-            $0.top.bottom.equalToSuperview().inset(20)
-//            $0.width.equalTo(UIScreen.main.bounds.width / 2 - 30)
-//            $0.width.equalTo(150)
-//            $0.trailing.equalToSuperview().inset(20)
-        }
         
         
-        
-        [ glView, glStackView, borderView, stack2View, portfolioView, cvStackView, blankView].forEach{
+        [ glView, moneyHorizontalView, borderView, stockSectorStackView, portfolioView, cvStackView, blankView].forEach{
             stackView.addArrangedSubview($0)
         }
         
@@ -417,26 +387,26 @@ class MyAccountViewController: UIViewController {
             $0.height.equalTo(60)
         }
         
-        glStackView.snp.makeConstraints{
+        moneyHorizontalView.snp.makeConstraints{
             $0.top.equalTo(glView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(120)
+            $0.height.equalTo(90)
         }
 
         borderView.snp.makeConstraints{
-            $0.top.equalTo(glStackView.snp.bottom).offset(10)
+            $0.top.equalTo(moneyHorizontalView.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(20)
         }
         
-        stack2View.snp.makeConstraints{
-            $0.top.equalTo(borderView.snp.bottom)
+        stockSectorStackView.snp.makeConstraints{
+            $0.top.equalTo(borderView.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(50)
         }
         
         portfolioView.snp.makeConstraints{
-            $0.top.equalTo(stack2View.snp.bottom)
+            $0.top.equalTo(stockSectorStackView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(60)
         }
