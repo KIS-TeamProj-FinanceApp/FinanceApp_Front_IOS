@@ -28,8 +28,8 @@ final class SecurityNameCollectionViewCell: UICollectionViewCell{
         titleButton.setTitleColor(.black, for: .normal)
         titleButton.backgroundColor = .white
         titleButton.layer.borderWidth = 1.0
-        titleButton.layer.borderColor = UIColor.black.cgColor
-        titleButton.addTarget(self, action: #selector(btnClicked), for: .touchUpInside)
+        titleButton.layer.borderColor = UIColor.darkGray.cgColor
+      
     }
     
     private func layout() {
@@ -38,10 +38,6 @@ final class SecurityNameCollectionViewCell: UICollectionViewCell{
         titleButton.snp.makeConstraints{
             $0.edges.equalToSuperview()
         }
-    }
-    
-    @objc func btnClicked(){
-        print("주식 이름 버튼 클릭")
     }
     
     func setup(title: String){

@@ -28,8 +28,7 @@ final class SecurityCollectionViewCell: UICollectionViewCell{
         titleButton.setTitleColor(.black, for: .normal)
         titleButton.backgroundColor = .white
         titleButton.layer.borderWidth = 1.0
-        titleButton.layer.borderColor = UIColor.black.cgColor
-        titleButton.addTarget(self, action: #selector(btnClicked), for: .touchUpInside)
+        titleButton.layer.borderColor = UIColor.lightGray.cgColor
     }
     
     private func layout() {
@@ -38,10 +37,6 @@ final class SecurityCollectionViewCell: UICollectionViewCell{
         titleButton.snp.makeConstraints{
             $0.edges.equalToSuperview()
         }
-    }
-    
-    @objc func btnClicked(){
-        self.titleButton.backgroundColor = .systemCyan
     }
     
     func setup(title: String){

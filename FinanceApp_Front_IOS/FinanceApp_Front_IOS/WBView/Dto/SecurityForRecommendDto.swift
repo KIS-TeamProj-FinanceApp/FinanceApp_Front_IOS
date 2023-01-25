@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct SecurityForRecommendDto: Decodable {
-    let securityName: String?
-    let securitySector: String?
+struct SecurityForRecommend: Decodable {
+    let securityName: String
+    let sector: String
     
     enum CodingKeys: String, CodingKey{
         case securityName = "securityName"
-        case securitySector = "securitySector"
+        case sector = "sector"
     }
 }

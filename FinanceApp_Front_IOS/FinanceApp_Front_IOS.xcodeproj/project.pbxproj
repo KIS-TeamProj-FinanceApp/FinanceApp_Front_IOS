@@ -67,6 +67,8 @@
 		A5B77E2C2980B308006D754F /* glHalfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E2B2980B308006D754F /* glHalfView.swift */; };
 		A5B77E2E2980BF4D006D754F /* SecurityCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E2D2980BF4D006D754F /* SecurityCollectionViewCell.swift */; };
 		A5B77E302980C6A5006D754F /* SecurityNameCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E2F2980C6A5006D754F /* SecurityNameCollectionViewCell.swift */; };
+		A5B77E3429810C20006D754F /* MyAccountSecuritiesDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E3329810C20006D754F /* MyAccountSecuritiesDto.swift */; };
+		A5B77E3629810C30006D754F /* MyAccountSecurities.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E3529810C30006D754F /* MyAccountSecurities.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -130,6 +132,8 @@
 		A5B77E2B2980B308006D754F /* glHalfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = glHalfView.swift; sourceTree = "<group>"; };
 		A5B77E2D2980BF4D006D754F /* SecurityCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityCollectionViewCell.swift; sourceTree = "<group>"; };
 		A5B77E2F2980C6A5006D754F /* SecurityNameCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityNameCollectionViewCell.swift; sourceTree = "<group>"; };
+		A5B77E3329810C20006D754F /* MyAccountSecuritiesDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountSecuritiesDto.swift; sourceTree = "<group>"; };
+		A5B77E3529810C30006D754F /* MyAccountSecurities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountSecurities.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,8 +156,8 @@
 				A5398BFF297E5E1F0062A24A /* GainsAndLossesView.swift */,
 				A5398C01297E62350062A24A /* PortfolioView.swift */,
 				A5B77E2B2980B308006D754F /* glHalfView.swift */,
-				A5B77E2D2980BF4D006D754F /* SecurityCollectionViewCell.swift */,
 				A5B77E2F2980C6A5006D754F /* SecurityNameCollectionViewCell.swift */,
+				A5B77E2D2980BF4D006D754F /* SecurityCollectionViewCell.swift */,
 			);
 			path = SubComponents;
 			sourceTree = "<group>";
@@ -419,6 +423,8 @@
 			children = (
 				A557E483297D025F00A40EEE /* MyAccountViewController.swift */,
 				A5398BFE297E511C0062A24A /* SubComponents */,
+				A5B77E3129810BEC006D754F /* Dto */,
+				A5B77E3229810BFA006D754F /* Entity */,
 			);
 			path = MyAccountView;
 			sourceTree = "<group>";
@@ -465,6 +471,22 @@
 				A557E49A297D626200A40EEE /* SectorCollectionViewCell.swift */,
 			);
 			path = SectorCollectionView;
+			sourceTree = "<group>";
+		};
+		A5B77E3129810BEC006D754F /* Dto */ = {
+			isa = PBXGroup;
+			children = (
+				A5B77E3329810C20006D754F /* MyAccountSecuritiesDto.swift */,
+			);
+			path = Dto;
+			sourceTree = "<group>";
+		};
+		A5B77E3229810BFA006D754F /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				A5B77E3529810C30006D754F /* MyAccountSecurities.swift */,
+			);
+			path = Entity;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -554,6 +576,7 @@
 				A557E484297D025F00A40EEE /* MyAccountViewController.swift in Sources */,
 				A557E4412977AE6A00A40EEE /* GetERAPI.swift in Sources */,
 				A557E42A2977AB8100A40EEE /* GridCollectionViewLayout.swift in Sources */,
+				A5B77E3629810C30006D754F /* MyAccountSecurities.swift in Sources */,
 				A557E43E2977ADF700A40EEE /* TestViewController.swift in Sources */,
 				A557E4042977891B00A40EEE /* ViewController.swift in Sources */,
 				A557E4462977AEB100A40EEE /* ChartViewController.swift in Sources */,
@@ -588,6 +611,7 @@
 				A557E47E297D023000A40EEE /* WBRankViewController.swift in Sources */,
 				A557E4672978201900A40EEE /* AppkeyExistenceViewController.swift in Sources */,
 				A557E4652977D12400A40EEE /* AccountExistenceViewController.swift in Sources */,
+				A5B77E3429810C20006D754F /* MyAccountSecuritiesDto.swift in Sources */,
 				A557E4692978226900A40EEE /* AppkeyInputViewController.swift in Sources */,
 				A5398C02297E62350062A24A /* PortfolioView.swift in Sources */,
 				A557E4602977B2DA00A40EEE /* ProfileCollectionViewCell.swift in Sources */,
