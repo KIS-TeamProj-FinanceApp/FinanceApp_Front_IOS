@@ -85,7 +85,7 @@ class MyAccountViewController: UIViewController {
         stackView.axis = .vertical
         stackView.distribution = .fill
         stackView.spacing = 0.0
-        stackView.backgroundColor = .yellow
+        stackView.backgroundColor = .systemBrown
         return stackView
     }()
     
@@ -154,23 +154,27 @@ class MyAccountViewController: UIViewController {
     //collectionView 2개를 써야한다.
     
     
+    
+    private let cvScrollView = UIScrollView()
+    private let cvContentView = UIView()
+    
     private lazy var cvStackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.axis = .horizontal
+        stackView.axis = .vertical
         stackView.distribution = .fill
         stackView.spacing = 0.0
-        stackView.backgroundColor = .cyan
+        stackView.backgroundColor = .red
         return stackView
     }()
     
-    
     private lazy var securityNameCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
+        
         //layout.sectionInset = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         layout.scrollDirection = .vertical
-
+        
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.tag = 0
         
@@ -178,7 +182,8 @@ class MyAccountViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
 //        collectionView.isPagingEnabled = true
-        collectionView.showsVerticalScrollIndicator = false
+//        collectionView.showsVerticalScrollIndicator = false
+        collectionView.isScrollEnabled = false
 
         collectionView.backgroundColor = .lightGray
 //        collectionView.isScrollEnabled = false
@@ -187,9 +192,12 @@ class MyAccountViewController: UIViewController {
     
     private lazy var securityCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
+        
         //layout.sectionInset = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        
         layout.scrollDirection = .horizontal
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -199,7 +207,8 @@ class MyAccountViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
 //        collectionView.isPagingEnabled = true
-        collectionView.showsHorizontalScrollIndicator = true
+//        collectionView.showsHorizontalScrollIndicator = true
+        collectionView.isScrollEnabled = true
 
         collectionView.backgroundColor = .lightGray
 //        collectionView.isScrollEnabled = false
@@ -233,6 +242,7 @@ class MyAccountViewController: UIViewController {
         print("agreementButtonClicked button clicked")
         self.balanceButtonBottom.backgroundColor = .white
         self.agreementButtonBottom.backgroundColor = .darkGray
+        
     }
     
     @objc func stockButtonClicked(){
@@ -260,6 +270,7 @@ class MyAccountViewController: UIViewController {
         scrollView.backgroundColor = .systemBackground
         contentView.backgroundColor = .systemBackground
         self.navigationController?.isNavigationBarHidden = true
+        cvScrollView.backgroundColor = .magenta
         attribute()
         layout()
     }
@@ -369,28 +380,9 @@ class MyAccountViewController: UIViewController {
 //            $0.trailing.equalToSuperview().inset(20)
         }
         
-        [securityNameCollectionView, securityCollectionView].forEach{
-            cvStackView.addArrangedSubview($0)
-        }
         
-        securityNameCollectionView.snp.makeConstraints{
-//            $0.top.equalTo(portfolioView.snp.bottom)
-            $0.top.bottom.equalToSuperview()
-//            $0.leading.equalToSuperview()
-            $0.width.equalTo(UIScreen.main.bounds.width * 7 / 24)
-            $0.height.equalTo(420)
-        }
         
-        securityCollectionView.snp.makeConstraints{
-//            $0.top.equalTo(portfolioView.snp.bottom)
-            $0.top.bottom.equalToSuperview()
-//            $0.leading.equalTo(securityNameCollectionView.snp.trailing)
-//            $0.trailing.equalToSuperview()
-            $0.width.equalTo(UIScreen.main.bounds.width * 17 / 24)
-            $0.height.equalTo(420)
-        }
-        
-        [ glView, glStackView, borderView, stack2View, portfolioView, cvStackView, cvStackView, blankView].forEach{
+        [ glView, glStackView, borderView, stack2View, portfolioView, cvScrollView, blankView].forEach{
             stackView.addArrangedSubview($0)
         }
         
@@ -423,12 +415,80 @@ class MyAccountViewController: UIViewController {
             $0.height.equalTo(60)
         }
         
-        cvStackView.snp.makeConstraints{
+        cvScrollView.snp.makeConstraints{
             $0.top.equalTo(portfolioView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
-            $0.width.equalToSuperview()
-            $0.height.equalTo(420)
+            $0.height.equalTo(500)
         }
+        cvScrollView.addSubview(cvContentView)
+        cvContentView.snp.makeConstraints{
+            $0.edges.equalToSuperview()
+            //가로를 고정시켜주어 세로스크롤 뷰가 된다.
+            $0.width.equalToSuperview()
+        }
+        cvContentView.addSubview(cvStackView)
+        
+        cvStackView.snp.makeConstraints{
+            $0.edges.equalToSuperview()
+        }
+        
+//        [getDataButton, tableView].forEach{
+//            stackView.addArrangedSubview($0)
+//        }
+        
+        
+        
+        
+//
+//        cvScrollView.snp.makeConstraints{
+//            $0.top.equalTo(portfolioView.snp.bottom)
+//            $0.leading.trailing.equalToSuperview()
+//            $0.height.equalTo(500)
+//        }
+//
+//
+//        cvScrollView.addSubview(cvContentView)
+//
+//        cvContentView.snp.makeConstraints{
+//            $0.edges.equalToSuperview()
+//            //가로를 고정시켜주어 세로스크롤 뷰가 된다.
+//            $0.width.equalToSuperview()
+//        }
+//        cvContentView.addSubview(cvStackView)
+//        cvStackView.snp.makeConstraints{
+//            $0.edges.equalToSuperview()
+//        }
+//
+//        [securityNameCollectionView, securityCollectionView].forEach{
+//            cvStackView.addArrangedSubview($0)
+//        }
+//
+//        securityNameCollectionView.snp.makeConstraints{
+////            $0.top.equalTo(portfolioView.snp.bottom)
+//            $0.top.bottom.equalToSuperview()
+////            $0.leading.equalToSuperview()
+//            $0.width.equalTo(UIScreen.main.bounds.width  / 3)
+////            $0.height.equalTo(44 * (self.securities.count + 1))
+//            $0.height.equalTo(100)
+//        }
+//
+//        securityCollectionView.snp.makeConstraints{
+////            $0.top.equalTo(portfolioView.snp.bottom)
+//            $0.top.bottom.equalToSuperview()
+////            $0.leading.equalTo(securityNameCollectionView.snp.trailing)
+////            $0.trailing.equalToSuperview()
+//            $0.width.equalTo(UIScreen.main.bounds.width * 2 / 3)
+////            $0.height.equalTo(44 * (self.securities.count + 1))
+//            $0.height.equalTo(100)
+//        }
+        
+        
+//        cvStackView.snp.makeConstraints{
+//            $0.top.equalTo(portfolioView.snp.bottom)
+//            $0.leading.trailing.equalToSuperview()
+//            $0.width.equalToSuperview()
+//            $0.height.equalTo(44 * (self.securities.count + 1))
+//        }
         
         blankView.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview()
@@ -444,14 +504,14 @@ extension MyAccountViewController: UICollectionViewDataSource, UICollectionViewD
 //        return records.count
         //Header까지 포함해야하므로 1을 더해줌
         if collectionView.tag == 0{
-            return self.securities.count + 1
+            return 1
         }
-        return self.securities.count + 1
+        return 7
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // 평가손익, 수익률 ..... 등을 보여줘야함
-        return 13
+        return self.securities.count + 1
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -467,6 +527,16 @@ extension MyAccountViewController: UICollectionViewDataSource, UICollectionViewD
             cell.setup(title: String(indexPath.section) + String(indexPath.row))
             return cell
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if collectionView.tag == 0{
+            return CGSize(width: UIScreen.main.bounds.width  / 3, height: 44)
+        }
+        else {
+            return CGSize(width: 120, height: 44)
+        }
+        
     }
        
 }

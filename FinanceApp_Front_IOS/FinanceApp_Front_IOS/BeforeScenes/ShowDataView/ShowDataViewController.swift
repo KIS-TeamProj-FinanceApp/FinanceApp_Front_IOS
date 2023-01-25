@@ -77,6 +77,7 @@ class ShowDataViewController: UIViewController {
     
     private lazy var collectionView: UICollectionView = {
         let layout = GridLayout()
+        //collectionView cell 사이즈 설정
         layout.cellHeight = 44
         layout.cellWidths = Array(repeating: CGFloat(200), count: jsonResultArr[0].count + 1)
         //layout.sectionInset = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
