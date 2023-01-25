@@ -303,10 +303,22 @@ class MyAccountViewController: UIViewController {
         contentView.backgroundColor = .systemBackground
         navigationController?.isNavigationBarHidden = true
         layout()
+        // Header쪽에서 refresh버튼 누르는 액션을 전달받기 위해
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshBtnClicked), name: .refreshMyAccount, object: nil)
         
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        requestAPI()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+            self.cvStackView.snp.updateConstraints{
+                $0.height.equalTo(44 * (self.myAccountSecurities.count + 1) )
+            }
+        }
+    }
+    
+    @objc func refreshBtnClicked(){
         requestAPI()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1){

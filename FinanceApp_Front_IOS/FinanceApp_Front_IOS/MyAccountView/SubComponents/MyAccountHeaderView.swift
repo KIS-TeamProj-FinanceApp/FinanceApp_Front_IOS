@@ -58,6 +58,7 @@ class MyAccountHeaderView: UIView {
     
     @objc func refreshButtonClicked(){
         print("refreshButtonClicked button clicked")
+        NotificationCenter.default.post(name: .refreshMyAccount, object: nil)
     }
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -96,4 +97,8 @@ class MyAccountHeaderView: UIView {
         }
     
     }
+}
+
+extension Notification.Name {
+    static let refreshMyAccount = Notification.Name("refreshMyAccount")
 }
