@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SecurityForRecommend: Decodable {
+struct SecurityForRecommendDto: Decodable {
     let securityName: String
     let sector: String
     
