@@ -37,6 +37,17 @@ class MyAccountHeaderView: UIView {
         return btn
     }()
     
+    
+    private lazy var refreshButton: UIButton = {
+        let btn = UIButton()
+//        btn.layer.cornerRadius = 3.0
+//        btn.layer.borderWidth = 2.0
+//        btn.layer.borderColor = UIColor(red: 0/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1.0).cgColor
+//        btn.backgroundColor = .black
+        btn.setImage(UIImage(systemName: "arrow.counterclockwise"), for: .normal)
+        btn.addTarget(self, action: #selector(refreshButtonClicked), for: .touchUpInside)
+        return btn
+    }()
 
     // ------------------------------------------------------- UI Components ------------------------------------------------------ //
     
@@ -44,6 +55,10 @@ class MyAccountHeaderView: UIView {
         print("marketChange button clicked")
     }
     
+    
+    @objc func refreshButtonClicked(){
+        print("refreshButtonClicked button clicked")
+    }
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .systemBackground
@@ -56,7 +71,7 @@ class MyAccountHeaderView: UIView {
     }
     
     private func layout(){
-        [titleLabel, changeButton].forEach{
+        [titleLabel, changeButton, refreshButton].forEach{
             self.addSubview($0)
         }
         
@@ -71,7 +86,13 @@ class MyAccountHeaderView: UIView {
         
         changeButton.snp.makeConstraints{
             $0.centerY.equalToSuperview()
-            $0.trailing.equalToSuperview().inset(20)
+            $0.trailing.equalToSuperview().inset(60)
+        }
+        
+        refreshButton.snp.makeConstraints{
+            $0.centerY.equalToSuperview()
+            $0.width.height.equalTo(40)
+            $0.leading.equalTo(changeButton.snp.trailing).offset(10)
         }
     
     }
