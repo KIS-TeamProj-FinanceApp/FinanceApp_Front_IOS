@@ -72,6 +72,11 @@
 		A5B77E3829810D07006D754F /* MyAccountMoneyDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E3729810D07006D754F /* MyAccountMoneyDto.swift */; };
 		A5B77E3A29810D66006D754F /* MyAccountMoney.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E3929810D66006D754F /* MyAccountMoney.swift */; };
 		A5B77E3E2981672F006D754F /* MyAccountTotalDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E3D2981672F006D754F /* MyAccountTotalDto.swift */; };
+		A5B77E412981F923006D754F /* MyOverseasSecuritiesDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E402981F923006D754F /* MyOverseasSecuritiesDto.swift */; };
+		A5B77E442981F941006D754F /* MyOverseasMoneyDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E432981F941006D754F /* MyOverseasMoneyDto.swift */; };
+		A5B77E462981F951006D754F /* MyOverseasTotalDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E452981F951006D754F /* MyOverseasTotalDto.swift */; };
+		A5B77E492981F96B006D754F /* MyOverseasSecurities.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E482981F96B006D754F /* MyOverseasSecurities.swift */; };
+		A5B77E4C2981F977006D754F /* MyOverseasMoney.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E4B2981F977006D754F /* MyOverseasMoney.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -140,6 +145,11 @@
 		A5B77E3729810D07006D754F /* MyAccountMoneyDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountMoneyDto.swift; sourceTree = "<group>"; };
 		A5B77E3929810D66006D754F /* MyAccountMoney.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountMoney.swift; sourceTree = "<group>"; };
 		A5B77E3D2981672F006D754F /* MyAccountTotalDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountTotalDto.swift; sourceTree = "<group>"; };
+		A5B77E402981F923006D754F /* MyOverseasSecuritiesDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOverseasSecuritiesDto.swift; sourceTree = "<group>"; };
+		A5B77E432981F941006D754F /* MyOverseasMoneyDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOverseasMoneyDto.swift; sourceTree = "<group>"; };
+		A5B77E452981F951006D754F /* MyOverseasTotalDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOverseasTotalDto.swift; sourceTree = "<group>"; };
+		A5B77E482981F96B006D754F /* MyOverseasSecurities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOverseasSecurities.swift; sourceTree = "<group>"; };
+		A5B77E4B2981F977006D754F /* MyOverseasMoney.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOverseasMoney.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -482,9 +492,8 @@
 		A5B77E3129810BEC006D754F /* Dto */ = {
 			isa = PBXGroup;
 			children = (
-				A5B77E3329810C20006D754F /* MyAccountSecuritiesDto.swift */,
-				A5B77E3729810D07006D754F /* MyAccountMoneyDto.swift */,
-				A5B77E3D2981672F006D754F /* MyAccountTotalDto.swift */,
+				A5B77E3F2981F8F2006D754F /* Domestic */,
+				A5B77E422981F927006D754F /* Overseas */,
 			);
 			path = Dto;
 			sourceTree = "<group>";
@@ -492,10 +501,48 @@
 		A5B77E3229810BFA006D754F /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				A5B77E472981F95A006D754F /* Domestic */,
+				A5B77E4A2981F96E006D754F /* Overseas */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
+		A5B77E3F2981F8F2006D754F /* Domestic */ = {
+			isa = PBXGroup;
+			children = (
+				A5B77E3329810C20006D754F /* MyAccountSecuritiesDto.swift */,
+				A5B77E3729810D07006D754F /* MyAccountMoneyDto.swift */,
+				A5B77E3D2981672F006D754F /* MyAccountTotalDto.swift */,
+			);
+			path = Domestic;
+			sourceTree = "<group>";
+		};
+		A5B77E422981F927006D754F /* Overseas */ = {
+			isa = PBXGroup;
+			children = (
+				A5B77E402981F923006D754F /* MyOverseasSecuritiesDto.swift */,
+				A5B77E432981F941006D754F /* MyOverseasMoneyDto.swift */,
+				A5B77E452981F951006D754F /* MyOverseasTotalDto.swift */,
+			);
+			path = Overseas;
+			sourceTree = "<group>";
+		};
+		A5B77E472981F95A006D754F /* Domestic */ = {
+			isa = PBXGroup;
+			children = (
 				A5B77E3529810C30006D754F /* MyAccountSecurities.swift */,
 				A5B77E3929810D66006D754F /* MyAccountMoney.swift */,
 			);
-			path = Entity;
+			path = Domestic;
+			sourceTree = "<group>";
+		};
+		A5B77E4A2981F96E006D754F /* Overseas */ = {
+			isa = PBXGroup;
+			children = (
+				A5B77E482981F96B006D754F /* MyOverseasSecurities.swift */,
+				A5B77E4B2981F977006D754F /* MyOverseasMoney.swift */,
+			);
+			path = Overseas;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -578,6 +625,7 @@
 			files = (
 				A557E49B297D626200A40EEE /* SectorCollectionViewCell.swift in Sources */,
 				A557E491297D2C1600A40EEE /* WBRankTableView.swift in Sources */,
+				A5B77E492981F96B006D754F /* MyOverseasSecurities.swift in Sources */,
 				A557E48B297D114400A40EEE /* WBRankHeaderView.swift in Sources */,
 				A557E499297D597C00A40EEE /* NowFutureLabelView.swift in Sources */,
 				A557E471297A369200A40EEE /* AccountNumInputViewController.swift in Sources */,
@@ -587,6 +635,8 @@
 				A557E42A2977AB8100A40EEE /* GridCollectionViewLayout.swift in Sources */,
 				A5B77E3629810C30006D754F /* MyAccountSecurities.swift in Sources */,
 				A557E43E2977ADF700A40EEE /* TestViewController.swift in Sources */,
+				A5B77E4C2981F977006D754F /* MyOverseasMoney.swift in Sources */,
+				A5B77E412981F923006D754F /* MyOverseasSecuritiesDto.swift in Sources */,
 				A557E4042977891B00A40EEE /* ViewController.swift in Sources */,
 				A557E4462977AEB100A40EEE /* ChartViewController.swift in Sources */,
 				A5B77E2E2980BF4D006D754F /* SecurityCollectionViewCell.swift in Sources */,
@@ -602,6 +652,7 @@
 				A557E4282977AB6C00A40EEE /* ShowDataViewCollectionViewCell.swift in Sources */,
 				A557E477297A7D3300A40EEE /* MainViewController.swift in Sources */,
 				A557E481297D024600A40EEE /* TradingViewController.swift in Sources */,
+				A5B77E442981F941006D754F /* MyOverseasMoneyDto.swift in Sources */,
 				A5398C00297E5E1F0062A24A /* GainsAndLossesView.swift in Sources */,
 				A557E4332977ACB500A40EEE /* ButtonListViewLayout.swift in Sources */,
 				A5B77E3829810D07006D754F /* MyAccountMoneyDto.swift in Sources */,
@@ -618,6 +669,7 @@
 				A557E4432977AE7500A40EEE /* GetERNetwork.swift in Sources */,
 				A557E4212977A99A00A40EEE /* AddHeaderViewCell.swift in Sources */,
 				A557E49E297D699500A40EEE /* WBTradeViewController.swift in Sources */,
+				A5B77E462981F951006D754F /* MyOverseasTotalDto.swift in Sources */,
 				A557E45C2977B2BB00A40EEE /* ProfileDataView.swift in Sources */,
 				A557E47E297D023000A40EEE /* WBRankViewController.swift in Sources */,
 				A557E4672978201900A40EEE /* AppkeyExistenceViewController.swift in Sources */,

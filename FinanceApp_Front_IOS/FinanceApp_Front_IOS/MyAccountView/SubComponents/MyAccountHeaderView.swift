@@ -10,7 +10,6 @@ import UIKit
 class MyAccountHeaderView: UIView {
     
     // --------------------------------------------------------- Variables -------------------------------------------------------- //
-    
     private var titles: [String] = ["국내 주식잔고", "해외 주식잔고"]
     
     // --------------------------------------------------------- Variables -------------------------------------------------------- //
@@ -53,6 +52,7 @@ class MyAccountHeaderView: UIView {
     
     @objc func marketChange(){
         print("marketChange button clicked")
+        NotificationCenter.default.post(name: .changeMarket, object: nil)
     }
     
     
@@ -96,6 +96,11 @@ class MyAccountHeaderView: UIView {
             $0.leading.equalTo(changeButton.snp.trailing).offset(10)
         }
     
+    }
+    
+    func setup(isDomestic: Bool){
+        self.titleLabel.text = isDomestic ? "국내 주식잔고" : "해외 주식잔고"
+        self.changeButton.setTitle( isDomestic ? "  해외주식잔고  " : "  국내주식잔고  ", for: .normal)
     }
 }
 

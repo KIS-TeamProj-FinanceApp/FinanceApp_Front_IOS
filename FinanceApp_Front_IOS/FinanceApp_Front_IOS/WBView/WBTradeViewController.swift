@@ -73,8 +73,14 @@ class WBTradeViewController: UIViewController {
         btn.setTitle("매수", for: .normal)
         btn.setTitleColor(.black, for: .normal)
         btn.titleLabel?.font = .systemFont(ofSize: 14.0, weight: .bold)
+        btn.addTarget(self, action: #selector(domesticBuyStockClicked), for: .touchUpInside)
         return btn
     }()
+    
+    @objc func domesticBuyStockClicked(){
+        print("호출!")
+        domesticBuyStock()
+    }
     
     private lazy var sellButton: UIButton = {
         let btn = UIButton()
@@ -238,4 +244,41 @@ class WBTradeViewController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
             self.view.endEditing(true)
         }
+}
+
+
+extension WBTradeViewController{
+    
+    private func domesticBuyStock(){
+        let url = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/trading/order-cash"
+        var request = URLRequest(url: URL(string: url)!)
+        request.httpMethod = "POST"
+        request.setValue("application/json; charset=UTF-8", forHTTPHeaderField: "Content-Type")
+        request.setValue("bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0b2tlbiIsImF1ZCI6ImRiMzA5YzNjLTg1YzItNGU1NC05MGY3LThhNmQ0MDI1MjljMyIsImlzcyI6InVub2d3IiwiZXhwIjoxNjc0NzEwNTY3LCJpYXQiOjE2NzQ2MjQxNjcsImp0aSI6IlBTYnJpOVQyOThWeXhmSjAwNHg5TW5DUW54N2dLSlI4djY1OCJ9.Y985_sfMXWY9k1G-36kefExOCoLP_WydM7oUiHjayC6kdpikxkW0e84akuxJZmtibSIm46B9Bwg4oaZUYzR8bA", forHTTPHeaderField: "authorization")
+        request.setValue("PSbri9T298VyxfJ004x9MnCQnx7gKJR8v658", forHTTPHeaderField: "appkey")
+        request.setValue("VUn2CzaKPT1oTzwfBiXlY2ASg8SEndHMk/h5ukdZOElQVP5dfnfnv3OiTqw3aKYGR1NRYg17q05zOFlFhW8CdwYzMPI2wmqB9cNgx2f03O1ROveEw6Kr/CeGojxZBPMVU2MMzun4Gapcq1zu+lWYhbkDK/fAfmeCD+ftD2WMWPrJw9UBG0c=", forHTTPHeaderField: "appsecret")
+        request.setValue("TTTC0802U", forHTTPHeaderField: "tr_id")
+        request.timeoutInterval = 10
+        // POST 로 보낼 정보
+        let params = ["CANO":"73085780", "ACNT_PRDT_CD":"01", "PDNO":"036630", "ORD_DVSN":"01", "ORD_QTY":"1", "ORD_UNPR":"0"] as Dictionary
+
+        // httpBody 에 parameters 추가
+        do {
+            try request.httpBody = JSONSerialization.data(withJSONObject: params, options: [])
+        } catch {
+            print("http Body Error")
+        }
+        
+        AF.request(request).response(){ [weak self] response in
+            guard
+                let self = self,
+                case .success(let data) = response.result else { return }
+            //str이, 받아온 json을 형태 그대로 STring으로 만든 것이다.
+           print("받은 응답 = ")
+            let str = String(decoding: data!, as: UTF8.self)
+            print(str)
+            self.navigationController?.dismiss(animated: true)
+        }
+        .resume()
+    }
 }

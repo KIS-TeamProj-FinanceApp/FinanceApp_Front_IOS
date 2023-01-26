@@ -20,8 +20,19 @@ class MyAccountViewController: UIViewController {
     private var myAccountSecurities: [MyAccountSecurities] = [MyAccountSecurities(prdt_name: "", pdno: "", evlu_pfls_amt: "", evlu_pfls_rt: "", evlu_amt: "", hldg_qty: "", pchs_amt: "", pchs_avg_pric: "", prpr: "", fltt_rt: "", thdt_buyqty: "", thdt_sll_qty: "")]
     //배열에 하나밖에 안 나옴 어차피
     private var myAccountMoney: [MyAccountMoney] = [MyAccountMoney(evlu_pfls_smtl_amt: "", dnca_tot_amt: "", d2_auto_rdpt_amt: "", scts_evlu_amt: "", pchs_amt_smtl_amt: "")]
-    private var TotalSuikRyul: String = "0.00%"
+    private var domesticTotalSuikRyul: String = "0.00%"
     
+    //해외용
+    private var myOverseasSecurities: [MyOverseasSecurities] = []
+    //배열에 하나밖에 안 나옴 어차피
+    private var myOverseasMoney: [MyOverseasMoney] = []
+    
+    
+    
+    
+    
+    
+    private var isDomestic: Bool = true
     // 종목명 prdt_name
     // 종목코드 pdno
     //평가손익 evlu_pfls_amt
@@ -305,11 +316,12 @@ class MyAccountViewController: UIViewController {
         layout()
         // Header쪽에서 refresh버튼 누르는 액션을 전달받기 위해
         NotificationCenter.default.addObserver(self, selector: #selector(refreshBtnClicked), name: .refreshMyAccount, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(changeMarketBtnClicked), name: .changeMarket, object: nil)
         
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        requestAPI()
+        requestAPI_Domestic()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1){
             self.cvStackView.snp.updateConstraints{
@@ -319,13 +331,22 @@ class MyAccountViewController: UIViewController {
     }
     
     @objc func refreshBtnClicked(){
-        requestAPI()
+        requestAPI_Domestic()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1){
             self.cvStackView.snp.updateConstraints{
                 $0.height.equalTo(44 * (self.myAccountSecurities.count + 1) )
             }
         }
+    }
+    // 해외주식잔고 / 국내주식잔고  버튼 클릭시 변경 왔다갔다
+    @objc func changeMarketBtnClicked(){
+        //현재의 틱 (self.isDomestic)에 따라 viewController 최상단 HeaderView를 업데이트)
+        myAccountHeader.setup(isDomestic: !self.isDomestic)
+        
+        
+        
+        self.isDomestic = !isDomestic
     }
     
 
@@ -408,8 +429,6 @@ class MyAccountViewController: UIViewController {
             $0.trailing.equalToSuperview()
             $0.height.equalTo(50)
         }
-        
-        
         
         
         [ glView, moneyHorizontalView, borderView, stockSectorStackView, portfolioView, cvStackView, blankView].forEach{
@@ -659,7 +678,7 @@ extension MyAccountViewController: UICollectionViewDataSource, UICollectionViewD
 
 extension MyAccountViewController {
 
-    private func requestAPI(){
+    private func requestAPI_Domestic(){
         
         let url = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/trading/inquire-balance?CANO=73085780&ACNT_PRDT_CD=01&AFHR_FLPR_YN=N&OFL_YN&INQR_DVSN=02&UNPR_DVSN=01&FUND_STTL_ICLD_YN=Y&FNCG_AMT_AUTO_RDPT_YN=N&PRCS_DVSN=00&CTX_AREA_FK100&CTX_AREA_NK100"
         
@@ -725,9 +744,73 @@ extension MyAccountViewController {
                     self.securityCollectionView.reloadData()
                     
         }.resume()
-        
     }
-    
+    //해외계좌 조회는 나스닥, 뉴욕 모두 함께 됨 
+    private func requestAPI_Overseas(){
+        
+        let url = "https://openapi.koreainvestment.com:9443/uapi/overseas-stock/v1/trading/inquire-balance?CANO=73085780&ACNT_PRDT_CD=01&OVRS_EXCG_CD=NASD&TR_CRCY_CD=USD&CTX_AREA_FK200&CTX_AREA_NK200"
+        
+//        print("지금 만든 url = " + (url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed.union( CharacterSet(["%"]))) ?? "") )
+//        print("access Token = " + UserDefaults.standard.string(forKey: "accessToken")!)
+//        print("appkey = " + UserDefaults.standard.string(forKey: "appkey")!)
+//        print("appServiceKey = " + UserDefaults.standard.string(forKey: "appSecretKey")!)
+//        print()
+//        print()
+        
+        
+        AF.request(url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed.union( CharacterSet(["%"]))) ?? "",
+                   method: .get,
+                   headers: ["content-type": "application/json; charset=utf-8",
+                                             "authorization": accessToken,
+                                             "appkey": UserDefaults.standard.string(forKey: "appkey")!,
+                                             "appsecret": UserDefaults.standard.string(forKey: "appSecretKey")!,
+                                             "tr_id": "TTTC8434R"]
+                   )
+                .responseDecodable(of: MyAccountTotalDto.self){ [weak self] response in
+                                // success 이외의 응답을 받으면, else문에 걸려 함수 종료
+                                guard
+                                    let self = self,
+                                    case .success(let data) = response.result else {
+                                    print("못함.... response는")
+                                    print(response)
+                                    return }
+                                //데이터 받아옴
+                    self.myAccountSecurities = data.output1.map{ obj -> MyAccountSecurities in
+                        let now = MyAccountSecurities(prdt_name: obj.prdt_name, pdno: obj.pdno, evlu_pfls_amt: obj.evlu_pfls_amt, evlu_pfls_rt: obj.evlu_pfls_rt, evlu_amt: obj.evlu_amt, hldg_qty: obj.hldg_qty, pchs_amt: obj.pchs_amt, pchs_avg_pric: obj.pchs_avg_pric, prpr: obj.prpr, fltt_rt: obj.fltt_rt, thdt_buyqty: obj.thdt_buyqty, thdt_sll_qty: obj.thdt_sll_qty)
+                        return now
+                    }
+                    print("myAccountSecurities 갱신 후")
+                    print(self.myAccountSecurities)
+                    print()
+                    print()
+                    
+                    self.myAccountMoney = data.output2.map{ obj -> MyAccountMoney in
+                        let now = MyAccountMoney(evlu_pfls_smtl_amt: obj.evlu_pfls_smtl_amt, dnca_tot_amt: obj.dnca_tot_amt, d2_auto_rdpt_amt: obj.d2_auto_rdpt_amt, scts_evlu_amt: obj.scts_evlu_amt, pchs_amt_smtl_amt: obj.pchs_amt_smtl_amt)
+                        return now
+                    }
+                    print("myAccountMoney 갱신 후")
+                    print(self.myAccountMoney)
+                    print()
+                    print()
+                    
+                    //먼저 평가손익 glView에서 평가손익합계금액과 총 수익률을 setup해준다
+                    let temp_totalRevenueRate: String = String(Double(self.myAccountMoney[0].evlu_pfls_smtl_amt)! * 100 / Double(self.myAccountMoney[0].pchs_amt_smtl_amt)!)
+                    let dot_idx = temp_totalRevenueRate.firstIndex(of: ".")
+                    let two = temp_totalRevenueRate.index(after: dot_idx!)
+                    let three = temp_totalRevenueRate.index(after: two)
 
-
+                    print(temp_totalRevenueRate[temp_totalRevenueRate.startIndex ... three])
+                    let now_totalRevenueRate = String(temp_totalRevenueRate[temp_totalRevenueRate.startIndex ... three]) + "%"
+                    
+                    self.glView.setup(totalRevenue: self.myAccountMoney[0].evlu_pfls_smtl_amt, totalRevenueRate: now_totalRevenueRate)
+                   
+                    // 평가손익 아래 촟4개 예수금 관련 창 업데이트
+                    self.moneyHorizontalView.setupValue(pyunggagumTotal: self.myAccountMoney[0].scts_evlu_amt, maeipgum: self.myAccountMoney[0].pchs_amt_smtl_amt, yesugumTotal: self.myAccountMoney[0].dnca_tot_amt, D2Yesugum: self.myAccountMoney[0].d2_auto_rdpt_amt)
+                    
+                    //보유종목 부분 update
+                    self.securityNameCollectionView.reloadData()
+                    self.securityCollectionView.reloadData()
+                    
+        }.resume()
+    }
 }
