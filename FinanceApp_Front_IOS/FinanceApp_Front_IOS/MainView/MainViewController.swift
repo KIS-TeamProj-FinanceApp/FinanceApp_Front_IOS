@@ -10,7 +10,13 @@ import UIKit
 
 class MainViewController: UIViewController {
     
-    
+    // 이곳에 왔을 때 UserDefaults에 저장된 항목 총 6가지
+    // 1. appkey
+    // 2. appsecret
+    // 3. accessToken
+    // 4. name
+    // 5. acntNoFront
+    // 6. acntNoBack
   
     private lazy var tempLabel: UILabel = {
         let label = UILabel()
@@ -50,6 +56,11 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemYellow
+        
+        print("main와서 확인 ")
+        print(UserDefaults.standard.string(forKey: "name"))
+        print(UserDefaults.standard.string(forKey: "acntNoFront"))
+        print(UserDefaults.standard.string(forKey: "acntNoBack"))
         
         attribute()
         layout()

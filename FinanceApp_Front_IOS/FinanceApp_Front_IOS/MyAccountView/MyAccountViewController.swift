@@ -40,7 +40,7 @@ class MyAccountViewController: UIViewController {
    
     //계좌 관련 columns
     private let myAccountColumns: [String] = ["종목명", "종목코드", "평가손익", "수익률" ,"평가금액", "보유수량", "매입금액", "매입단가", "현재가", "등락률", "금일매수", "금일매도"]
-    private let myOverseasColumns: [String] = ["종목명", "종목코드", "평가손익", "수익률" ,"평가금액", "보유수량", "매입금액", "매입단가", "현재가", "거래통화"]
+    private let myOverseasColumns: [String] = ["종목명", "종목코드", "평가손익", "수익률" ,"평가금액", "보유수량", "매입금액", "매입단가", "현재가", "거래시장"]
     
     // 체결내역 관련
     private let myDomesticAgreementColumns: [String] = ["종목명", "매매구분", "구분", "주문수량" ,"체결평균", "체결수량", "총결제금", "주문구분", "주문번호", "주문일", "주문시간"]

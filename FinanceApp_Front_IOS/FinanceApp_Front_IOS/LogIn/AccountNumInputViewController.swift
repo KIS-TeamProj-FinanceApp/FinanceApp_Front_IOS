@@ -140,7 +140,7 @@ final class AccountNumInputViewController: UIViewController {
 
         requestAPI()
         
-        DispatchQueue.main.async {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             let vc = MainTabBarController()
             guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
             windowScene.windows.first?.rootViewController = vc
@@ -260,9 +260,27 @@ extension AccountNumInputViewController {
 
     private func requestAPI(){
         
+        
+        //종목명이 입력되지 않았을 경우
+        if self.nameTextField.text == nil || self.nameTextField.text == ""{
+            print("이름을 입력해주세요 ")
+            return
+        }
+        //종목명이 입력되지 않았을 경우
+        if self.accountNumFrontTextField.text == nil || self.accountNumFrontTextField.text == ""{
+            print("계좌 앞자리를 입력해주세요 ")
+            return
+        }
+        //수량이 입력되지 않았을 경우
+        if self.accountNumBackTextField.text == nil || self.accountNumBackTextField.text == ""{
+            print("계좌 뒷자리를 입력해주세요 ")
+            return
+        }
+        
         let url = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/trading/inquire-balance?CANO=73085780&ACNT_PRDT_CD=01&AFHR_FLPR_YN=N&OFL_YN&INQR_DVSN=02&UNPR_DVSN=01&FUND_STTL_ICLD_YN=Y&FNCG_AMT_AUTO_RDPT_YN=N&PRCS_DVSN=00&CTX_AREA_FK100&CTX_AREA_NK100"
         
         print("지금 만든 url = " + (url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed.union( CharacterSet(["%"]))) ?? "") )
+        print(type(of: UserDefaults.standard.string(forKey: "accessToken")))
         print("access Token = " + UserDefaults.standard.string(forKey: "accessToken")!)
         print("appkey = " + UserDefaults.standard.string(forKey: "appkey")!)
         print("appServiceKey = " + UserDefaults.standard.string(forKey: "appsecret")!)
@@ -281,13 +299,19 @@ extension AccountNumInputViewController {
         .response(){ [weak self] response in
             guard
                 let self = self,
-                case .success(let data) = response.result else { return }
+                case .success(let data) = response.result else {
+                print("못함.....")
+                      return }
+            
+            self.name = self.nameTextField.text!
+            self.accountNoFront8 = self.accountNumFrontTextField.text!
+            self.accountNoBack2 = self.accountNumBackTextField.text!
+            
                 UserDefaults.standard.set(self.name, forKey: "name")
                 UserDefaults.standard.set(self.accountNoFront8, forKey: "acntNoFront")
                 UserDefaults.standard.set(self.accountNoBack2, forKey: "acntNoBack")
                 print(data)
 
-//                    self.textfield.text = (self.myAccount?.totalMoney ?? "계좌잔액 불러오지못함") + (self.myAccount?.oneDayBeforeMoney ?? "전일 계좌잔액 없음")
         }.resume()
         
         
