@@ -12,11 +12,11 @@ import Alamofire
 class MyAccountViewController: UIViewController {
     
     
-    private var appKey: String = "PSbri9T298VyxfJ004x9MnCQnx7gKJR8v658"
-    private var appSecretKey: String = "VUn2CzaKPT1oTzwfBiXlY2ASg8SEndHMk/h5ukdZOElQVP5dfnfnv3OiTqw3aKYGR1NRYg17q05zOFlFhW8CdwYzMPI2wmqB9cNgx2f03O1ROveEw6Kr/CeGojxZBPMVU2MMzun4Gapcq1zu+lWYhbkDK/fAfmeCD+ftD2WMWPrJw9UBG0c="
-    private var accessToken: String = "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0b2tlbiIsImF1ZCI6ImZjZTk0OTJhLWViODEtNDk2OS1iYzc1LTc2MDI1MTM5YTc2NyIsImlzcyI6InVub2d3IiwiZXhwIjoxNjc0Nzk4NDMyLCJpYXQiOjE2NzQ3MTIwMzIsImp0aSI6IlBTYnJpOVQyOThWeXhmSjAwNHg5TW5DUW54N2dLSlI4djY1OCJ9.-7-80CZXIOPo36d3SWET4qCvJT2dAgSj0nDcYJ99QkT64-tlssj3rVCcTglHDcbYE_-CFcvCG5tjmvDySfArQA"
-    
-    
+//    private var appKey: String = "PSbri9T298VyxfJ004x9MnCQnx7gKJR8v658"
+//    private var appSecretKey: String = "VUn2CzaKPT1oTzwfBiXlY2ASg8SEndHMk/h5ukdZOElQVP5dfnfnv3OiTqw3aKYGR1NRYg17q05zOFlFhW8CdwYzMPI2wmqB9cNgx2f03O1ROveEw6Kr/CeGojxZBPMVU2MMzun4Gapcq1zu+lWYhbkDK/fAfmeCD+ftD2WMWPrJw9UBG0c="
+//    private var accessToken: String = "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0b2tlbiIsImF1ZCI6ImZjZTk0OTJhLWViODEtNDk2OS1iYzc1LTc2MDI1MTM5YTc2NyIsImlzcyI6InVub2d3IiwiZXhwIjoxNjc0Nzk4NDMyLCJpYXQiOjE2NzQ3MTIwMzIsImp0aSI6IlBTYnJpOVQyOThWeXhmSjAwNHg5TW5DUW54N2dLSlI4djY1OCJ9.-7-80CZXIOPo36d3SWET4qCvJT2dAgSj0nDcYJ99QkT64-tlssj3rVCcTglHDcbYE_-CFcvCG5tjmvDySfArQA"
+//
+//
     private var myAccountSecurities: [MyAccountSecurities] = [MyAccountSecurities(prdt_name: "", pdno: "", evlu_pfls_amt: "", evlu_pfls_rt: "", evlu_amt: "", hldg_qty: "", pchs_amt: "", pchs_avg_pric: "", prpr: "", fltt_rt: "", thdt_buyqty: "", thdt_sll_qty: "")]
     //배열에 하나밖에 안 나옴 어차피
     private var myAccountMoney: [MyAccountMoney] = [MyAccountMoney(evlu_pfls_smtl_amt: "", dnca_tot_amt: "", d2_auto_rdpt_amt: "", scts_evlu_amt: "", pchs_amt_smtl_amt: "")]
@@ -1054,11 +1054,14 @@ extension MyAccountViewController {
 //        print()
 //        print()
         
+//        request.setValue(UserDefaults.standard.string(forKey: "accessToken")!, forHTTPHeaderField: "authorization")
+//        request.setValue(UserDefaults.standard.string(forKey: "appkey")!, forHTTPHeaderField: "appkey")
+//        request.setValue(UserDefaults.standard.string(forKey: "appsecret")!, forHTTPHeaderField: "appsecret")
         
         AF.request(url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed.union( CharacterSet(["%"]))) ?? "",
                    method: .get,
                    headers: ["content-type": "application/json; charset=utf-8",
-                                             "authorization": accessToken,
+                                             "authorization": UserDefaults.standard.string(forKey: "accessToken")!,
                                              "appkey": UserDefaults.standard.string(forKey: "appkey")!,
                                              "appsecret": UserDefaults.standard.string(forKey: "appSecretKey")!,
                                              "tr_id": "TTTC8434R"]
@@ -1127,7 +1130,7 @@ extension MyAccountViewController {
         AF.request(url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed.union( CharacterSet(["%"]))) ?? "",
                    method: .get,
                    headers: ["content-type": "application/json; charset=utf-8",
-                                             "authorization": accessToken,
+                                             "authorization": UserDefaults.standard.string(forKey: "accessToken")!,
                                              "appkey": UserDefaults.standard.string(forKey: "appkey")!,
                                              "appsecret": UserDefaults.standard.string(forKey: "appSecretKey")!,
                                              "tr_id": "CTRP6504R"]
@@ -1190,7 +1193,7 @@ extension MyAccountViewController {
         AF.request(url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed.union( CharacterSet(["%"]))) ?? "",
                    method: .get,
                    headers: ["content-type": "application/json; charset=utf-8",
-                                             "authorization": accessToken,
+                                             "authorization": UserDefaults.standard.string(forKey: "accessToken")!,
                                              "appkey": UserDefaults.standard.string(forKey: "appkey")!,
                                              "appsecret": UserDefaults.standard.string(forKey: "appSecretKey")!,
                                              "tr_id": "TTTC8001R"]
@@ -1236,7 +1239,7 @@ extension MyAccountViewController {
         AF.request(url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "" ,
                    method: .get,
                    headers: ["content-type": "application/json; charset=utf-8",
-                                             "authorization": accessToken,
+                                             "authorization": UserDefaults.standard.string(forKey: "accessToken")!,
                                              "appkey": UserDefaults.standard.string(forKey: "appkey")!,
                                              "appsecret": UserDefaults.standard.string(forKey: "appSecretKey")!,
                                              "tr_id": "TTTS3035R"]

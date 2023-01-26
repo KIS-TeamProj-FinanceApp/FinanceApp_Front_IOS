@@ -489,6 +489,14 @@ class WBTradeViewController: UIViewController {
 
 extension WBTradeViewController{
     
+//    UserDefaults.standard.string(forKey: "appkey")!
+//    UserDefaults.standard.string(forKey: "appsecret")!
+//    UserDefaults.standard.string(forKey: "accessToken")!
+//
+//    UserDefaults.standard.set(self.name, forKey: "name")
+//    UserDefaults.standard.set(self.accountNoFront8, forKey: "acntNoFront")
+//    UserDefaults.standard.set(self.accountNoBack2, forKey: "acntNoBack")
+    
     // 국내주식 매수
     private func domesticBuyStock(){
         
@@ -515,9 +523,9 @@ extension WBTradeViewController{
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = "POST"
         request.setValue("application/json; charset=UTF-8", forHTTPHeaderField: "Content-Type")
-        request.setValue("bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0b2tlbiIsImF1ZCI6ImZjZTk0OTJhLWViODEtNDk2OS1iYzc1LTc2MDI1MTM5YTc2NyIsImlzcyI6InVub2d3IiwiZXhwIjoxNjc0Nzk4NDMyLCJpYXQiOjE2NzQ3MTIwMzIsImp0aSI6IlBTYnJpOVQyOThWeXhmSjAwNHg5TW5DUW54N2dLSlI4djY1OCJ9.-7-80CZXIOPo36d3SWET4qCvJT2dAgSj0nDcYJ99QkT64-tlssj3rVCcTglHDcbYE_-CFcvCG5tjmvDySfArQA", forHTTPHeaderField: "authorization")
-        request.setValue("PSbri9T298VyxfJ004x9MnCQnx7gKJR8v658", forHTTPHeaderField: "appkey")
-        request.setValue("VUn2CzaKPT1oTzwfBiXlY2ASg8SEndHMk/h5ukdZOElQVP5dfnfnv3OiTqw3aKYGR1NRYg17q05zOFlFhW8CdwYzMPI2wmqB9cNgx2f03O1ROveEw6Kr/CeGojxZBPMVU2MMzun4Gapcq1zu+lWYhbkDK/fAfmeCD+ftD2WMWPrJw9UBG0c=", forHTTPHeaderField: "appsecret")
+        request.setValue(UserDefaults.standard.string(forKey: "accessToken")!, forHTTPHeaderField: "authorization")
+        request.setValue(UserDefaults.standard.string(forKey: "appkey")!, forHTTPHeaderField: "appkey")
+        request.setValue(UserDefaults.standard.string(forKey: "appsecret")!, forHTTPHeaderField: "appsecret")
         request.setValue("TTTC0802U", forHTTPHeaderField: "tr_id")
         request.timeoutInterval = 10
         // POST 로 보낼 정보
@@ -570,9 +578,9 @@ extension WBTradeViewController{
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = "POST"
         request.setValue("application/json; charset=UTF-8", forHTTPHeaderField: "Content-Type")
-        request.setValue("bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0b2tlbiIsImF1ZCI6ImZjZTk0OTJhLWViODEtNDk2OS1iYzc1LTc2MDI1MTM5YTc2NyIsImlzcyI6InVub2d3IiwiZXhwIjoxNjc0Nzk4NDMyLCJpYXQiOjE2NzQ3MTIwMzIsImp0aSI6IlBTYnJpOVQyOThWeXhmSjAwNHg5TW5DUW54N2dLSlI4djY1OCJ9.-7-80CZXIOPo36d3SWET4qCvJT2dAgSj0nDcYJ99QkT64-tlssj3rVCcTglHDcbYE_-CFcvCG5tjmvDySfArQA", forHTTPHeaderField: "authorization")
-        request.setValue("PSbri9T298VyxfJ004x9MnCQnx7gKJR8v658", forHTTPHeaderField: "appkey")
-        request.setValue("VUn2CzaKPT1oTzwfBiXlY2ASg8SEndHMk/h5ukdZOElQVP5dfnfnv3OiTqw3aKYGR1NRYg17q05zOFlFhW8CdwYzMPI2wmqB9cNgx2f03O1ROveEw6Kr/CeGojxZBPMVU2MMzun4Gapcq1zu+lWYhbkDK/fAfmeCD+ftD2WMWPrJw9UBG0c=", forHTTPHeaderField: "appsecret")
+        request.setValue(UserDefaults.standard.string(forKey: "accessToken")!, forHTTPHeaderField: "authorization")
+        request.setValue(UserDefaults.standard.string(forKey: "appkey")!, forHTTPHeaderField: "appkey")
+        request.setValue(UserDefaults.standard.string(forKey: "appsecret")!, forHTTPHeaderField: "appsecret")
         request.setValue("TTTC0801U", forHTTPHeaderField: "tr_id")
         request.timeoutInterval = 10
         // POST 로 보낼 정보
@@ -625,9 +633,9 @@ extension WBTradeViewController{
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = "POST"
         request.setValue("application/json; charset=UTF-8", forHTTPHeaderField: "Content-Type")
-        request.setValue("bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0b2tlbiIsImF1ZCI6ImZjZTk0OTJhLWViODEtNDk2OS1iYzc1LTc2MDI1MTM5YTc2NyIsImlzcyI6InVub2d3IiwiZXhwIjoxNjc0Nzk4NDMyLCJpYXQiOjE2NzQ3MTIwMzIsImp0aSI6IlBTYnJpOVQyOThWeXhmSjAwNHg5TW5DUW54N2dLSlI4djY1OCJ9.-7-80CZXIOPo36d3SWET4qCvJT2dAgSj0nDcYJ99QkT64-tlssj3rVCcTglHDcbYE_-CFcvCG5tjmvDySfArQA", forHTTPHeaderField: "authorization")
-        request.setValue("PSbri9T298VyxfJ004x9MnCQnx7gKJR8v658", forHTTPHeaderField: "appkey")
-        request.setValue("VUn2CzaKPT1oTzwfBiXlY2ASg8SEndHMk/h5ukdZOElQVP5dfnfnv3OiTqw3aKYGR1NRYg17q05zOFlFhW8CdwYzMPI2wmqB9cNgx2f03O1ROveEw6Kr/CeGojxZBPMVU2MMzun4Gapcq1zu+lWYhbkDK/fAfmeCD+ftD2WMWPrJw9UBG0c=", forHTTPHeaderField: "appsecret")
+        request.setValue(UserDefaults.standard.string(forKey: "accessToken")!, forHTTPHeaderField: "authorization")
+        request.setValue(UserDefaults.standard.string(forKey: "appkey")!, forHTTPHeaderField: "appkey")
+        request.setValue(UserDefaults.standard.string(forKey: "appsecret")!, forHTTPHeaderField: "appsecret")
         request.setValue("JTTT1002U", forHTTPHeaderField: "tr_id")
         request.timeoutInterval = 10
         // POST 로 보낼 정보
@@ -683,9 +691,9 @@ extension WBTradeViewController{
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = "POST"
         request.setValue("application/json; charset=UTF-8", forHTTPHeaderField: "Content-Type")
-        request.setValue("bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0b2tlbiIsImF1ZCI6ImZjZTk0OTJhLWViODEtNDk2OS1iYzc1LTc2MDI1MTM5YTc2NyIsImlzcyI6InVub2d3IiwiZXhwIjoxNjc0Nzk4NDMyLCJpYXQiOjE2NzQ3MTIwMzIsImp0aSI6IlBTYnJpOVQyOThWeXhmSjAwNHg5TW5DUW54N2dLSlI4djY1OCJ9.-7-80CZXIOPo36d3SWET4qCvJT2dAgSj0nDcYJ99QkT64-tlssj3rVCcTglHDcbYE_-CFcvCG5tjmvDySfArQA", forHTTPHeaderField: "authorization")
-        request.setValue("PSbri9T298VyxfJ004x9MnCQnx7gKJR8v658", forHTTPHeaderField: "appkey")
-        request.setValue("VUn2CzaKPT1oTzwfBiXlY2ASg8SEndHMk/h5ukdZOElQVP5dfnfnv3OiTqw3aKYGR1NRYg17q05zOFlFhW8CdwYzMPI2wmqB9cNgx2f03O1ROveEw6Kr/CeGojxZBPMVU2MMzun4Gapcq1zu+lWYhbkDK/fAfmeCD+ftD2WMWPrJw9UBG0c=", forHTTPHeaderField: "appsecret")
+        request.setValue(UserDefaults.standard.string(forKey: "accessToken")!, forHTTPHeaderField: "authorization")
+        request.setValue(UserDefaults.standard.string(forKey: "appkey")!, forHTTPHeaderField: "appkey")
+        request.setValue(UserDefaults.standard.string(forKey: "appsecret")!, forHTTPHeaderField: "appsecret")
         request.setValue("JTTT1006U", forHTTPHeaderField: "tr_id")
         request.timeoutInterval = 10
         // POST 로 보낼 정보
