@@ -53,6 +53,8 @@ class WBTradeViewController: UIViewController {
             return
         }else{
             self.isOverseas = true
+            self.securityTextField.placeholder = "해외는 직접입력 불가"
+            self.tickerTextField.placeholder = "해외는 직접입력 불가"
             self.securityTextField.text = ""
             self.tickerTextField.text = ""
             self.quantityTextField.text = ""
@@ -92,6 +94,8 @@ class WBTradeViewController: UIViewController {
             overseasButton.layer.borderWidth = 1.0
             overseasButton.layer.borderColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0).cgColor
             //국내이므로 수정 가능하게 해줘야함
+            self.securityTextField.placeholder = "종목명 입력"
+            self.tickerTextField.placeholder = "종목코드 입력"
             self.securityTextField.text = ""
             self.tickerTextField.text = ""
             self.quantityTextField.text = ""
@@ -158,15 +162,10 @@ class WBTradeViewController: UIViewController {
         btn.setTitle("매수", for: .normal)
         btn.setTitleColor(.black, for: .normal)
         btn.titleLabel?.font = .systemFont(ofSize: 14.0, weight: .bold)
-        btn.addTarget(self, action: #selector(domesticBuyStockClicked), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(buyStockClicked), for: .touchUpInside)
         return btn
     }()
     
-    @objc func domesticBuyStockClicked(){
-        print("호출!")
-        
-//        domesticBuyStock()
-    }
     
     private lazy var sellButton: UIButton = {
         let btn = UIButton()
@@ -177,8 +176,30 @@ class WBTradeViewController: UIViewController {
         btn.setTitle("매도", for: .normal)
         btn.setTitleColor(.black, for: .normal)
         btn.titleLabel?.font = .systemFont(ofSize: 14.0, weight: .bold)
+        btn.addTarget(self, action: #selector(sellStockClicked), for: .touchUpInside)
         return btn
     }()
+    
+    @objc func buyStockClicked(){
+        print("매수버튼 호출!")
+        
+        if self.isOverseas{
+            
+        }else {
+            
+        }
+//        domesticBuyStock()
+    }
+    
+    @objc func sellStockClicked(){
+        print("매도버튼 호출!")
+        
+        if self.isOverseas{
+            
+        }else {
+            
+        }
+    }
     
     private lazy var quantityLabel: UILabel = {
         let label = UILabel()
