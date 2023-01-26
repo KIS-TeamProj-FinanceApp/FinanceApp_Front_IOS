@@ -237,7 +237,17 @@ class MyAccountViewController: UIViewController {
         return collectionView
     }()
     
-    
+    private let agreementScrollView = UIScrollView()
+    private let agreementContentView = UIView()
+
+    private lazy var agreementStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .fill
+        stackView.spacing = 0.0
+        stackView.backgroundColor = .systemBrown
+        return stackView
+    }()
     
     
     let blankView: UIView = {
@@ -257,6 +267,17 @@ class MyAccountViewController: UIViewController {
         print("balanceButtonClicked button clicked")
         self.balanceButtonBottom.backgroundColor = .darkGray
         self.agreementButtonBottom.backgroundColor = .white
+      
+        self.glView.isHidden = false
+        self.moneyHorizontalView.isHidden = false
+        self.borderView.isHidden = false
+        self.stockSectorStackView.isHidden = false
+        self.portfolioView.isHidden = false
+        self.cvStackView.isHidden = false
+        self.agreementScrollView.isHidden = true
+//        self.cvStackView.snp.updateConstraints{
+//            $0.height.equalTo(44 * (self.myAccountSecurities.count + 1) )
+//        }
     }
     
     @objc func agreementButtonClicked(){
@@ -264,16 +285,16 @@ class MyAccountViewController: UIViewController {
         self.balanceButtonBottom.backgroundColor = .white
         self.agreementButtonBottom.backgroundColor = .darkGray
         
-//        self.securities.append(MyAccountSecurities(prdt_name: "임시 종목명11", pdno: "0000011", evlu_pfls_amt: "평가손익11", evlu_pfls_rt: "수익률11", evlu_amt: "평가금액11", hldg_qty: "보유수량11", pchs_amt: "매입금액11", pchs_avg_pric: "매입단가11", prpr: "현재가11", fltt_rt: "등락률11", thdt_buyqty: "금일매수11", thdt_sll_qty: "금일매도11"))
-//        self.securities.append(MyAccountSecurities(prdt_name: "임시 종목명12", pdno: "0000012", evlu_pfls_amt: "평가손익12", evlu_pfls_rt: "수익률12", evlu_amt: "평가금액12", hldg_qty: "보유수량12", pchs_amt: "매입금액12", pchs_avg_pric: "매입단가12", prpr: "현재가12", fltt_rt: "등락률12", thdt_buyqty: "금일매수12", thdt_sll_qty: "금일매도12"))
-        
-        self.securityNameCollectionView.reloadData()
-        self.securityCollectionView.reloadData()
-        
-//                    headerView.snp.updateConstraints { make in
-//                          make.height.equalTo(height)
-//                      }
-        
+        self.glView.isHidden = true
+        self.moneyHorizontalView.isHidden = true
+        self.borderView.isHidden = true
+        self.stockSectorStackView.isHidden = true
+        self.portfolioView.isHidden = true
+        self.cvStackView.isHidden = true
+        self.agreementScrollView.isHidden = false
+//        self.cvStackView.snp.updateConstraints{
+//            $0.height.equalTo(44 * (self.myAccountSecurities.count + 1) )
+//        }
     }
     
     @objc func stockButtonClicked(){
@@ -306,10 +327,15 @@ class MyAccountViewController: UIViewController {
 //            //        cvScrollView.backgroundColor = .magenta
 //            self.layout()
 //        }
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .red
         scrollView.backgroundColor = .systemBackground
         contentView.backgroundColor = .systemBackground
         navigationController?.isNavigationBarHidden = true
+        
+        agreementScrollView.backgroundColor = .systemPink
+        agreementContentView.backgroundColor = .systemPink
+        agreementStackView.backgroundColor = .systemPink
+        self.agreementScrollView.isHidden = true
         layout()
         // Header쪽에서 refresh버튼 누르는 액션을 전달받기 위해
         NotificationCenter.default.addObserver(self, selector: #selector(refreshBtnClicked), name: .refreshMyAccount, object: nil)
@@ -444,6 +470,7 @@ class MyAccountViewController: UIViewController {
         scrollView.snp.makeConstraints{
             $0.top.equalTo(balanceButtonBottom.snp.bottom)
             $0.leading.trailing.equalToSuperview()
+//            $0.bottom.equalTo(view.safeAreaLayoutGuide)
             $0.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         scrollView.addSubview(contentView)
@@ -457,6 +484,9 @@ class MyAccountViewController: UIViewController {
         stackView.snp.makeConstraints{
             $0.edges.equalToSuperview()
         }
+        
+        
+        
         
         [ stockButton, sectorButton].forEach {
             stockSectorStackView.addArrangedSubview($0)
@@ -477,7 +507,7 @@ class MyAccountViewController: UIViewController {
         }
         
         
-        [ glView, moneyHorizontalView, borderView, stockSectorStackView, portfolioView, cvStackView, blankView].forEach{
+        [ glView, moneyHorizontalView, borderView, stockSectorStackView, portfolioView, cvStackView, agreementScrollView, blankView].forEach{
             stackView.addArrangedSubview($0)
         }
         
@@ -603,6 +633,24 @@ class MyAccountViewController: UIViewController {
 //            $0.width.equalToSuperview()
 //            $0.height.equalTo(44 * (self.securities.count + 1))
 //        }
+        agreementScrollView.snp.makeConstraints{
+//            $0.top.equalTo(balanceButtonBottom.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(100)
+//            $0.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+        agreementScrollView.addSubview(agreementContentView)
+
+        agreementContentView.snp.makeConstraints{
+            $0.edges.equalToSuperview()
+            //가로를 고정시켜주어 세로스크롤 뷰가 된다.
+            $0.width.equalToSuperview()
+        }
+        agreementContentView.addSubview(agreementStackView)
+        agreementStackView.snp.makeConstraints{
+            $0.edges.equalToSuperview()
+        }
+
         
         blankView.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview()
