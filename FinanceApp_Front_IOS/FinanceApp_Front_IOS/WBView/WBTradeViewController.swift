@@ -572,10 +572,114 @@ extension WBTradeViewController{
     // 해외주식 매수
     private func overSeasBuyStock(){
         
+        //종목명이 입력되지 않았을 경우
+        if self.securityTextField.text == nil || self.securityTextField.text == ""{
+            print("종목명를 입력해주세요 ")
+            return
+        }
+        //종목명이 입력되지 않았을 경우
+        if self.tickerTextField.text == nil || self.tickerTextField.text == ""{
+            print("종목코드를 입력해주세요 ")
+            return
+        }
+        //수량이 입력되지 않았을 경우
+        if self.quantityTextField.text == nil || self.quantityTextField.text == ""{
+            print("수량을 입력해주세요 ")
+            return
+        }
+        
+        
+        let url = "https://openapi.koreainvestment.com:9443/uapi/overseas-stock/v1/trading/order"
+        var request = URLRequest(url: URL(string: url)!)
+        request.httpMethod = "POST"
+        request.setValue("application/json; charset=UTF-8", forHTTPHeaderField: "Content-Type")
+        request.setValue("bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0b2tlbiIsImF1ZCI6ImZjZTk0OTJhLWViODEtNDk2OS1iYzc1LTc2MDI1MTM5YTc2NyIsImlzcyI6InVub2d3IiwiZXhwIjoxNjc0Nzk4NDMyLCJpYXQiOjE2NzQ3MTIwMzIsImp0aSI6IlBTYnJpOVQyOThWeXhmSjAwNHg5TW5DUW54N2dLSlI4djY1OCJ9.-7-80CZXIOPo36d3SWET4qCvJT2dAgSj0nDcYJ99QkT64-tlssj3rVCcTglHDcbYE_-CFcvCG5tjmvDySfArQA", forHTTPHeaderField: "authorization")
+        request.setValue("PSbri9T298VyxfJ004x9MnCQnx7gKJR8v658", forHTTPHeaderField: "appkey")
+        request.setValue("VUn2CzaKPT1oTzwfBiXlY2ASg8SEndHMk/h5ukdZOElQVP5dfnfnv3OiTqw3aKYGR1NRYg17q05zOFlFhW8CdwYzMPI2wmqB9cNgx2f03O1ROveEw6Kr/CeGojxZBPMVU2MMzun4Gapcq1zu+lWYhbkDK/fAfmeCD+ftD2WMWPrJw9UBG0c=", forHTTPHeaderField: "appsecret")
+        request.setValue("JTTT1002U", forHTTPHeaderField: "tr_id")
+        request.timeoutInterval = 10
+        // POST 로 보낼 정보
+        //
+        let now_ticker: String = self.tickerTextField.text!
+        let now_quantity: String = self.quantityTextField.text!
+        let now_market_name: String = "NASD"
+        let now_order_danga: String = ""
+        let params = ["CANO":"73085780", "ACNT_PRDT_CD":"01", "OVRS_EXCG_CD" : now_market_name, "PDNO": now_ticker, "ORD_QTY": now_quantity, "OVRS_ORD_UNPR": now_order_danga, "ORD_SVR_DVSN_CD": "0", "ORD_DVSN": "00"] as Dictionary
+
+        // httpBody 에 parameters 추가
+        do {
+            try request.httpBody = JSONSerialization.data(withJSONObject: params, options: [])
+        } catch {
+            print("http Body Error")
+        }
+        
+        AF.request(request).response(){ [weak self] response in
+            guard
+                let self = self,
+                case .success(let data) = response.result else { return }
+            //str이, 받아온 json을 형태 그대로 STring으로 만든 것이다.
+            print("받은 응답 = ")
+            let str = String(decoding: data!, as: UTF8.self)
+            print(str)
+            self.dismiss(animated: true)
+        }
+        .resume()
     }
     
     // 해외주식 매도
     private func overSeasSellStock(){
         
+        //종목명이 입력되지 않았을 경우
+        if self.securityTextField.text == nil || self.securityTextField.text == ""{
+            print("종목명를 입력해주세요 ")
+            return
+        }
+        //종목명이 입력되지 않았을 경우
+        if self.tickerTextField.text == nil || self.tickerTextField.text == ""{
+            print("종목코드를 입력해주세요 ")
+            return
+        }
+        //수량이 입력되지 않았을 경우
+        if self.quantityTextField.text == nil || self.quantityTextField.text == ""{
+            print("수량을 입력해주세요 ")
+            return
+        }
+        
+        
+        let url = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/trading/order-cash"
+        var request = URLRequest(url: URL(string: url)!)
+        request.httpMethod = "POST"
+        request.setValue("application/json; charset=UTF-8", forHTTPHeaderField: "Content-Type")
+        request.setValue("bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0b2tlbiIsImF1ZCI6ImZjZTk0OTJhLWViODEtNDk2OS1iYzc1LTc2MDI1MTM5YTc2NyIsImlzcyI6InVub2d3IiwiZXhwIjoxNjc0Nzk4NDMyLCJpYXQiOjE2NzQ3MTIwMzIsImp0aSI6IlBTYnJpOVQyOThWeXhmSjAwNHg5TW5DUW54N2dLSlI4djY1OCJ9.-7-80CZXIOPo36d3SWET4qCvJT2dAgSj0nDcYJ99QkT64-tlssj3rVCcTglHDcbYE_-CFcvCG5tjmvDySfArQA", forHTTPHeaderField: "authorization")
+        request.setValue("PSbri9T298VyxfJ004x9MnCQnx7gKJR8v658", forHTTPHeaderField: "appkey")
+        request.setValue("VUn2CzaKPT1oTzwfBiXlY2ASg8SEndHMk/h5ukdZOElQVP5dfnfnv3OiTqw3aKYGR1NRYg17q05zOFlFhW8CdwYzMPI2wmqB9cNgx2f03O1ROveEw6Kr/CeGojxZBPMVU2MMzun4Gapcq1zu+lWYhbkDK/fAfmeCD+ftD2WMWPrJw9UBG0c=", forHTTPHeaderField: "appsecret")
+        request.setValue("JTTT1006U", forHTTPHeaderField: "tr_id")
+        request.timeoutInterval = 10
+        // POST 로 보낼 정보
+        //
+        let now_ticker: String = self.tickerTextField.text!
+        let now_quantity: String = self.quantityTextField.text!
+        let now_market_name: String = "NASD"
+        let now_order_danga: String = ""
+        let params = ["CANO":"73085780", "ACNT_PRDT_CD":"01", "OVRS_EXCG_CD" : now_market_name, "PDNO": now_ticker, "ORD_QTY": now_quantity, "OVRS_ORD_UNPR": now_order_danga, "ORD_SVR_DVSN_CD": "0", "ORD_DVSN": "00"] as Dictionary
+
+        // httpBody 에 parameters 추가
+        do {
+            try request.httpBody = JSONSerialization.data(withJSONObject: params, options: [])
+        } catch {
+            print("http Body Error")
+        }
+        
+        AF.request(request).response(){ [weak self] response in
+            guard
+                let self = self,
+                case .success(let data) = response.result else { return }
+            //str이, 받아온 json을 형태 그대로 STring으로 만든 것이다.
+            print("받은 응답 = ")
+            let str = String(decoding: data!, as: UTF8.self)
+            print(str)
+            self.dismiss(animated: true)
+        }
+        .resume()
     }
 }
