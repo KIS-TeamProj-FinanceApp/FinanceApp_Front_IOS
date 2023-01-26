@@ -127,8 +127,8 @@ class MyAccountViewController: UIViewController {
     private lazy var stockButton: UIButton = {
         let btn = UIButton()
         btn.backgroundColor = .white
-        btn.layer.borderWidth = 1.0
-        btn.layer.borderColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0).cgColor
+        btn.layer.borderWidth = 3.0
+        btn.layer.borderColor = UIColor(red: 253/255.0, green: 166/255.0, blue: 166/255.0, alpha: 1.0).cgColor
         btn.layer.cornerRadius = 6.0
         btn.setTitleColor(.black, for: .normal)
         btn.setTitle("종목별", for: .normal)
@@ -347,10 +347,20 @@ class MyAccountViewController: UIViewController {
     
     @objc func stockButtonClicked(){
         print("stockButtonClicked button clicked")
+        self.stockButton.layer.borderWidth = 3.0
+        self.stockButton.layer.borderColor = UIColor(red: 253/255.0, green: 166/255.0, blue: 176/255.0, alpha: 1.0).cgColor
+        
+        self.sectorButton.layer.borderWidth = 1.0
+        self.sectorButton.layer.borderColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0).cgColor
     }
     
     @objc func sectorButtonClicked(){
         print("sectorButtonClicked button clicked")
+        self.sectorButton.layer.borderWidth = 3.0
+        self.sectorButton.layer.borderColor = UIColor(red: 253/255.0, green: 166/255.0, blue: 176/255.0, alpha: 1.0).cgColor
+        
+        self.stockButton.layer.borderWidth = 1.0
+        self.stockButton.layer.borderColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0).cgColor
     }
     
    
