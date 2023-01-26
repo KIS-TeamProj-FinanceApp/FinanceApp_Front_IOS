@@ -184,7 +184,7 @@ class MyAccountViewController: UIViewController {
         stackView.axis = .horizontal
         stackView.distribution = .fill
         stackView.spacing = 0.0
-        stackView.backgroundColor = .red
+        stackView.backgroundColor = .white
         return stackView
     }()
     
@@ -327,7 +327,7 @@ class MyAccountViewController: UIViewController {
 //            //        cvScrollView.backgroundColor = .magenta
 //            self.layout()
 //        }
-        view.backgroundColor = .red
+        view.backgroundColor = .white
         scrollView.backgroundColor = .systemBackground
         contentView.backgroundColor = .systemBackground
         navigationController?.isNavigationBarHidden = true
@@ -486,8 +486,6 @@ class MyAccountViewController: UIViewController {
         }
         
         
-        
-        
         [ stockButton, sectorButton].forEach {
             stockSectorStackView.addArrangedSubview($0)
         }
@@ -505,7 +503,6 @@ class MyAccountViewController: UIViewController {
             $0.trailing.equalToSuperview()
             $0.height.equalTo(50)
         }
-        
         
         [ glView, moneyHorizontalView, borderView, stockSectorStackView, portfolioView, cvStackView, agreementScrollView, blankView].forEach{
             stackView.addArrangedSubview($0)
@@ -583,61 +580,11 @@ class MyAccountViewController: UIViewController {
 //            $0.height.equalToSuperview()
         }
 
-//
-//        cvScrollView.snp.makeConstraints{
-//            $0.top.equalTo(portfolioView.snp.bottom)
-//            $0.leading.trailing.equalToSuperview()
-//            $0.height.equalTo(500)
-//        }
-//
-//
-//        cvScrollView.addSubview(cvContentView)
-//
-//        cvContentView.snp.makeConstraints{
-//            $0.edges.equalToSuperview()
-//            //가로를 고정시켜주어 세로스크롤 뷰가 된다.
-//            $0.width.equalToSuperview()
-//        }
-//        cvContentView.addSubview(cvStackView)
-//        cvStackView.snp.makeConstraints{
-//            $0.edges.equalToSuperview()
-//        }
-//
-//        [securityNameCollectionView, securityCollectionView].forEach{
-//            cvStackView.addArrangedSubview($0)
-//        }
-//
-//        securityNameCollectionView.snp.makeConstraints{
-////            $0.top.equalTo(portfolioView.snp.bottom)
-//            $0.top.bottom.equalToSuperview()
-////            $0.leading.equalToSuperview()
-//            $0.width.equalTo(UIScreen.main.bounds.width  / 3)
-////            $0.height.equalTo(44 * (self.securities.count + 1))
-//            $0.height.equalTo(100)
-//        }
-//
-//        securityCollectionView.snp.makeConstraints{
-////            $0.top.equalTo(portfolioView.snp.bottom)
-//            $0.top.bottom.equalToSuperview()
-////            $0.leading.equalTo(securityNameCollectionView.snp.trailing)
-////            $0.trailing.equalToSuperview()
-//            $0.width.equalTo(UIScreen.main.bounds.width * 2 / 3)
-////            $0.height.equalTo(44 * (self.securities.count + 1))
-//            $0.height.equalTo(100)
-//        }
-        
-        
-//        cvStackView.snp.makeConstraints{
-//            $0.top.equalTo(portfolioView.snp.bottom)
-//            $0.leading.trailing.equalToSuperview()
-//            $0.width.equalToSuperview()
-//            $0.height.equalTo(44 * (self.securities.count + 1))
-//        }
         agreementScrollView.snp.makeConstraints{
-//            $0.top.equalTo(balanceButtonBottom.snp.bottom)
+            $0.top.equalTo(balanceButtonBottom.snp.bottom)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(100)
-//            $0.bottom.equalTo(view.safeAreaLayoutGuide)
+//            $0.height.equalTo(100)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         agreementScrollView.addSubview(agreementContentView)
 
