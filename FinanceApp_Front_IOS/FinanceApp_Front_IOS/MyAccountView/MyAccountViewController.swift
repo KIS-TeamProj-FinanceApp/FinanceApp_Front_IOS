@@ -28,34 +28,22 @@ class MyAccountViewController: UIViewController {
     private var myOverseasMoney: MyOverseasMoney? = nil
     
     
+    // 체결내역 - 국내
+    private var myDomesticAgreement: [DomesticAgreementDetail] = []
+    
+    
+    
+    //체결내역 - 해외
+//    private var myOverseasAgreement: [OverseasAg] = []
+    
+    
+    
     private var isDomestic: Bool = true
-    // 종목명 prdt_name
-    // 종목코드 pdno
-    //평가손익 evlu_pfls_amt
-    //수익률 = 평가손익률 evlu_pfls_rt
-    //평가금액 evlu_amt
-    //보유수량 hldg_qty
-    //매입금액 pchs_amt
-    //매입단가 pchs_avg_pric
-    //현재가 prpr
-    //등락률 fltt_rt
-    //금일매수 thdt_buyqty
-    //금일매도 thdt_sll_qty
+   
     
     private let myAccountColumns: [String] = ["종목명", "종목코드", "평가손익", "수익률" ,"평가금액", "보유수량", "매입금액", "매입단가", "현재가", "등락률", "금일매수", "금일매도"]
     private let myOverseasColumns: [String] = ["종목명", "종목코드", "평가손익", "수익률" ,"평가금액", "보유수량", "매입금액", "매입단가", "현재가", "거래통화"]
-//    private var securities: [MyAccountSecurities] = [
-//        MyAccountSecurities(prdt_name: "임시 종목명1", pdno: "000001", evlu_pfls_amt: "평가손익1", evlu_pfls_rt: "수익률1", evlu_amt: "평가금액1", hldg_qty: "보유수량1", pchs_amt: "매입금액1", pchs_avg_pric: "매입단가1", prpr: "현재가1", fltt_rt: "등락률1", thdt_buyqty: "금일매수1", thdt_sll_qty: "금일매도1"),
-//        MyAccountSecurities(prdt_name: "임시 종목명2", pdno: "000002", evlu_pfls_amt: "평가손익2", evlu_pfls_rt: "수익률2", evlu_amt: "평가금액2", hldg_qty: "보유수량2", pchs_amt: "매입금액2", pchs_avg_pric: "매입단가2", prpr: "현재가2", fltt_rt: "등락률2", thdt_buyqty: "금일매수1", thdt_sll_qty: "금일매도1"),
-//        MyAccountSecurities(prdt_name: "임시 종목명3", pdno: "000003", evlu_pfls_amt: "평가손익3", evlu_pfls_rt: "수익률3", evlu_amt: "평가금액3", hldg_qty: "보유수량3", pchs_amt: "매입금액3", pchs_avg_pric: "매입단가3", prpr: "현재가3", fltt_rt: "등락률3", thdt_buyqty: "금일매수1", thdt_sll_qty: "금일매도1"),
-//        MyAccountSecurities(prdt_name: "임시 종목명4", pdno: "000004", evlu_pfls_amt: "평가손익4", evlu_pfls_rt: "수익률4", evlu_amt: "평가금액4", hldg_qty: "보유수량4", pchs_amt: "매입금액4", pchs_avg_pric: "매입단가4", prpr: "현재가4", fltt_rt: "등락률4", thdt_buyqty: "금일매수1", thdt_sll_qty: "금일매도1"),
-//        MyAccountSecurities(prdt_name: "임시 종목명5", pdno: "000005", evlu_pfls_amt: "평가손익5", evlu_pfls_rt: "수익률5", evlu_amt: "평가금액5", hldg_qty: "보유수량5", pchs_amt: "매입금액5", pchs_avg_pric: "매입단가5", prpr: "현재가5", fltt_rt: "등락률5", thdt_buyqty: "금일매수1", thdt_sll_qty: "금일매도1"),
-//        MyAccountSecurities(prdt_name: "임시 종목명6", pdno: "000006", evlu_pfls_amt: "평가손익6", evlu_pfls_rt: "수익률6", evlu_amt: "평가금액6", hldg_qty: "보유수량6", pchs_amt: "매입금액6", pchs_avg_pric: "매입단가6", prpr: "현재가6", fltt_rt: "등락률6", thdt_buyqty: "금일매수1", thdt_sll_qty: "금일매도1"),
-//        MyAccountSecurities(prdt_name: "임시 종목명7", pdno: "000007", evlu_pfls_amt: "평가손익7", evlu_pfls_rt: "수익률7", evlu_amt: "평가금액7", hldg_qty: "보유수량7", pchs_amt: "매입금액7", pchs_avg_pric: "매입단가7", prpr: "현재가7", fltt_rt: "등락률7", thdt_buyqty: "금일매수1", thdt_sll_qty: "금일매도1"),
-//        MyAccountSecurities(prdt_name: "임시 종목명8", pdno: "000008", evlu_pfls_amt: "평가손익8", evlu_pfls_rt: "수익률8", evlu_amt: "평가금액8", hldg_qty: "보유수량8", pchs_amt: "매입금액8", pchs_avg_pric: "매입단가8", prpr: "현재가8", fltt_rt: "등락률8", thdt_buyqty: "금일매수1", thdt_sll_qty: "금일매도1"),
-//        MyAccountSecurities(prdt_name: "임시 종목명9", pdno: "000009", evlu_pfls_amt: "평가손익9", evlu_pfls_rt: "수익률9", evlu_amt: "평가금액9", hldg_qty: "보유수량9", pchs_amt: "매입금액9", pchs_avg_pric: "매입단가9", prpr: "현재가9", fltt_rt: "등락률9", thdt_buyqty: "금일매수1", thdt_sll_qty: "금일매도1"),
-//        MyAccountSecurities(prdt_name: "임시 종목명10", pdno: "0000010", evlu_pfls_amt: "평가손익10", evlu_pfls_rt: "수익률10", evlu_amt: "평가금액10", hldg_qty: "보유수량10", pchs_amt: "매입금액10", pchs_avg_pric: "매입단가10", prpr: "현재가10", fltt_rt: "등락률10", thdt_buyqty: "금일매수1", thdt_sll_qty: "금일매도1")
-//        ]
+
     
     // --------------------------------------------------------- Variables -------------------------------------------------------- //
     
@@ -247,6 +235,64 @@ class MyAccountViewController: UIViewController {
         stackView.spacing = 0.0
         stackView.backgroundColor = .systemBrown
         return stackView
+    }()
+    
+    private lazy var agreementCvStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fill
+        stackView.spacing = 0.0
+        stackView.backgroundColor = .white
+        return stackView
+    }()
+    
+    private lazy var agreementNameCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        
+        //layout.sectionInset = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        layout.scrollDirection = .vertical
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.tag = 2
+        
+        collectionView.register(SecurityNameCollectionViewCell.self, forCellWithReuseIdentifier: "SecurityNameCollectionViewCell")
+        collectionView.dataSource = self
+        collectionView.delegate = self
+//        collectionView.isPagingEnabled = true
+//        collectionView.showsVerticalScrollIndicator = false
+        collectionView.isScrollEnabled = false
+
+        collectionView.backgroundColor = .white
+//        collectionView.isScrollEnabled = false
+        return collectionView
+    }()
+    
+    private lazy var agreementCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        
+        //layout.sectionInset = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        
+        layout.scrollDirection = .horizontal
+
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.tag = 3
+        
+        collectionView.register(SecurityCollectionViewCell.self, forCellWithReuseIdentifier: "SecurityCollectionViewCell")
+        collectionView.dataSource = self
+        collectionView.delegate = self
+//        collectionView.isPagingEnabled = true
+//        collectionView.showsHorizontalScrollIndicator = true
+        collectionView.isScrollEnabled = true
+
+        collectionView.backgroundColor = .white
+//        collectionView.isScrollEnabled = false
+        
+        return collectionView
     }()
     
     
@@ -537,26 +583,13 @@ class MyAccountViewController: UIViewController {
             $0.height.equalTo(60)
         }
         
-//        cvScrollView.snp.makeConstraints{
-//            $0.top.equalTo(portfolioView.snp.bottom)
-//            $0.leading.trailing.equalToSuperview()
-//            $0.height.equalTo(500)
-//        }
-//        cvScrollView.addSubview(cvContentView)
-//        cvContentView.snp.makeConstraints{
-//            $0.edges.equalToSuperview()
-//            //가로를 고정시켜주어 세로스크롤 뷰가 된다.
-//            $0.width.equalToSuperview()
-//        }
-//        cvContentView.addSubview(cvStackView)
-//
         cvStackView.snp.makeConstraints{
             $0.top.equalTo(portfolioView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
             //총 12종목만 보여줌
             $0.height.equalTo(44 * (self.myAccountSecurities.count + 1))
         }
-//
+        
         [securityNameCollectionView, securityCollectionView].forEach{
             cvStackView.addArrangedSubview($0)
         }
@@ -580,6 +613,11 @@ class MyAccountViewController: UIViewController {
 //            $0.height.equalToSuperview()
         }
 
+        
+        
+        
+        
+        
         agreementScrollView.snp.makeConstraints{
             $0.top.equalTo(balanceButtonBottom.snp.bottom)
             $0.leading.trailing.equalToSuperview()
@@ -597,6 +635,39 @@ class MyAccountViewController: UIViewController {
         agreementStackView.snp.makeConstraints{
             $0.edges.equalToSuperview()
         }
+        [agreementCvStackView].forEach{
+            agreementStackView.addArrangedSubview($0)
+        }
+        
+        agreementCvStackView.snp.makeConstraints{
+            $0.top.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
+            //총 12종목만 보여줌
+            $0.height.equalTo(44 * (self.myAccountSecurities.count + 1))
+        }
+        [agreementNameCollectionView, agreementCollectionView].forEach{
+            agreementCvStackView.addArrangedSubview($0)
+        }
+        
+        agreementNameCollectionView.snp.makeConstraints{
+//            $0.top.equalTo(portfolioView.snp.bottom)
+            $0.top.bottom.equalToSuperview()
+            $0.leading.equalToSuperview()
+            $0.width.equalTo(UIScreen.main.bounds.width  / 3)
+//            $0.height.equalTo(44 * (self.securities.count + 1))
+//            $0.height.equalTo(300)
+        }
+
+        agreementCollectionView.snp.makeConstraints{
+//            $0.top.equalTo(portfolioView.snp.bottom)
+            $0.top.bottom.equalToSuperview()
+            $0.leading.equalTo(agreementNameCollectionView.snp.trailing)
+//            $0.trailing.equalToSuperview()
+            $0.width.equalTo(UIScreen.main.bounds.width * 2 / 3)
+//            $0.height.equalTo(44 * (self.securities.count + 1))
+//            $0.height.equalToSuperview()
+        }
+
 
         
         blankView.snp.makeConstraints{
@@ -612,25 +683,48 @@ extension MyAccountViewController: UICollectionViewDataSource, UICollectionViewD
     func numberOfSections(in collectionView: UICollectionView) -> Int {
 //        return records.count
         //Header까지 포함해야하므로 1을 더해줌
-        if collectionView.tag == 0{
+        if collectionView.tag == 0 || collectionView.tag == 2{
             return 1
         }
-        //국내인 경우
-        if self.isDomestic{
-            return self.myAccountColumns.count - 1
-        }else{// 해외인 경우
-            return self.myOverseasColumns.count - 1
+        else if collectionView.tag == 1{
+            //국내인 경우
+            if self.isDomestic{
+                return self.myAccountColumns.count - 1
+            }else{// 해외인 경우
+                return self.myOverseasColumns.count - 1
+            }
         }
+        else{ // tag == 3인 경우
+            //국내인 경우
+            if self.isDomestic{
+                return 10
+            }else{// 해외인 경우
+                return 10
+            }
+        }
+        
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // 평가손익, 수익률 ..... 등을 보여줘야함
-        if self.isDomestic{
-            return self.myAccountSecurities.count + 1
+        if collectionView.tag == 0 || collectionView.tag == 1{
+            if self.isDomestic{
+                return self.myAccountSecurities.count + 1
+            }
+            else {
+                return self.myOverseasSecurities.count + 1
+            }
         }
-        else {
-            return self.myOverseasSecurities.count + 1
+        //체결내역인 경우
+        else{
+            if self.isDomestic{
+                return self.myDomesticAgreement.count + 1
+            }
+            else {
+                return self.myDomesticAgreement.count + 1
+            }
         }
+        
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -917,6 +1011,97 @@ extension MyAccountViewController {
         }.resume()
     }
     
+  //국내 체결내역 호출
+    private func requestAPI_DomesticAgreement(){
+        
+        let url = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/trading/inquire-daily-ccld?CANO=73085780&ACNT_PRDT_CD=01&INQR_STRT_DT=20230123&INQR_END_DT=20230127&SLL_BUY_DVSN_CD=00&INQR_DVSN=01&PDNO&CCLD_DVSN=00&ORD_GNO_BRNO&ODNO&INQR_DVSN_3=00&INQR_DVSN_1&CTX_AREA_FK100&CTX_AREA_NK100"
+        
+//        print("지금 만든 url = " + (url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed.union( CharacterSet(["%"]))) ?? "") )
+//        print("access Token = " + UserDefaults.standard.string(forKey: "accessToken")!)
+//        print("appkey = " + UserDefaults.standard.string(forKey: "appkey")!)
+//        print("appServiceKey = " + UserDefaults.standard.string(forKey: "appSecretKey")!)
+//        print()
+//        print()
+        
+        
+        AF.request(url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed.union( CharacterSet(["%"]))) ?? "",
+                   method: .get,
+                   headers: ["content-type": "application/json; charset=utf-8",
+                                             "authorization": accessToken,
+                                             "appkey": UserDefaults.standard.string(forKey: "appkey")!,
+                                             "appsecret": UserDefaults.standard.string(forKey: "appSecretKey")!,
+                                             "tr_id": "TTTC8001R"]
+                   )
+                .responseDecodable(of: DomesticAgreementTotalDto.self){ [weak self] response in
+                                // success 이외의 응답을 받으면, else문에 걸려 함수 종료
+                                guard
+                                    let self = self,
+                                    case .success(let data) = response.result else {
+                                    print("못함.... response는")
+                                    print(response)
+                                    return }
+                                //데이터 받아옴
+                    self.myDomesticAgreement = data.output1.map{ obj -> DomesticAgreementDetail in
+                        let now = DomesticAgreementDetail(prdt_name: obj.prdt_name, sll_buy_dvsn_cd_name: obj.sll_buy_dvsn_cd_name, sll_buy_dvsn_cd: obj.sll_buy_dvsn_cd, ord_qty: obj.ord_qty, avg_prvs: obj.avg_prvs, tot_ccld_qty: obj.tot_ccld_qty, tot_ccld_amt: obj.tot_ccld_amt, ord_dvsn_cd: obj.ord_dvsn_cd, odno: obj.odno, ord_dt: obj.ord_dt, ord_tmd: obj.ord_tmd)
+                        return now
+                    }
+                    print("myDomesticAgreement 갱신 후")
+                    print(self.myDomesticAgreement)
+                    print()
+                    print()
+                    
+                    //보유종목 부분 update
+//                    self.securityNameCollectionView.reloadData()
+//                    self.securityCollectionView.reloadData()
+                    
+        }.resume()
+    }
+    
+    //해외 체결내역 호출
+    private func requestAPI_OverseasAgreement(){
+        
+        let url = "https://openapi.koreainvestment.com:9443/uapi/overseas-stock/v1/trading/inquire-ccnl?CANO=73085780&ACNT_PRDT_CD=01&PDNO=%&ORD_STRT_DT=20230123&ORD_END_DT=20230127&SLL_BUY_DVSN=00&CCLD_NCCS_DVSN=00&OVRS_EXCG_CD=%&SORT_SQN=DS&ORD_DT&ORD_GNO_BRNO&ODNO&CTX_AREA_NK200&CTX_AREA_FK200"
+        
+//        print("지금 만든 url = " + (url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed.union( CharacterSet(["%"]))) ?? "") )
+//        print("access Token = " + UserDefaults.standard.string(forKey: "accessToken")!)
+//        print("appkey = " + UserDefaults.standard.string(forKey: "appkey")!)
+//        print("appServiceKey = " + UserDefaults.standard.string(forKey: "appSecretKey")!)
+//        print()
+//        print()
+        
+        
+        AF.request(url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed.union( CharacterSet(["%"]))) ?? "",
+                   method: .get,
+                   headers: ["content-type": "application/json; charset=utf-8",
+                                             "authorization": accessToken,
+                                             "appkey": UserDefaults.standard.string(forKey: "appkey")!,
+                                             "appsecret": UserDefaults.standard.string(forKey: "appSecretKey")!,
+                                             "tr_id": "TTTS3035R"]
+                   )
+                .responseDecodable(of: DomesticAgreementTotalDto.self){ [weak self] response in
+                                // success 이외의 응답을 받으면, else문에 걸려 함수 종료
+                                guard
+                                    let self = self,
+                                    case .success(let data) = response.result else {
+                                    print("못함.... response는")
+                                    print(response)
+                                    return }
+                                //데이터 받아옴
+                    self.myDomesticAgreement = data.output1.map{ obj -> DomesticAgreementDetail in
+                        let now = DomesticAgreementDetail(prdt_name: obj.prdt_name, sll_buy_dvsn_cd_name: obj.sll_buy_dvsn_cd_name, sll_buy_dvsn_cd: obj.sll_buy_dvsn_cd, ord_qty: obj.ord_qty, avg_prvs: obj.avg_prvs, tot_ccld_qty: obj.tot_ccld_qty, tot_ccld_amt: obj.tot_ccld_amt, ord_dvsn_cd: obj.ord_dvsn_cd, odno: obj.odno, ord_dt: obj.ord_dt, ord_tmd: obj.ord_tmd)
+                        return now
+                    }
+                    print("myDomesticAgreement 갱신 후")
+                    print(self.myDomesticAgreement)
+                    print()
+                    print()
+                    
+                    //보유종목 부분 update
+//                    self.securityNameCollectionView.reloadData()
+//                    self.securityCollectionView.reloadData()
+                    
+        }.resume()
+    }
     private func sliceStringAfterDot(str: String) -> String{
         let dot_idx = str.firstIndex(of: ".")
         let two = str.index(after: dot_idx!)

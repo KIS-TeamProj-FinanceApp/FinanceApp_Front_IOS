@@ -82,6 +82,7 @@
 		A5B77E562982C17E006D754F /* OverseasAgreementDetailDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E552982C17E006D754F /* OverseasAgreementDetailDto.swift */; };
 		A5B77E5A2982C19C006D754F /* OverseasAgreementDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E592982C19C006D754F /* OverseasAgreementDetail.swift */; };
 		A5B77E5D2982C296006D754F /* DomesticAgreementTotalDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E5C2982C296006D754F /* DomesticAgreementTotalDto.swift */; };
+		A5B77E5F2982CA8B006D754F /* OverseasAgreementTotalDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E5E2982CA8B006D754F /* OverseasAgreementTotalDto.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -160,6 +161,7 @@
 		A5B77E552982C17E006D754F /* OverseasAgreementDetailDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverseasAgreementDetailDto.swift; sourceTree = "<group>"; };
 		A5B77E592982C19C006D754F /* OverseasAgreementDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverseasAgreementDetail.swift; sourceTree = "<group>"; };
 		A5B77E5C2982C296006D754F /* DomesticAgreementTotalDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomesticAgreementTotalDto.swift; sourceTree = "<group>"; };
+		A5B77E5E2982CA8B006D754F /* OverseasAgreementTotalDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverseasAgreementTotalDto.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -579,6 +581,7 @@
 		A5B77E572982C181006D754F /* OverseasAgreementDetail */ = {
 			isa = PBXGroup;
 			children = (
+				A5B77E5E2982CA8B006D754F /* OverseasAgreementTotalDto.swift */,
 				A5B77E552982C17E006D754F /* OverseasAgreementDetailDto.swift */,
 			);
 			path = OverseasAgreementDetail;
@@ -675,6 +678,7 @@
 				A5B77E492981F96B006D754F /* MyOverseasSecurities.swift in Sources */,
 				A557E48B297D114400A40EEE /* WBRankHeaderView.swift in Sources */,
 				A557E499297D597C00A40EEE /* NowFutureLabelView.swift in Sources */,
+				A5B77E5F2982CA8B006D754F /* OverseasAgreementTotalDto.swift in Sources */,
 				A557E471297A369200A40EEE /* AccountNumInputViewController.swift in Sources */,
 				A557E41F2977A98B00A40EEE /* HomeViewController.swift in Sources */,
 				A557E484297D025F00A40EEE /* MyAccountViewController.swift in Sources */,
