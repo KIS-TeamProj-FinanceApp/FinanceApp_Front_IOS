@@ -181,23 +181,26 @@ class WBTradeViewController: UIViewController {
     }()
     
     @objc func buyStockClicked(){
-        print("매수버튼 호출!")
         
+        //해외
         if self.isOverseas{
-            
+            print("매수버튼 호출! - 해외")
+            overSeasBuyStock()
         }else {
-            
+            print("매수버튼 호출! - 국내")
+            domesticBuyStock()
         }
-//        domesticBuyStock()
+//
     }
     
     @objc func sellStockClicked(){
-        print("매도버튼 호출!")
         
         if self.isOverseas{
-            
+            print("매도버튼 호출! - 해외")
+            overSeasSellStock()
         }else {
-            
+            print("매도버튼 호출! - 국내")
+            domesticSellStock()
         }
     }
     
@@ -453,19 +456,43 @@ class WBTradeViewController: UIViewController {
 
 
 extension WBTradeViewController{
+    
     // 국내주식 매수
     private func domesticBuyStock(){
+        
+        //여기서 먼저 비어있는 란이 없는지, 즉, 종목코드 혹은 수량 등 입력해야할 필수정보를 입력안한 것이 있는지 체크하고 알림을 띄움
+        
+        //종목명이 입력되지 않았을 경우
+        if self.securityTextField.text == nil || self.securityTextField.text == ""{
+            print("종목명를 입력해주세요 ")
+            return
+        }
+        //종목명이 입력되지 않았을 경우
+        if self.tickerTextField.text == nil || self.tickerTextField.text == ""{
+            print("종목코드를 입력해주세요 ")
+            return
+        }
+        //수량이 입력되지 않았을 경우
+        if self.quantityTextField.text == nil || self.quantityTextField.text == ""{
+            print("수량을 입력해주세요 ")
+            return
+        }
+        
+        
         let url = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/trading/order-cash"
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = "POST"
         request.setValue("application/json; charset=UTF-8", forHTTPHeaderField: "Content-Type")
-        request.setValue("bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0b2tlbiIsImF1ZCI6ImRiMzA5YzNjLTg1YzItNGU1NC05MGY3LThhNmQ0MDI1MjljMyIsImlzcyI6InVub2d3IiwiZXhwIjoxNjc0NzEwNTY3LCJpYXQiOjE2NzQ2MjQxNjcsImp0aSI6IlBTYnJpOVQyOThWeXhmSjAwNHg5TW5DUW54N2dLSlI4djY1OCJ9.Y985_sfMXWY9k1G-36kefExOCoLP_WydM7oUiHjayC6kdpikxkW0e84akuxJZmtibSIm46B9Bwg4oaZUYzR8bA", forHTTPHeaderField: "authorization")
+        request.setValue("bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0b2tlbiIsImF1ZCI6ImZjZTk0OTJhLWViODEtNDk2OS1iYzc1LTc2MDI1MTM5YTc2NyIsImlzcyI6InVub2d3IiwiZXhwIjoxNjc0Nzk4NDMyLCJpYXQiOjE2NzQ3MTIwMzIsImp0aSI6IlBTYnJpOVQyOThWeXhmSjAwNHg5TW5DUW54N2dLSlI4djY1OCJ9.-7-80CZXIOPo36d3SWET4qCvJT2dAgSj0nDcYJ99QkT64-tlssj3rVCcTglHDcbYE_-CFcvCG5tjmvDySfArQA", forHTTPHeaderField: "authorization")
         request.setValue("PSbri9T298VyxfJ004x9MnCQnx7gKJR8v658", forHTTPHeaderField: "appkey")
         request.setValue("VUn2CzaKPT1oTzwfBiXlY2ASg8SEndHMk/h5ukdZOElQVP5dfnfnv3OiTqw3aKYGR1NRYg17q05zOFlFhW8CdwYzMPI2wmqB9cNgx2f03O1ROveEw6Kr/CeGojxZBPMVU2MMzun4Gapcq1zu+lWYhbkDK/fAfmeCD+ftD2WMWPrJw9UBG0c=", forHTTPHeaderField: "appsecret")
         request.setValue("TTTC0802U", forHTTPHeaderField: "tr_id")
         request.timeoutInterval = 10
         // POST 로 보낼 정보
-        let params = ["CANO":"73085780", "ACNT_PRDT_CD":"01", "PDNO":"036630", "ORD_DVSN":"01", "ORD_QTY":"1", "ORD_UNPR":"0"] as Dictionary
+        // 항상 바뀌는 곳 2가지: PDNO - 종목코드, ORD_QTY - 주문수량  ... 나중에 시장가 / 지정가는 ORD_DVSN
+        let now_ticker: String = self.tickerTextField.text!
+        let now_quantity: String = self.quantityTextField.text!
+        let params = ["CANO":"73085780", "ACNT_PRDT_CD":"01", "PDNO": now_ticker, "ORD_DVSN":"01", "ORD_QTY": now_quantity, "ORD_UNPR":"0"] as Dictionary
 
         // httpBody 에 parameters 추가
         do {
@@ -479,14 +506,13 @@ extension WBTradeViewController{
                 let self = self,
                 case .success(let data) = response.result else { return }
             //str이, 받아온 json을 형태 그대로 STring으로 만든 것이다.
-           print("받은 응답 = ")
+            print("받은 응답 = ")
             let str = String(decoding: data!, as: UTF8.self)
             print(str)
-            self.navigationController?.dismiss(animated: true)
+            self.dismiss(animated: true)
         }
         .resume()
     }
-    
     // 국내주식 매도
     private func domesticSellStock(){
         
