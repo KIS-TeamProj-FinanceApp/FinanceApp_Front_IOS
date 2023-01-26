@@ -55,16 +55,32 @@ class WBRankViewController: UIViewController {
     let header = WBRankHeaderView()
     
     //여기에 ""'s NOW를 앞,뒤 나누어 addSubview해야함
-    private lazy var nowLabel: UIView = {
-        let uiview = UIView()
-        uiview.backgroundColor = .green
-        return uiview
+//    private lazy var nowLabel: UIView = {
+//        let uiview = UIView()
+//        uiview.backgroundColor = .green
+//        return uiview
+//    }()
+//    //여기에 ""'s Future를 앞,뒤 나누어 addSubview해야함
+//    private lazy var futureLabel: UIView = {
+//        let uiview = UIView()
+//        uiview.backgroundColor = .blue
+//        return uiview
+//    }()
+    
+    private lazy var nowLabel: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0)
+        label.text = "NOW"
+        label.textAlignment = .center
+        return label
     }()
     //여기에 ""'s Future를 앞,뒤 나누어 addSubview해야함
-    private lazy var futureLabel: UIView = {
-        let uiview = UIView()
-        uiview.backgroundColor = .blue
-        return uiview
+    private lazy var futureLabel: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = UIColor(red: 253/255.0, green: 166/255.0, blue: 186/255.0, alpha: 1.0)
+        label.text = "FUTURE"
+        label.textAlignment = .center
+        return label
     }()
     
     // 섹터 선택을 위한 collectionView
@@ -135,7 +151,7 @@ class WBRankViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemYellow
+        view.backgroundColor = .white
         //navigationBar 숨기기는 viewDidLoad에서 해줘야한다.
         self.navigationController?.isNavigationBarHidden = true
         attribute()

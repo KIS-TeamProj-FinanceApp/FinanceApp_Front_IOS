@@ -27,6 +27,6 @@ struct MyAccount {
 
 struct MoneyObject{
     let totalMoney: String
-    let oneDayBeforeMoney: String
+
 }
 

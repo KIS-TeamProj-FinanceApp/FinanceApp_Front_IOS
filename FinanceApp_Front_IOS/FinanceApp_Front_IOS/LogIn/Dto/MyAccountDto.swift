@@ -31,12 +31,12 @@ struct MyAccountDto: Decodable {
 struct MoneyObjectDto: Decodable{
     
     let totalMoney: String
-    let oneDayBeforeMoney: String
+
     
     enum CodingKeys: String, CodingKey{
 //        case securities = "output1"
         case totalMoney = "dnca_tot_amt"
-        case oneDayBeforeMoney = "bfdy_tot_asst_evlu_amt"
+        
     }
 }
 

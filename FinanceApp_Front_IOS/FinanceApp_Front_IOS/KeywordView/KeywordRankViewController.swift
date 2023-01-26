@@ -105,12 +105,12 @@ extension KeywordRankViewController: UISearchBarDelegate{
         //이전 검색이 있었을 경우에, DidEndEditing에서 stations리스트를 비워두었고 tableView는 그대로이기 때문에
         // reloadData() 해주지 않으면 이전 검색 내역이 그대로 tableView에 남아있다.
         urlTableView.reloadData()
-        urlTableView.isHidden = false
+//        urlTableView.isHidden = false
 //        print(urlsArr)
     }
  
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        urlTableView.isHidden = true
+//        urlTableView.isHidden = true
         //나중에 다시 검색창을 켰을 때, 이전에 검색했던 지하철역들이 TableView에 그대로 보이지 않도록 리스트 비워줌
 //        urlsArr = []
         

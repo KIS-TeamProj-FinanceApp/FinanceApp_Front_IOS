@@ -55,8 +55,28 @@ final class AccountExistenceViewController: UIViewController {
     
     @objc func noAccount(){
         print("no")
+        openAppStore()
     }
     
+    private func openAppStore() {
+        let url = "https://itunes.apple.com/app/"
+        if let url = URL(string: url), UIApplication.shared.canOpenURL(url) {
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            } else {
+                UIApplication.shared.openURL(url)
+            }
+        }
+       
+    }
+    
+    
+    private func callSafari(){
+        guard let url = URL(string: "http://zeddios.tistory.com"),
+                UIApplication.shared.canOpenURL(url) else { return }
+
+         UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)

@@ -18,12 +18,22 @@ final class AppkeyInputViewController: UIViewController {
     private var appKey: String = "PSbri9T298VyxfJ004x9MnCQnx7gKJR8v658"
     private var appSecretKey: String = "VUn2CzaKPT1oTzwfBiXlY2ASg8SEndHMk/h5ukdZOElQVP5dfnfnv3OiTqw3aKYGR1NRYg17q05zOFlFhW8CdwYzMPI2wmqB9cNgx2f03O1ROveEw6Kr/CeGojxZBPMVU2MMzun4Gapcq1zu+lWYhbkDK/fAfmeCD+ftD2WMWPrJw9UBG0c="
     
-    private lazy var questionLabel: UILabel = {
-        let qLabel = UILabel()
+    
+    private lazy var questionTextField: UITextField = {
+        let tv = UITextField()
         
-        qLabel.text = "appkey와 appservicekey를 입력해주세요"
-        qLabel.font = UIFont.systemFont(ofSize: 22)
-        return qLabel
+        tv.text = "appkey와 appservicekey를"
+        tv.font = UIFont.systemFont(ofSize: 22)
+//        tv.textAlignment = .natural
+        return tv
+    }()
+    private lazy var questionTextField2: UITextField = {
+        let tv = UITextField()
+        
+        tv.text = "입력해주세요"
+        tv.font = UIFont.systemFont(ofSize: 20)
+//        tv.textAlignment = .natural
+        return tv
     }()
     
     private lazy var appKeyLabel: UILabel = {
@@ -37,7 +47,7 @@ final class AppkeyInputViewController: UIViewController {
         let tf = UITextField()
         tf.layer.borderWidth = 2.0
         tf.layer.borderColor = UIColor(red: 0/255, green: 192/255, blue: 210/255, alpha: 1).cgColor
-        tf.layer.cornerRadius = 8.0
+        tf.layer.cornerRadius = 4.0
         tf.backgroundColor = .systemBackground
         tf.placeholder = "AppKey 입력"
         //textField 앞에 inset을 줘서 text가 자연스럽게 보이도록
@@ -60,7 +70,7 @@ final class AppkeyInputViewController: UIViewController {
         let tf = UITextField()
         tf.layer.borderWidth = 2.0
         tf.layer.borderColor = UIColor(red: 0/255, green: 192/255, blue: 210/255, alpha: 1).cgColor
-        tf.layer.cornerRadius = 8.0
+        tf.layer.cornerRadius = 4.0
         tf.backgroundColor = .systemBackground
         tf.placeholder = "AppServiceKey 입력"
         //textField 앞에 inset을 줘서 text가 자연스럽게 보이도록
@@ -84,13 +94,13 @@ final class AppkeyInputViewController: UIViewController {
     
     private lazy var nosendButton: UIButton = {
         let button = UIButton()
-        button.setTitle("OAuth 접근토큰 발급 안된 경우", for: .normal)
+        button.setTitle("두가지key 채우기", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.backgroundColor = UIColor(red: 255/255.0, green: 222/255.0, blue: 194/255.0, alpha: 1.0)
         button.layer.borderColor = UIColor(red: 153/255.0, green: 76/255.0, blue: 0/255.0, alpha: 1.0).cgColor
         button.layer.borderWidth = 1.0
         button.layer.cornerRadius = 8.0
-        button.addTarget(self, action: #selector(getToken), for: .touchUpInside)
+        button.addTarget(self, action: #selector(fillTextField), for: .touchUpInside)
         return button
     }()
     
@@ -118,13 +128,12 @@ final class AppkeyInputViewController: UIViewController {
             self.navigationController?.pushViewController(vc, animated: true)
             
         }
-        
-        
-        
-//        let vc = AppkeyExistenceViewController()
-//        self.navigationController?.pushViewController(vc, animated: true)
     }
     
+    @objc func fillTextField(){
+        self.appKeyTextField.text = self.appKey
+        self.appServiceKeyTextField.text = self.appSecretKey
+    }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -148,33 +157,40 @@ final class AppkeyInputViewController: UIViewController {
     
     private func layout(){
         
-        [questionLabel, appKeyLabel, appKeyTextField, appServiceKeyLabel, appServiceKeyTextField, sendButton, nosendButton, textfield].forEach{
+        [questionTextField, questionTextField2, appKeyLabel, appKeyTextField, appServiceKeyLabel, appServiceKeyTextField, sendButton, nosendButton].forEach{
             view.addSubview($0)
         }
         
-        questionLabel.snp.makeConstraints{
+        questionTextField.snp.makeConstraints{
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(50)
             $0.leading.trailing.equalToSuperview().inset(30)
         }
         
+        questionTextField2.snp.makeConstraints{
+            $0.top.equalTo(questionTextField.snp.bottom).offset(4)
+            $0.leading.trailing.equalToSuperview().inset(30)
+        }
+        
         appKeyLabel.snp.makeConstraints{
-            $0.top.equalTo(questionLabel.snp.bottom).offset(50)
+            $0.top.equalTo(questionTextField2.snp.bottom).offset(50)
             $0.leading.trailing.equalToSuperview().inset(30)
         }
         
         appKeyTextField.snp.makeConstraints{
-            $0.top.equalTo(appKeyLabel.snp.bottom).offset(50)
+            $0.top.equalTo(appKeyLabel.snp.bottom).offset(10)
+            $0.height.equalTo(30)
             $0.leading.trailing.equalToSuperview().inset(30)
         }
         
         
         appServiceKeyLabel.snp.makeConstraints{
-            $0.top.equalTo(appKeyTextField.snp.bottom).offset(50)
+            $0.top.equalTo(appKeyTextField.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview().inset(30)
         }
         
         appServiceKeyTextField.snp.makeConstraints{
-            $0.top.equalTo(appServiceKeyLabel.snp.bottom).offset(50)
+            $0.top.equalTo(appServiceKeyLabel.snp.bottom).offset(10)
+            $0.height.equalTo(30)
             $0.leading.trailing.equalToSuperview().inset(30)
         }
         
@@ -187,12 +203,12 @@ final class AppkeyInputViewController: UIViewController {
             $0.top.equalTo(sendButton.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview().inset(30)
         }
-        
-        textfield.snp.makeConstraints{
-            $0.top.equalTo(sendButton.snp.bottom).offset(20)
-            $0.height.equalTo(300)
-            $0.leading.trailing.equalToSuperview().inset(30)
-        }
+//
+//        textfield.snp.makeConstraints{
+//            $0.top.equalTo(sendButton.snp.bottom).offset(20)
+//            $0.height.equalTo(300)
+//            $0.leading.trailing.equalToSuperview().inset(30)
+//        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -244,9 +260,10 @@ extension AppkeyInputViewController {
                 print("저장 시작 UserDefaults")
                 //AccessToken을 UserDefaults에 저장한다.
                 //appkey, appServiceKey를 UserDefaults에 저장함
-                
+//                let now_appkey: String = self.appKeyTextField.text ?? ""
+//                let now_appsecret: String = self.appServiceKeyTextField.text ?? ""
                 UserDefaults.standard.set(self.appKey, forKey: "appkey")
-                UserDefaults.standard.set(self.appSecretKey, forKey: "appSecretKey")
+                UserDefaults.standard.set(self.appSecretKey, forKey: "appsecret")
                 
                 UserDefaults.standard.set("Bearer " + (self.accessToken?.access_token ?? ""), forKey: "accessToken")
                 
@@ -267,58 +284,11 @@ extension AppkeyInputViewController {
 //                }
 
                 
-                self.textfield.text = (self.accessToken?.access_token ?? "no access_token\n token_type = \n") + (self.accessToken?.token_type ?? "no token_type!")
+//                self.textfield.text = (self.accessToken?.access_token ?? "no access_token\n token_type = \n") + (self.accessToken?.token_type ?? "no token_type!")
                 
             }.resume()
-        
-//        AF.request(request).response(){
-//            [weak self] response in
-//            guard
-//                let self = self,
-//                case .success(let data) = response.result else { return }
-//
-//            let str = String(decoding: data!, as: UTF8.self)
-//
-//            print(type(of:str))
-//
-//            print("내용내용내용")
-//            print(str)
-//            self.textfield.text = str
-//
-//        }.resume()
-        
-        
-        
-        
+    
         
     }
-
-//
-
-//    private func requestAPI(){
-//        let url = "https://openapi.koreainvestment.com:9443/oauth2/tokenP"
-////        let url = self.apiUrl
-//        //addingPercentEncoding은 한글(영어 이외의 값) 이 url에 포함되었을 때 오류나는 것을 막아준다.
-//
-//        AF.request(url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")
-//            .response(){ [weak self] response in
-//                guard
-//                    let self = self,
-//                    case .success(let data) = response.result else { return }
-//                //str이, 받아온 json을 형태 그대로 STring으로 만든 것이다.
-//                let str = String(decoding: data!, as: UTF8.self)
-//                self.apiResultStr = str
-//                self.jsonResultArr = JsonParser.jsonToArr(jsonString: str)
-//                print(self.jsonResultArr)
-//                self.isClickedArr_col = Array(repeating: false, count: self.jsonResultArr[0].count)
-//                self.isClickedArr_row = Array(repeating: false, count: self.jsonResultArr.count - 1)
-//
-////                //테이블 뷰 다시 그려줌
-//                self.collectionView.isHidden = false
-//                self.collectionView.reloadData()
-//            }
-//            .resume()
-//    }
-    
     
 }

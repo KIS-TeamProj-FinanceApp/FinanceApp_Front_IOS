@@ -13,12 +13,29 @@ import SnapKit
 final class AppkeyExistenceViewController: UIViewController {
     
     
-    private lazy var questionLabel: UILabel = {
-        let qLabel = UILabel()
+    private lazy var questionTextField: UITextField = {
+        let tv = UITextField()
         
-        qLabel.text = "한국투자증권 Developers에서 appkey와 appservicekey를 발급받으세요"
-        qLabel.font = UIFont.systemFont(ofSize: 22)
-        return qLabel
+        tv.text = "한국투자증권 Developers에서"
+        tv.font = UIFont.systemFont(ofSize: 22)
+//        tv.textAlignment = .natural
+        return tv
+    }()
+    private lazy var questionTextField2: UITextField = {
+        let tv = UITextField()
+        
+        tv.text = "appkey와 appservicekey를"
+        tv.font = UIFont.systemFont(ofSize: 20)
+//        tv.textAlignment = .natural
+        return tv
+    }()
+    private lazy var questionTextField3: UITextField = {
+        let tv = UITextField()
+        
+        tv.text = "발급받으세요"
+        tv.font = UIFont.systemFont(ofSize: 20)
+//        tv.textAlignment = .natural
+        return tv
     }()
     
     private lazy var appKeyLabel: UILabel = {
@@ -62,6 +79,7 @@ final class AppkeyExistenceViewController: UIViewController {
     
     @objc func goKISDevelopers(){
         print("goKISDevelopers")
+        openSafariApp()
     }
     
     @objc func alreadyDid(){
@@ -73,7 +91,12 @@ final class AppkeyExistenceViewController: UIViewController {
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        attribute()
+        self.questionTextField.isEnabled = false
+        self.questionTextField2.isEnabled = false
+        self.questionTextField3.isEnabled = false
+        self.questionTextField.backgroundColor = .cyan
+        self.questionTextField2.backgroundColor = .cyan
+        self.questionTextField3.backgroundColor = .cyan
         layout()
     }
     
@@ -86,24 +109,38 @@ final class AppkeyExistenceViewController: UIViewController {
         
     }
     
-    
-    private func attribute(){
-        
+    @objc private func openSafariApp() {
+        guard let appleUrl = URL(string: "https://apiportal.koreainvestment.com/")   else { return }
+        guard UIApplication.shared.canOpenURL(appleUrl)             else { return }
+
+        UIApplication.shared.open(appleUrl, options: [:], completionHandler: nil)
     }
+    
+   
     
     private func layout(){
         
-        [questionLabel, appKeyLabel, appServiceKeyLabel, accountYesButton, accountNoButton].forEach{
+        [questionTextField, questionTextField2, questionTextField3, appKeyLabel, appServiceKeyLabel, accountYesButton, accountNoButton].forEach{
             view.addSubview($0)
         }
         
-        questionLabel.snp.makeConstraints{
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(50)
+        questionTextField.snp.makeConstraints{
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(30)
+            $0.leading.trailing.equalToSuperview().inset(30)
+        }
+        
+        questionTextField2.snp.makeConstraints{
+            $0.top.equalTo(questionTextField.snp.bottom).offset(4)
+            $0.leading.trailing.equalToSuperview().inset(30)
+        }
+        
+        questionTextField3.snp.makeConstraints{
+            $0.top.equalTo(questionTextField2.snp.bottom).offset(4)
             $0.leading.trailing.equalToSuperview().inset(30)
         }
         
         appKeyLabel.snp.makeConstraints{
-            $0.top.equalTo(questionLabel.snp.bottom).offset(50)
+            $0.top.equalTo(questionTextField3.snp.bottom).offset(50)
             $0.leading.trailing.equalToSuperview().inset(30)
         }
         

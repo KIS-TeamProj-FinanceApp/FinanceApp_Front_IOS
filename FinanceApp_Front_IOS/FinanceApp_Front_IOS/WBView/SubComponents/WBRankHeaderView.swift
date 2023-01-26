@@ -74,7 +74,7 @@ class WBRankHeaderView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .brown
+        self.backgroundColor = .white
         self.investorTextField.inputView = self.investorPicker
         createToolBar()
         layout()
