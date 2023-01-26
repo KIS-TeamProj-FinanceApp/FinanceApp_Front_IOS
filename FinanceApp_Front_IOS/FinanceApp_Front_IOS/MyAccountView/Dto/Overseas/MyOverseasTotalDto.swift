@@ -12,10 +12,10 @@ struct MyOverseasTotalDto: Decodable {
     // 주식 종목들 배열형태로 보내주는 곳
     let output1: [MyOverseasSecuritiesDto]
     // 계좌 수익률, 평가금액 등 돈 관련 정보 보내주는 곳
-    let output2: MyOverseasMoneyDto
+    let output3: MyOverseasMoneyDto
     
     enum CodingKeys: String, CodingKey{
         case output1 = "output1"
-        case output2 = "output2"
+        case output3 = "output3"
     }
 }

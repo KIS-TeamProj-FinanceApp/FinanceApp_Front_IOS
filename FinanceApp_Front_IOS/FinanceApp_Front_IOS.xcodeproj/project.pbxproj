@@ -170,8 +170,8 @@
 			children = (
 				A5398BFC297E51190062A24A /* MyAccountHeaderView.swift */,
 				A5398BFF297E5E1F0062A24A /* GainsAndLossesView.swift */,
-				A5398C01297E62350062A24A /* PortfolioView.swift */,
 				A5B77E2B2980B308006D754F /* MyAccountMoneyView.swift */,
+				A5398C01297E62350062A24A /* PortfolioView.swift */,
 				A5B77E2F2980C6A5006D754F /* SecurityNameCollectionViewCell.swift */,
 				A5B77E2D2980BF4D006D754F /* SecurityCollectionViewCell.swift */,
 			);

@@ -25,11 +25,7 @@ class MyAccountViewController: UIViewController {
     //해외용
     private var myOverseasSecurities: [MyOverseasSecurities] = []
     //배열에 하나밖에 안 나옴 어차피
-    private var myOverseasMoney: [MyOverseasMoney] = []
-    
-    
-    
-    
+    private var myOverseasMoney: MyOverseasMoney? = nil
     
     
     private var isDomestic: Bool = true
@@ -47,6 +43,7 @@ class MyAccountViewController: UIViewController {
     //금일매도 thdt_sll_qty
     
     private let myAccountColumns: [String] = ["종목명", "종목코드", "평가손익", "수익률" ,"평가금액", "보유수량", "매입금액", "매입단가", "현재가", "등락률", "금일매수", "금일매도"]
+    private let myOverseasColumns: [String] = ["종목명", "종목코드", "평가손익", "수익률" ,"평가금액", "보유수량", "매입금액", "매입단가", "현재가", "거래통화"]
 //    private var securities: [MyAccountSecurities] = [
 //        MyAccountSecurities(prdt_name: "임시 종목명1", pdno: "000001", evlu_pfls_amt: "평가손익1", evlu_pfls_rt: "수익률1", evlu_amt: "평가금액1", hldg_qty: "보유수량1", pchs_amt: "매입금액1", pchs_avg_pric: "매입단가1", prpr: "현재가1", fltt_rt: "등락률1", thdt_buyqty: "금일매수1", thdt_sll_qty: "금일매도1"),
 //        MyAccountSecurities(prdt_name: "임시 종목명2", pdno: "000002", evlu_pfls_amt: "평가손익2", evlu_pfls_rt: "수익률2", evlu_amt: "평가금액2", hldg_qty: "보유수량2", pchs_amt: "매입금액2", pchs_avg_pric: "매입단가2", prpr: "현재가2", fltt_rt: "등락률2", thdt_buyqty: "금일매수1", thdt_sll_qty: "금일매도1"),
@@ -141,7 +138,7 @@ class MyAccountViewController: UIViewController {
         let btn = UIButton()
         btn.backgroundColor = .white
         btn.layer.borderWidth = 1.0
-        btn.layer.borderColor = UIColor.magenta.cgColor
+        btn.layer.borderColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0).cgColor
         btn.layer.cornerRadius = 6.0
         btn.setTitleColor(.black, for: .normal)
         btn.setTitle("종목별", for: .normal)
@@ -155,7 +152,7 @@ class MyAccountViewController: UIViewController {
         let btn = UIButton()
         btn.backgroundColor = .white
         btn.layer.borderWidth = 1.0
-        btn.layer.borderColor = UIColor.magenta.cgColor
+        btn.layer.borderColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0).cgColor
         btn.layer.cornerRadius = 6.0
         btn.setTitleColor(.black, for: .normal)
         btn.setTitle("업종별", for: .normal)
@@ -169,7 +166,7 @@ class MyAccountViewController: UIViewController {
         stackView.axis = .horizontal
         stackView.distribution = .fill
         stackView.spacing = 0.0
-        stackView.backgroundColor = .yellow
+        stackView.backgroundColor = .white
         return stackView
     }()
     
@@ -209,7 +206,7 @@ class MyAccountViewController: UIViewController {
 //        collectionView.showsVerticalScrollIndicator = false
         collectionView.isScrollEnabled = false
 
-        collectionView.backgroundColor = .lightGray
+        collectionView.backgroundColor = .white
 //        collectionView.isScrollEnabled = false
         return collectionView
     }()
@@ -234,7 +231,7 @@ class MyAccountViewController: UIViewController {
 //        collectionView.showsHorizontalScrollIndicator = true
         collectionView.isScrollEnabled = true
 
-        collectionView.backgroundColor = .lightGray
+        collectionView.backgroundColor = .white
 //        collectionView.isScrollEnabled = false
         
         return collectionView
@@ -245,7 +242,7 @@ class MyAccountViewController: UIViewController {
     
     let blankView: UIView = {
         let v = UIView()
-        v.backgroundColor = .yellow
+        v.backgroundColor = .white
         return v
     }()
     
@@ -319,8 +316,16 @@ class MyAccountViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(changeMarketBtnClicked), name: .changeMarket, object: nil)
         
     }
+    
+    // --------------------------------------------  이 아래 3곳에서 view를 Update해야한다  -------------------------------------------- //
+    // --------------------------------------------  이 아래 3곳에서 view를 Update해야한다  -------------------------------------------- //
+    // --------------------------------------------  이 아래 3곳에서 view를 Update해야한다  -------------------------------------------- //
+    
+    //여기는 더 건드릴 필요가 없다.
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        //일단 화면에 돌아올때는 항상 국내주식으로 시작하도록
+        self.isDomestic = true
         requestAPI_Domestic()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1){
@@ -329,25 +334,62 @@ class MyAccountViewController: UIViewController {
             }
         }
     }
-    
+    //여기도 끝
     @objc func refreshBtnClicked(){
-        requestAPI_Domestic()
+        
+        if isDomestic{
+            requestAPI_Domestic()
+        }//해외면
+        else {
+            requestAPI_Overseas()
+        }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1){
-            self.cvStackView.snp.updateConstraints{
-                $0.height.equalTo(44 * (self.myAccountSecurities.count + 1) )
+            //국내면
+            if self.isDomestic{
+                self.cvStackView.snp.updateConstraints{
+                    $0.height.equalTo(44 * (self.myAccountSecurities.count + 1) )
+                }
+            }//해외면
+            else {
+                self.cvStackView.snp.updateConstraints{
+                    $0.height.equalTo(44 * (self.myOverseasSecurities.count + 1) )
+                }
             }
         }
     }
     // 해외주식잔고 / 국내주식잔고  버튼 클릭시 변경 왔다갔다
     @objc func changeMarketBtnClicked(){
-        //현재의 틱 (self.isDomestic)에 따라 viewController 최상단 HeaderView를 업데이트)
-        myAccountHeader.setup(isDomestic: !self.isDomestic)
-        
-        
-        
+        //먼저 Domestic을 바꿔준다
         self.isDomestic = !isDomestic
+        //4. 보유잔고 update 해야함
+        //국내면
+        if isDomestic{
+            requestAPI_Domestic()
+        }//해외면
+        else {
+            requestAPI_Overseas()
+        }
+        // API호출이 끝나고 view관련 task들은 모두 main thread에서
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+            //1. 현재의 틱 (self.isDomestic)에 따라 viewController 최상단 HeaderView를 업데이트)
+            self.myAccountHeader.setup(isDomestic: self.isDomestic)
+            
+            //5. 마지막으로 collectionView 길이 늘려주기
+            if self.isDomestic{
+                self.cvStackView.snp.updateConstraints{
+                    $0.height.equalTo(44 * (self.myAccountSecurities.count + 1))
+                }
+            }//해외면
+            else {
+                self.cvStackView.snp.updateConstraints{
+                    $0.height.equalTo(44 * (self.myOverseasSecurities.count + 1))
+                }
+            }
+        }
     }
+    
+    // --------------------------------------------  이 아래 3곳에서 view를 Update해야한다  -------------------------------------------- //
     
 
     private func layout(){
@@ -574,12 +616,22 @@ extension MyAccountViewController: UICollectionViewDataSource, UICollectionViewD
         if collectionView.tag == 0{
             return 1
         }
-        return self.myAccountColumns.count - 1
+        //국내인 경우
+        if self.isDomestic{
+            return self.myAccountColumns.count - 1
+        }else{// 해외인 경우
+            return self.myOverseasColumns.count - 1
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // 평가손익, 수익률 ..... 등을 보여줘야함
-        return self.myAccountSecurities.count + 1
+        if self.isDomestic{
+            return self.myAccountSecurities.count + 1
+        }
+        else {
+            return self.myOverseasSecurities.count + 1
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -590,8 +642,12 @@ extension MyAccountViewController: UICollectionViewDataSource, UICollectionViewD
             if indexPath.section == 0 && indexPath.row == 0 {
                 cell.setup(title: "종목명")
             }
-            else {
-                cell.setup(title: self.myAccountSecurities[indexPath.row - 1].prdt_name)
+            else { //첫 열 종목명
+                if self.isDomestic{
+                    cell.setup(title: self.myAccountSecurities[indexPath.row - 1].prdt_name)
+                }else {
+                    cell.setup(title: self.myOverseasSecurities[indexPath.row - 1].prdt_name)
+                }
             }
             return cell
         }
@@ -601,7 +657,11 @@ extension MyAccountViewController: UICollectionViewDataSource, UICollectionViewD
             
             // 오른쪽 collectionView의 첫 행
             if indexPath.row == 0 {
-                cell.setup(title: myAccountColumns[indexPath.section + 1])
+                if self.isDomestic{
+                    cell.setup(title: myAccountColumns[indexPath.section + 1])
+                }else {
+                    cell.setup(title: myOverseasColumns[indexPath.section + 1])
+                }
                 return cell
             }
             // 오른쪽 collectionView의 두번쨰 행부터
@@ -622,43 +682,92 @@ extension MyAccountViewController: UICollectionViewDataSource, UICollectionViewD
                 switch indexPath.section{
                     //종목코드
                 case 0:
-                    print("지금의 indexPath.row = " )
-                    print(indexPath.row)
-                    print()
-                    
-                    cell.setup(title: self.myAccountSecurities[indexPath.row - 1].pdno)
+//                    print("지금의 indexPath.row = " )
+//                    print(indexPath.row)
+//                    print()
+                    if self.isDomestic{
+                        cell.setup(title: self.myAccountSecurities[indexPath.row - 1].pdno)
+                    }else {
+                        cell.setup(title: self.myOverseasSecurities[indexPath.row - 1].pdno)
+                    }
                     //평가손익
                 case 1:
-                    cell.setup(title: self.myAccountSecurities[indexPath.row - 1].evlu_pfls_amt)
+                    if self.isDomestic{
+                        cell.setup(title: self.myAccountSecurities[indexPath.row - 1].evlu_pfls_amt)
+                    }else {
+                        cell.setup(title: self.myOverseasSecurities[indexPath.row - 1].evlu_pfls_amt2)
+                    }
+                    
                     // 수익률
                 case 2:
-                    cell.setup(title: self.myAccountSecurities[indexPath.row - 1].evlu_pfls_rt)
-                    // 평가금액
+                    if self.isDomestic{
+                        cell.setup(title: self.myAccountSecurities[indexPath.row - 1].evlu_pfls_rt)
+                    }else {
+                        cell.setup(title: self.myOverseasSecurities[indexPath.row - 1].evlu_pfls_rt1)
+                    }
+                                        // 평가금액
                 case 3:
-                    cell.setup(title: self.myAccountSecurities[indexPath.row - 1].evlu_amt)
+                    if self.isDomestic{
+                        cell.setup(title: self.myAccountSecurities[indexPath.row - 1].evlu_amt)
+                    }else {
+                        cell.setup(title: self.myOverseasSecurities[indexPath.row - 1].frcr_evlu_amt2)
+                    }
+                    
                     // 보유수량
                 case 4:
-                    cell.setup(title: self.myAccountSecurities[indexPath.row - 1].hldg_qty)
+                    if self.isDomestic{
+                        cell.setup(title: self.myAccountSecurities[indexPath.row - 1].hldg_qty)
+                    }else {
+                        cell.setup(title: self.myOverseasSecurities[indexPath.row - 1].cblc_qty13)
+                    }
+                    
                     //매입금액
                 case 5:
-                    cell.setup(title: self.myAccountSecurities[indexPath.row - 1].pchs_amt)
+                    if self.isDomestic{
+                        cell.setup(title: self.myAccountSecurities[indexPath.row - 1].pchs_amt)
+                    }else {
+                        cell.setup(title: self.myOverseasSecurities[indexPath.row - 1].frcr_pchs_amt)
+                    }
+                    
                     //매입단가
                 case 6:
-                    cell.setup(title: self.myAccountSecurities[indexPath.row - 1].pchs_avg_pric)
+                    if self.isDomestic{
+                        cell.setup(title: self.myAccountSecurities[indexPath.row - 1].pchs_avg_pric)
+                    }else {
+                        cell.setup(title: self.myOverseasSecurities[indexPath.row - 1].avg_unpr3)
+                    }
                     // 현재가
                 case 7:
-                    cell.setup(title: self.myAccountSecurities[indexPath.row - 1].prpr)
+                    if self.isDomestic{
+                        cell.setup(title: self.myAccountSecurities[indexPath.row - 1].prpr)
+                    }else {
+                        cell.setup(title: self.myOverseasSecurities[indexPath.row - 1].ovrs_now_pric1)
+                    }
+                    
                     // 등락률
                 case 8:
-                    cell.setup(title: self.myAccountSecurities[indexPath.row - 1].fltt_rt)
+                    if self.isDomestic{
+                        cell.setup(title: self.myAccountSecurities[indexPath.row - 1].fltt_rt)
+                    }else {
+                        cell.setup(title: self.myOverseasSecurities[indexPath.row - 1].ovrs_excg_cd)
+                    }
+                    
                     //금일 매수
                 case 9:
-                    cell.setup(title: self.myAccountSecurities[indexPath.row - 1].thdt_buyqty)
+                    if self.isDomestic{
+                        cell.setup(title: self.myAccountSecurities[indexPath.row - 1].thdt_buyqty)
+                    }else {
+                        cell.setup(title: self.myOverseasSecurities[indexPath.row - 1].ovrs_excg_cd)
+                    }
+                    
                     //금일 매도
                 default:
-                    cell.setup(title: self.myAccountSecurities[indexPath.row - 1].thdt_sll_qty)
+                    if self.isDomestic{
+                        cell.setup(title: self.myAccountSecurities[indexPath.row - 1].thdt_sll_qty)
+                    }else {
+                        cell.setup(title: self.myOverseasSecurities[indexPath.row - 1].ovrs_excg_cd)
+                    }
                 }
-                
                 return cell
             }
         }
@@ -737,6 +846,7 @@ extension MyAccountViewController {
                     self.glView.setup(totalRevenue: self.myAccountMoney[0].evlu_pfls_smtl_amt, totalRevenueRate: now_totalRevenueRate)
                    
                     // 평가손익 아래 촟4개 예수금 관련 창 업데이트
+                    self.moneyHorizontalView.setupTitle(leftTopTitle: "평가금액", leftBottomTitle: "매입금액합계", rightTopTitle: "예수금총액", rightBottomTitle: "D+2예수금")
                     self.moneyHorizontalView.setupValue(pyunggagumTotal: self.myAccountMoney[0].scts_evlu_amt, maeipgum: self.myAccountMoney[0].pchs_amt_smtl_amt, yesugumTotal: self.myAccountMoney[0].dnca_tot_amt, D2Yesugum: self.myAccountMoney[0].d2_auto_rdpt_amt)
                     
                     //보유종목 부분 update
@@ -745,10 +855,10 @@ extension MyAccountViewController {
                     
         }.resume()
     }
-    //해외계좌 조회는 나스닥, 뉴욕 모두 함께 됨 
+    //해외계좌 조회는 나스닥, 뉴욕 모두 함께 됨
     private func requestAPI_Overseas(){
         
-        let url = "https://openapi.koreainvestment.com:9443/uapi/overseas-stock/v1/trading/inquire-balance?CANO=73085780&ACNT_PRDT_CD=01&OVRS_EXCG_CD=NASD&TR_CRCY_CD=USD&CTX_AREA_FK200&CTX_AREA_NK200"
+        let url = "https://openapi.koreainvestment.com:9443/uapi/overseas-stock/v1/trading/inquire-present-balance?CANO=73085780&ACNT_PRDT_CD=01&WCRC_FRCR_DVSN_CD=02&NATN_CD=840&TR_MKET_CD=00&INQR_DVSN_CD=00"
         
 //        print("지금 만든 url = " + (url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed.union( CharacterSet(["%"]))) ?? "") )
 //        print("access Token = " + UserDefaults.standard.string(forKey: "accessToken")!)
@@ -764,9 +874,9 @@ extension MyAccountViewController {
                                              "authorization": accessToken,
                                              "appkey": UserDefaults.standard.string(forKey: "appkey")!,
                                              "appsecret": UserDefaults.standard.string(forKey: "appSecretKey")!,
-                                             "tr_id": "TTTC8434R"]
+                                             "tr_id": "CTRP6504R"]
                    )
-                .responseDecodable(of: MyAccountTotalDto.self){ [weak self] response in
+                .responseDecodable(of: MyOverseasTotalDto.self){ [weak self] response in
                                 // success 이외의 응답을 받으면, else문에 걸려 함수 종료
                                 guard
                                     let self = self,
@@ -775,42 +885,45 @@ extension MyAccountViewController {
                                     print(response)
                                     return }
                                 //데이터 받아옴
-                    self.myAccountSecurities = data.output1.map{ obj -> MyAccountSecurities in
-                        let now = MyAccountSecurities(prdt_name: obj.prdt_name, pdno: obj.pdno, evlu_pfls_amt: obj.evlu_pfls_amt, evlu_pfls_rt: obj.evlu_pfls_rt, evlu_amt: obj.evlu_amt, hldg_qty: obj.hldg_qty, pchs_amt: obj.pchs_amt, pchs_avg_pric: obj.pchs_avg_pric, prpr: obj.prpr, fltt_rt: obj.fltt_rt, thdt_buyqty: obj.thdt_buyqty, thdt_sll_qty: obj.thdt_sll_qty)
+                    self.myOverseasSecurities = data.output1.map{ obj -> MyOverseasSecurities in
+                        let now = MyOverseasSecurities(prdt_name: obj.prdt_name, pdno: obj.pdno, evlu_pfls_amt2: obj.evlu_pfls_amt2, evlu_pfls_rt1: obj.evlu_pfls_rt1, frcr_evlu_amt2: obj.frcr_evlu_amt2, cblc_qty13: obj.cblc_qty13, frcr_pchs_amt: obj.frcr_pchs_amt, avg_unpr3: obj.avg_unpr3, ovrs_now_pric1: obj.ovrs_now_pric1, ovrs_excg_cd: obj.ovrs_excg_cd)
                         return now
                     }
-                    print("myAccountSecurities 갱신 후")
-                    print(self.myAccountSecurities)
+                    print("myOverseasSecurities 갱신 후")
+                    print(self.myOverseasSecurities)
                     print()
                     print()
                     
-                    self.myAccountMoney = data.output2.map{ obj -> MyAccountMoney in
-                        let now = MyAccountMoney(evlu_pfls_smtl_amt: obj.evlu_pfls_smtl_amt, dnca_tot_amt: obj.dnca_tot_amt, d2_auto_rdpt_amt: obj.d2_auto_rdpt_amt, scts_evlu_amt: obj.scts_evlu_amt, pchs_amt_smtl_amt: obj.pchs_amt_smtl_amt)
-                        return now
-                    }
-                    print("myAccountMoney 갱신 후")
-                    print(self.myAccountMoney)
+                    self.myOverseasMoney = MyOverseasMoney(tot_evlu_pfls_amt: data.output3.tot_evlu_pfls_amt, evlu_erng_rt1: data.output3.evlu_erng_rt1, evlu_amt_smtl_amt: data.output3.evlu_amt_smtl_amt, pchs_amt_smtl_amt: data.output3.pchs_amt_smtl_amt, tot_frcr_cblc_smtl: data.output3.tot_frcr_cblc_smtl, frcr_evlu_tota: data.output3.frcr_evlu_tota)
+                    
+                    print("myOverseasMoney 갱신 후")
+                    print(self.myOverseasMoney)
                     print()
                     print()
                     
                     //먼저 평가손익 glView에서 평가손익합계금액과 총 수익률을 setup해준다
-                    let temp_totalRevenueRate: String = String(Double(self.myAccountMoney[0].evlu_pfls_smtl_amt)! * 100 / Double(self.myAccountMoney[0].pchs_amt_smtl_amt)!)
-                    let dot_idx = temp_totalRevenueRate.firstIndex(of: ".")
-                    let two = temp_totalRevenueRate.index(after: dot_idx!)
-                    let three = temp_totalRevenueRate.index(after: two)
-
-                    print(temp_totalRevenueRate[temp_totalRevenueRate.startIndex ... three])
-                    let now_totalRevenueRate = String(temp_totalRevenueRate[temp_totalRevenueRate.startIndex ... three]) + "%"
+                   
                     
-                    self.glView.setup(totalRevenue: self.myAccountMoney[0].evlu_pfls_smtl_amt, totalRevenueRate: now_totalRevenueRate)
+                    
+                    self.glView.setup(totalRevenue:  self.sliceStringAfterDot(str: self.myOverseasMoney!.tot_evlu_pfls_amt) , totalRevenueRate: self.sliceStringAfterDot(str: self.myOverseasMoney!.evlu_erng_rt1) + "%")
                    
                     // 평가손익 아래 촟4개 예수금 관련 창 업데이트
-                    self.moneyHorizontalView.setupValue(pyunggagumTotal: self.myAccountMoney[0].scts_evlu_amt, maeipgum: self.myAccountMoney[0].pchs_amt_smtl_amt, yesugumTotal: self.myAccountMoney[0].dnca_tot_amt, D2Yesugum: self.myAccountMoney[0].d2_auto_rdpt_amt)
+                    self.moneyHorizontalView.setupTitle(leftTopTitle: "평가금", leftBottomTitle: "달러매입금", rightTopTitle: "예수금", rightBottomTitle: "달러예수금")
+                    self.moneyHorizontalView.setupValue(pyunggagumTotal: (self.myOverseasMoney?.evlu_amt_smtl_amt ?? "0") + "원", maeipgum: (self.myOverseasMoney?.pchs_amt_smtl_amt ?? "0") + "원" , yesugumTotal: self.sliceStringAfterDot(str: self.myOverseasMoney!.tot_frcr_cblc_smtl) + "원", D2Yesugum: (self.myOverseasMoney?.frcr_evlu_tota ?? "0") + "원")
                     
                     //보유종목 부분 update
                     self.securityNameCollectionView.reloadData()
                     self.securityCollectionView.reloadData()
                     
         }.resume()
+    }
+    
+    private func sliceStringAfterDot(str: String) -> String{
+        let dot_idx = str.firstIndex(of: ".")
+        let two = str.index(after: dot_idx!)
+        let three = str.index(after: two)
+
+//        print(str[str.startIndex ... three])
+        return String(str[str.startIndex ... three])
     }
 }

@@ -25,7 +25,7 @@ class GainsAndLossesView: UIView {
     
     private lazy var wonLabel: UILabel = {
         let label = UILabel()
-        label.text = "10000"
+        label.text = "0"
         label.font = .systemFont(ofSize: 26.0, weight: .bold)
         label.textColor = .systemRed
         return label
@@ -33,7 +33,7 @@ class GainsAndLossesView: UIView {
     
     private lazy var percentLabel: UILabel = {
         let label = UILabel()
-        label.text = "7.82%"
+        label.text = "0.00%"
         label.font = .systemFont(ofSize: 16.0, weight: .regular)
         label.textColor = .systemRed
         return label
