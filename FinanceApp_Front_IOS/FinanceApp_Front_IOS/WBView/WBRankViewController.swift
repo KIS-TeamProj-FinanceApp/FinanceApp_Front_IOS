@@ -25,7 +25,7 @@ class WBRankViewController: UIViewController {
         SecurityForRecommend(securityName: "현재 10위", sector: "업종6"),
         SecurityForRecommend(securityName: "현재 11위", sector: "업종7"),
         SecurityForRecommend(securityName: "현재 12위", sector: "업종4"),
-           ]
+        ]
     
     // 투자자'S Future에 들어갈 Data를 담을 배열
     private var futureTop12: [SecurityForRecommend] = [

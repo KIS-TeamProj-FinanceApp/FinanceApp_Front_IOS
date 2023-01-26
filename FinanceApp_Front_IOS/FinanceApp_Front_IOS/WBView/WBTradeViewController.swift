@@ -18,6 +18,11 @@ class WBTradeViewController: UIViewController {
     
     private var isOverseas: Bool = true
     
+    // 우리가 제공할 호가방식 목록
+    private let hogaList: [String] = ["시장가", "지정가"]
+    // 지금 선택한 투자자를 담을 변수
+    private var selectedHoga: String = ""
+    
     // ------------------------------------------------------- variables ------------------------------------------------------ //
     
     
@@ -277,14 +282,37 @@ class WBTradeViewController: UIViewController {
         return v
     }()
     
+    private lazy var hogaPicker: UIPickerView = {
+        let pv = UIPickerView()
+        pv.frame = CGRect(x: 2000, y: 2000, width: 200, height: 200)
+        //숨겨놔야함
+//        pv.isHidden = true
+        pv.delegate = self
+        pv.dataSource = self
+
+        return pv
+    }()
+    
     
     // ------------------------------------------------------- UI Components ------------------------------------------------------ //
-    
+    func createToolBar(){
+        let toolBar = UIToolbar()
+        toolBar.sizeToFit()
+        let doneBtn = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(self.dismissKeyboard))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        toolBar.setItems([flexibleSpace,doneBtn], animated: false)
+        formulaTextField.inputAccessoryView = toolBar
+    }
 
+    @objc private func dismissKeyboard(){
+        self.formulaTextField.endEditing(true)
+    }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        
+        self.formulaTextField.inputView = self.hogaPicker
+        createToolBar()
+
     }
     
     required init?(coder: NSCoder) {
@@ -681,5 +709,28 @@ extension WBTradeViewController{
             self.dismiss(animated: true)
         }
         .resume()
+    }
+}
+
+
+
+extension WBTradeViewController: UIPickerViewDelegate, UIPickerViewDataSource{
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return hogaList.count
+    }
+
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return hogaList[row]
+    }
+
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        print("select\(hogaList[row])")
+        self.selectedHoga = hogaList[row]
+        formulaTextField.text = hogaList[row]
     }
 }
