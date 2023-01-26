@@ -63,7 +63,8 @@ class WBTradeViewController: UIViewController {
             self.securityTextField.text = ""
             self.tickerTextField.text = ""
             self.quantityTextField.text = ""
-            self.formulaTextField.text = ""
+            self.formulaTextField.text = "지정가"
+            self.formulaTextField.isEnabled = false
             self.designatedTextField.text = ""
             self.securityTextField.isEnabled = false
             self.tickerTextField.isEnabled = false
@@ -105,6 +106,7 @@ class WBTradeViewController: UIViewController {
             self.tickerTextField.text = ""
             self.quantityTextField.text = ""
             self.formulaTextField.text = ""
+            self.formulaTextField.isEnabled = true
             self.designatedTextField.text = ""
             self.securityTextField.isEnabled = true
             self.tickerTextField.isEnabled = true
@@ -332,6 +334,8 @@ class WBTradeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.isOverseas = true
+        self.formulaTextField.text = "지정가"
+        self.formulaTextField.isEnabled = false
         self.overseasButton.layer.borderWidth = 3.0
         self.overseasButton.layer.borderColor = UIColor(red: 253/255.0, green: 166/255.0, blue: 166/255.0, alpha: 1.0).cgColor
         self.domesticButton.layer.borderWidth = 1.0
@@ -628,10 +632,11 @@ extension WBTradeViewController{
         request.timeoutInterval = 10
         // POST 로 보낼 정보
         //
-        let now_ticker: String = self.tickerTextField.text!
+//        let now_ticker: String = self.tickerTextField.text!
+        let now_ticker: String = "MRIN"
         let now_quantity: String = self.quantityTextField.text!
-        let now_market_name: String = "NASD"
-        let now_order_danga: String = ""
+        let now_market_name: String = "NYSE"
+        let now_order_danga: String = "1.2"
         let params = ["CANO":"73085780", "ACNT_PRDT_CD":"01", "OVRS_EXCG_CD" : now_market_name, "PDNO": now_ticker, "ORD_QTY": now_quantity, "OVRS_ORD_UNPR": now_order_danga, "ORD_SVR_DVSN_CD": "0", "ORD_DVSN": "00"] as Dictionary
 
         // httpBody 에 parameters 추가
@@ -685,7 +690,8 @@ extension WBTradeViewController{
         request.timeoutInterval = 10
         // POST 로 보낼 정보
         //
-        let now_ticker: String = self.tickerTextField.text!
+//        let now_ticker: String = self.tickerTextField.text!
+        let now_ticker: String = "MRIN"
         let now_quantity: String = self.quantityTextField.text!
         let now_market_name: String = "NASD"
         let now_order_danga: String = ""
