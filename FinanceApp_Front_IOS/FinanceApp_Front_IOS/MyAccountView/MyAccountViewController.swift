@@ -29,20 +29,22 @@ class MyAccountViewController: UIViewController {
     
     
     // 체결내역 - 국내
-    private var myDomesticAgreement: [DomesticAgreementDetail] = []
-    
-    
+    private var myDomesticAgreement: [DomesticAgreementDetail] = [DomesticAgreementDetail(prdt_name: "", sll_buy_dvsn_cd_name: "", sll_buy_dvsn_cd: "", ord_qty: "", avg_prvs: "", tot_ccld_qty: "", tot_ccld_amt: "", ord_dvsn_cd: "", odno: "", ord_dt: "", ord_tmd: "")]
     
     //체결내역 - 해외
-//    private var myOverseasAgreement: [OverseasAg] = []
+    private var myOverseasAgreement: [OverseasAgreementDetail] = [OverseasAgreementDetail(prdt_name: "", sll_buy_dvsn_cd_name: "", sll_buy_dvsn_cd: "", ft_ord_qty: "", ft_ccld_unpr3: "", ft_ccld_qty: "", ft_ccld_amt3: "", odno: "", ord_dt: "", ord_tmd: "")]
     
     
     
     private var isDomestic: Bool = true
    
-    
+    //계좌 관련 columns
     private let myAccountColumns: [String] = ["종목명", "종목코드", "평가손익", "수익률" ,"평가금액", "보유수량", "매입금액", "매입단가", "현재가", "등락률", "금일매수", "금일매도"]
     private let myOverseasColumns: [String] = ["종목명", "종목코드", "평가손익", "수익률" ,"평가금액", "보유수량", "매입금액", "매입단가", "현재가", "거래통화"]
+    
+    // 체결내역 관련
+    private let myDomesticAgreementColumns: [String] = ["종목명", "매매구분", "구분", "주문수량" ,"체결평균", "체결수량", "총결제금", "주문구분", "주문번호", "주문일", "주문시간"]
+    private let myOverseasAgreementColumns: [String] = ["종목명", "매매구분", "구분", "주문수량" ,"체결평균", "체결수량", "총결제금", "주문번호", "주문일", "주문시간"]
 
     
     // --------------------------------------------------------- Variables -------------------------------------------------------- //
@@ -378,9 +380,9 @@ class MyAccountViewController: UIViewController {
         contentView.backgroundColor = .systemBackground
         navigationController?.isNavigationBarHidden = true
         
-        agreementScrollView.backgroundColor = .systemPink
-        agreementContentView.backgroundColor = .systemPink
-        agreementStackView.backgroundColor = .systemPink
+        agreementScrollView.backgroundColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0)
+        agreementContentView.backgroundColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0)
+        agreementStackView.backgroundColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0)
         self.agreementScrollView.isHidden = true
         layout()
         // Header쪽에서 refresh버튼 누르는 액션을 전달받기 위해
@@ -399,6 +401,7 @@ class MyAccountViewController: UIViewController {
         //일단 화면에 돌아올때는 항상 국내주식으로 시작하도록
         self.isDomestic = true
         requestAPI_Domestic()
+        requestAPI_DomesticAgreement()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1){
             //1. 현재의 틱 (self.isDomestic)에 따라 viewController 최상단 HeaderView를 업데이트)
@@ -406,6 +409,10 @@ class MyAccountViewController: UIViewController {
             self.cvStackView.snp.updateConstraints{
                 $0.height.equalTo(44 * (self.myAccountSecurities.count + 1) )
             }
+            self.agreementCvStackView.snp.updateConstraints{
+                $0.height.equalTo(44 * (self.myDomesticAgreement.count + 1) )
+            }
+        
         }
     }
     //여기도 끝
@@ -413,9 +420,11 @@ class MyAccountViewController: UIViewController {
         
         if isDomestic{
             requestAPI_Domestic()
+            requestAPI_DomesticAgreement()
         }//해외면
         else {
             requestAPI_Overseas()
+            requestAPI_OverseasAgreement()
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1){
@@ -426,10 +435,16 @@ class MyAccountViewController: UIViewController {
                 self.cvStackView.snp.updateConstraints{
                     $0.height.equalTo(44 * (self.myAccountSecurities.count + 1) )
                 }
+                self.agreementCvStackView.snp.updateConstraints{
+                    $0.height.equalTo(44 * (self.myDomesticAgreement.count + 1) )
+                }
             }//해외면
             else {
                 self.cvStackView.snp.updateConstraints{
                     $0.height.equalTo(44 * (self.myOverseasSecurities.count + 1) )
+                }
+                self.agreementCvStackView.snp.updateConstraints{
+                    $0.height.equalTo(44 * (self.myOverseasAgreement.count + 1) )
                 }
             }
         }
@@ -442,9 +457,11 @@ class MyAccountViewController: UIViewController {
         //국내면
         if isDomestic{
             requestAPI_Domestic()
+            requestAPI_DomesticAgreement()
         }//해외면
         else {
             requestAPI_Overseas()
+            requestAPI_OverseasAgreement()
         }
         // API호출이 끝나고 view관련 task들은 모두 main thread에서
         DispatchQueue.main.asyncAfter(deadline: .now() + 1){
@@ -456,10 +473,16 @@ class MyAccountViewController: UIViewController {
                 self.cvStackView.snp.updateConstraints{
                     $0.height.equalTo(44 * (self.myAccountSecurities.count + 1))
                 }
+                self.agreementCvStackView.snp.updateConstraints{
+                    $0.height.equalTo(44 * (self.myDomesticAgreement.count + 1) )
+                }
             }//해외면
             else {
                 self.cvStackView.snp.updateConstraints{
                     $0.height.equalTo(44 * (self.myOverseasSecurities.count + 1))
+                }
+                self.agreementCvStackView.snp.updateConstraints{
+                    $0.height.equalTo(44 * (self.myOverseasAgreement.count + 1) )
                 }
             }
         }
@@ -643,7 +666,7 @@ class MyAccountViewController: UIViewController {
             $0.top.equalToSuperview()
             $0.leading.trailing.equalToSuperview()
             //총 12종목만 보여줌
-            $0.height.equalTo(44 * (self.myAccountSecurities.count + 1))
+            $0.height.equalTo(44 * (self.myDomesticAgreement.count + 1))
         }
         [agreementNameCollectionView, agreementCollectionView].forEach{
             agreementCvStackView.addArrangedSubview($0)
@@ -697,9 +720,9 @@ extension MyAccountViewController: UICollectionViewDataSource, UICollectionViewD
         else{ // tag == 3인 경우
             //국내인 경우
             if self.isDomestic{
-                return 10
+                return self.myDomesticAgreementColumns.count - 1
             }else{// 해외인 경우
-                return 10
+                return self.myOverseasAgreementColumns.count - 1
             }
         }
         
@@ -721,7 +744,7 @@ extension MyAccountViewController: UICollectionViewDataSource, UICollectionViewD
                 return self.myDomesticAgreement.count + 1
             }
             else {
-                return self.myDomesticAgreement.count + 1
+                return self.myOverseasAgreement.count + 1
             }
         }
         
@@ -729,31 +752,52 @@ extension MyAccountViewController: UICollectionViewDataSource, UICollectionViewD
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         //첫 열
-        if collectionView.tag == 0 {
+        if collectionView.tag == 0 || collectionView.tag == 2 {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SecurityNameCollectionViewCell", for: indexPath) as? SecurityNameCollectionViewCell else { return UICollectionViewCell() }
             // 첫 열, 첫 행
             if indexPath.section == 0 && indexPath.row == 0 {
                 cell.setup(title: "종목명")
             }
             else { //첫 열 종목명
-                if self.isDomestic{
-                    cell.setup(title: self.myAccountSecurities[indexPath.row - 1].prdt_name)
-                }else {
-                    cell.setup(title: self.myOverseasSecurities[indexPath.row - 1].prdt_name)
+                if collectionView.tag == 0{
+                    if self.isDomestic{
+                        cell.setup(title: self.myAccountSecurities[indexPath.row - 1].prdt_name)
+                    }else {
+                        cell.setup(title: self.myOverseasSecurities[indexPath.row - 1].prdt_name)
+                    }
                 }
+                // collectionView.tag == 2
+                else{
+                    if self.isDomestic{
+                        cell.setup(title: self.myDomesticAgreement[indexPath.row - 1].prdt_name)
+                    }else {
+                        cell.setup(title: self.myOverseasAgreement[indexPath.row - 1].prdt_name)
+                    }
+                }
+                
             }
             return cell
         }
-        // 오른쪽 collectionView
+        // 오른쪽 collectionView  tag == 1 || 3
         else {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SecurityCollectionViewCell", for: indexPath) as? SecurityCollectionViewCell else { return UICollectionViewCell() }
             
             // 오른쪽 collectionView의 첫 행
             if indexPath.row == 0 {
-                if self.isDomestic{
-                    cell.setup(title: myAccountColumns[indexPath.section + 1])
-                }else {
-                    cell.setup(title: myOverseasColumns[indexPath.section + 1])
+                if collectionView.tag == 1{
+                    if self.isDomestic{
+                        cell.setup(title: myAccountColumns[indexPath.section + 1])
+                    }else {
+                        cell.setup(title: myOverseasColumns[indexPath.section + 1])
+                    }
+                }
+                // tag == 3
+                else{
+                    if self.isDomestic{
+                        cell.setup(title: myDomesticAgreementColumns[indexPath.section + 1])
+                    }else {
+                        cell.setup(title: myOverseasAgreementColumns[indexPath.section + 1])
+                    }
                 }
                 return cell
             }
@@ -778,87 +822,196 @@ extension MyAccountViewController: UICollectionViewDataSource, UICollectionViewD
 //                    print("지금의 indexPath.row = " )
 //                    print(indexPath.row)
 //                    print()
-                    if self.isDomestic{
-                        cell.setup(title: self.myAccountSecurities[indexPath.row - 1].pdno)
-                    }else {
-                        cell.setup(title: self.myOverseasSecurities[indexPath.row - 1].pdno)
+                    if collectionView.tag == 1{
+                        if self.isDomestic{
+                            cell.setup(title: self.myAccountSecurities[indexPath.row - 1].pdno)
+                        }else {
+                            cell.setup(title: self.myOverseasSecurities[indexPath.row - 1].pdno)
+                        }
                     }
+                    else{
+                        if self.isDomestic{
+                            cell.setup(title: self.myDomesticAgreement[indexPath.row - 1].sll_buy_dvsn_cd_name)
+                        }else {
+                            cell.setup(title: self.myOverseasAgreement[indexPath.row - 1].sll_buy_dvsn_cd_name)
+                        }
+                    }
+                    
                     //평가손익
                 case 1:
-                    if self.isDomestic{
-                        cell.setup(title: self.myAccountSecurities[indexPath.row - 1].evlu_pfls_amt)
-                    }else {
-                        cell.setup(title: self.myOverseasSecurities[indexPath.row - 1].evlu_pfls_amt2)
+                    if collectionView.tag == 1{
+                        if self.isDomestic{
+                            cell.setup(title: self.myAccountSecurities[indexPath.row - 1].evlu_pfls_amt)
+                        }else {
+                            cell.setup(title: self.myOverseasSecurities[indexPath.row - 1].evlu_pfls_amt2)
+                        }
                     }
+                    else{
+                        if self.isDomestic{
+                            cell.setup(title: self.myDomesticAgreement[indexPath.row - 1].sll_buy_dvsn_cd)
+                        }else {
+                            cell.setup(title: self.myOverseasAgreement[indexPath.row - 1].sll_buy_dvsn_cd)
+                        }
+                    }
+                    
                     
                     // 수익률
                 case 2:
-                    if self.isDomestic{
-                        cell.setup(title: self.myAccountSecurities[indexPath.row - 1].evlu_pfls_rt)
-                    }else {
-                        cell.setup(title: self.myOverseasSecurities[indexPath.row - 1].evlu_pfls_rt1)
+                    if collectionView.tag == 1{
+                        if self.isDomestic{
+                            cell.setup(title: self.myAccountSecurities[indexPath.row - 1].evlu_pfls_rt)
+                        }else {
+                            cell.setup(title: self.myOverseasSecurities[indexPath.row - 1].evlu_pfls_rt1)
+                        }
                     }
+                    else{
+                        if self.isDomestic{
+                            cell.setup(title: self.myDomesticAgreement[indexPath.row - 1].ord_qty)
+                        }else {
+                            cell.setup(title: self.myOverseasAgreement[indexPath.row - 1].ft_ord_qty)
+                        }
+                    }
+                    
                                         // 평가금액
                 case 3:
-                    if self.isDomestic{
-                        cell.setup(title: self.myAccountSecurities[indexPath.row - 1].evlu_amt)
-                    }else {
-                        cell.setup(title: self.myOverseasSecurities[indexPath.row - 1].frcr_evlu_amt2)
+                    if collectionView.tag == 1{
+                        if self.isDomestic{
+                            cell.setup(title: self.myAccountSecurities[indexPath.row - 1].evlu_amt)
+                        }else {
+                            cell.setup(title: self.myOverseasSecurities[indexPath.row - 1].frcr_evlu_amt2)
+                        }
                     }
+                    else{
+                        if self.isDomestic{
+                            cell.setup(title: self.myDomesticAgreement[indexPath.row - 1].avg_prvs)
+                        }else {
+                            cell.setup(title: self.myOverseasAgreement[indexPath.row - 1].ft_ccld_unpr3)
+                        }
+                    }
+                    
                     
                     // 보유수량
                 case 4:
-                    if self.isDomestic{
-                        cell.setup(title: self.myAccountSecurities[indexPath.row - 1].hldg_qty)
-                    }else {
-                        cell.setup(title: self.myOverseasSecurities[indexPath.row - 1].cblc_qty13)
+                    if collectionView.tag == 1{
+                        if self.isDomestic{
+                            cell.setup(title: self.myAccountSecurities[indexPath.row - 1].hldg_qty)
+                        }else {
+                            cell.setup(title: self.myOverseasSecurities[indexPath.row - 1].cblc_qty13)
+                        }
                     }
+                    else{
+                        if self.isDomestic{
+                            cell.setup(title: self.myDomesticAgreement[indexPath.row - 1].tot_ccld_qty)
+                        }else {
+                            cell.setup(title: self.myOverseasAgreement[indexPath.row - 1].ft_ccld_qty)
+                        }
+                    }
+                    
                     
                     //매입금액
                 case 5:
-                    if self.isDomestic{
-                        cell.setup(title: self.myAccountSecurities[indexPath.row - 1].pchs_amt)
-                    }else {
-                        cell.setup(title: self.myOverseasSecurities[indexPath.row - 1].frcr_pchs_amt)
+                    if collectionView.tag == 1{
+                        if self.isDomestic{
+                            cell.setup(title: self.myAccountSecurities[indexPath.row - 1].pchs_amt)
+                        }else {
+                            cell.setup(title: self.myOverseasSecurities[indexPath.row - 1].frcr_pchs_amt)
+                        }
                     }
+                    else{
+                        if self.isDomestic{
+                            cell.setup(title: self.myDomesticAgreement[indexPath.row - 1].tot_ccld_amt)
+                        }else {
+                            cell.setup(title: self.myOverseasAgreement[indexPath.row - 1].ft_ccld_amt3)
+                        }
+                    }
+                    
                     
                     //매입단가
                 case 6:
-                    if self.isDomestic{
-                        cell.setup(title: self.myAccountSecurities[indexPath.row - 1].pchs_avg_pric)
-                    }else {
-                        cell.setup(title: self.myOverseasSecurities[indexPath.row - 1].avg_unpr3)
+                    if collectionView.tag == 1{
+                        if self.isDomestic{
+                            cell.setup(title: self.myAccountSecurities[indexPath.row - 1].pchs_avg_pric)
+                        }else {
+                            cell.setup(title: self.myOverseasSecurities[indexPath.row - 1].avg_unpr3)
+                        }
                     }
+                    else{
+                        if self.isDomestic{
+                            cell.setup(title: self.myDomesticAgreement[indexPath.row - 1].ord_dvsn_cd)
+                        }else {
+                            cell.setup(title: self.myOverseasAgreement[indexPath.row - 1].odno)
+                        }
+                    }
+                    
                     // 현재가
                 case 7:
-                    if self.isDomestic{
-                        cell.setup(title: self.myAccountSecurities[indexPath.row - 1].prpr)
-                    }else {
-                        cell.setup(title: self.myOverseasSecurities[indexPath.row - 1].ovrs_now_pric1)
+                    if collectionView.tag == 1{
+                        if self.isDomestic{
+                            cell.setup(title: self.myAccountSecurities[indexPath.row - 1].prpr)
+                        }else {
+                            cell.setup(title: self.myOverseasSecurities[indexPath.row - 1].ovrs_now_pric1)
+                        }
                     }
+                    else{
+                        if self.isDomestic{
+                            cell.setup(title: self.myDomesticAgreement[indexPath.row - 1].odno)
+                        }else {
+                            cell.setup(title: self.myOverseasAgreement[indexPath.row - 1].ord_dt)
+                        }
+                    }
+                    
                     
                     // 등락률
                 case 8:
-                    if self.isDomestic{
-                        cell.setup(title: self.myAccountSecurities[indexPath.row - 1].fltt_rt)
-                    }else {
-                        cell.setup(title: self.myOverseasSecurities[indexPath.row - 1].ovrs_excg_cd)
+                    if collectionView.tag == 1{
+                        if self.isDomestic{
+                            cell.setup(title: self.myAccountSecurities[indexPath.row - 1].fltt_rt)
+                        }else {
+                            cell.setup(title: self.myOverseasSecurities[indexPath.row - 1].ovrs_excg_cd)
+                        }
                     }
+                    else{
+                        if self.isDomestic{
+                            cell.setup(title: self.myDomesticAgreement[indexPath.row - 1].ord_dt)
+                        }else {
+                            cell.setup(title: self.myOverseasAgreement[indexPath.row - 1].ord_tmd)
+                        }
+                    }
+                    
                     
                     //금일 매수
                 case 9:
-                    if self.isDomestic{
-                        cell.setup(title: self.myAccountSecurities[indexPath.row - 1].thdt_buyqty)
-                    }else {
-                        cell.setup(title: self.myOverseasSecurities[indexPath.row - 1].ovrs_excg_cd)
+                    if collectionView.tag == 1{
+                        if self.isDomestic{
+                            cell.setup(title: self.myAccountSecurities[indexPath.row - 1].thdt_buyqty)
+                        }else {
+                            cell.setup(title: self.myOverseasSecurities[indexPath.row - 1].ovrs_excg_cd)
+                        }
                     }
+                    else{
+                        if self.isDomestic{
+                            cell.setup(title: self.myDomesticAgreement[indexPath.row - 1].ord_tmd)
+                        }else {
+                            cell.setup(title: self.myOverseasAgreement[indexPath.row - 1].ord_tmd)
+                        }
+                    }
+                    
                     
                     //금일 매도
                 default:
-                    if self.isDomestic{
-                        cell.setup(title: self.myAccountSecurities[indexPath.row - 1].thdt_sll_qty)
-                    }else {
-                        cell.setup(title: self.myOverseasSecurities[indexPath.row - 1].ovrs_excg_cd)
+                    if collectionView.tag == 1{
+                        if self.isDomestic{
+                            cell.setup(title: self.myAccountSecurities[indexPath.row - 1].thdt_sll_qty)
+                        }else {
+                            cell.setup(title: self.myOverseasSecurities[indexPath.row - 1].ovrs_excg_cd)
+                        }
+                    }
+                    else{
+                        if self.isDomestic{
+                            cell.setup(title: self.myDomesticAgreement[indexPath.row - 1].ord_tmd)
+                        }else {
+                            cell.setup(title: self.myOverseasAgreement[indexPath.row - 1].ord_tmd)
+                        }
                     }
                 }
                 return cell
@@ -867,7 +1020,7 @@ extension MyAccountViewController: UICollectionViewDataSource, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if collectionView.tag == 0{
+        if collectionView.tag == 0 || collectionView.tag == 2 {
             return CGSize(width: UIScreen.main.bounds.width  / 3, height: 44)
         }
         else {
@@ -1051,8 +1204,8 @@ extension MyAccountViewController {
                     print()
                     
                     //보유종목 부분 update
-//                    self.securityNameCollectionView.reloadData()
-//                    self.securityCollectionView.reloadData()
+                    self.agreementNameCollectionView.reloadData()
+                    self.agreementCollectionView.reloadData()
                     
         }.resume()
     }
@@ -1070,7 +1223,7 @@ extension MyAccountViewController {
 //        print()
         
         
-        AF.request(url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed.union( CharacterSet(["%"]))) ?? "",
+        AF.request(url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "" ,
                    method: .get,
                    headers: ["content-type": "application/json; charset=utf-8",
                                              "authorization": accessToken,
@@ -1078,7 +1231,7 @@ extension MyAccountViewController {
                                              "appsecret": UserDefaults.standard.string(forKey: "appSecretKey")!,
                                              "tr_id": "TTTS3035R"]
                    )
-                .responseDecodable(of: DomesticAgreementTotalDto.self){ [weak self] response in
+                .responseDecodable(of: OverseasAgreementTotalDto.self){ [weak self] response in
                                 // success 이외의 응답을 받으면, else문에 걸려 함수 종료
                                 guard
                                     let self = self,
@@ -1087,18 +1240,18 @@ extension MyAccountViewController {
                                     print(response)
                                     return }
                                 //데이터 받아옴
-                    self.myDomesticAgreement = data.output1.map{ obj -> DomesticAgreementDetail in
-                        let now = DomesticAgreementDetail(prdt_name: obj.prdt_name, sll_buy_dvsn_cd_name: obj.sll_buy_dvsn_cd_name, sll_buy_dvsn_cd: obj.sll_buy_dvsn_cd, ord_qty: obj.ord_qty, avg_prvs: obj.avg_prvs, tot_ccld_qty: obj.tot_ccld_qty, tot_ccld_amt: obj.tot_ccld_amt, ord_dvsn_cd: obj.ord_dvsn_cd, odno: obj.odno, ord_dt: obj.ord_dt, ord_tmd: obj.ord_tmd)
+                    self.myOverseasAgreement = data.output.map{ obj -> OverseasAgreementDetail in
+                        let now = OverseasAgreementDetail(prdt_name: obj.prdt_name, sll_buy_dvsn_cd_name: obj.sll_buy_dvsn_cd_name, sll_buy_dvsn_cd: obj.sll_buy_dvsn_cd, ft_ord_qty: obj.ft_ord_qty, ft_ccld_unpr3: obj.ft_ccld_unpr3, ft_ccld_qty: obj.ft_ccld_qty, ft_ccld_amt3: obj.ft_ccld_amt3, odno: obj.odno, ord_dt: obj.ord_dt, ord_tmd: obj.ord_tmd)
                         return now
                     }
-                    print("myDomesticAgreement 갱신 후")
-                    print(self.myDomesticAgreement)
+                    print("myOverseasAgreement 갱신 후")
+                    print(self.myOverseasAgreement)
                     print()
                     print()
                     
                     //보유종목 부분 update
-//                    self.securityNameCollectionView.reloadData()
-//                    self.securityCollectionView.reloadData()
+                    self.agreementNameCollectionView.reloadData()
+                    self.agreementCollectionView.reloadData()
                     
         }.resume()
     }
