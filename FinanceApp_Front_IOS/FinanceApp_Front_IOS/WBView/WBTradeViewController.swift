@@ -53,6 +53,13 @@ class WBTradeViewController: UIViewController {
             return
         }else{
             self.isOverseas = true
+            self.securityTextField.text = ""
+            self.tickerTextField.text = ""
+            self.quantityTextField.text = ""
+            self.formulaTextField.text = ""
+            self.designatedTextField.text = ""
+            self.securityTextField.isEnabled = false
+            self.tickerTextField.isEnabled = false
             overseasButton.layer.borderWidth = 3.0
             overseasButton.layer.borderColor = UIColor(red: 253/255.0, green: 166/255.0, blue: 166/255.0, alpha: 1.0).cgColor
             
@@ -84,6 +91,14 @@ class WBTradeViewController: UIViewController {
             
             overseasButton.layer.borderWidth = 1.0
             overseasButton.layer.borderColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0).cgColor
+            //국내이므로 수정 가능하게 해줘야함
+            self.securityTextField.text = ""
+            self.tickerTextField.text = ""
+            self.quantityTextField.text = ""
+            self.formulaTextField.text = ""
+            self.designatedTextField.text = ""
+            self.securityTextField.isEnabled = true
+            self.tickerTextField.isEnabled = true
         }else{
             return
         }
@@ -97,7 +112,7 @@ class WBTradeViewController: UIViewController {
         return label
     }()
     
-    private lazy var securityValueLabel: UITextField = {
+    private lazy var securityTextField: UITextField = {
         let tf = UITextField()
         tf.layer.borderWidth = 2.0
         tf.layer.borderColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0).cgColor
@@ -119,7 +134,7 @@ class WBTradeViewController: UIViewController {
         return label
     }()
     
-    private lazy var tickerValueLabel: UITextField = {
+    private lazy var tickerTextField: UITextField = {
         let tf = UITextField()
         tf.layer.borderWidth = 2.0
         tf.layer.borderColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0).cgColor
@@ -258,6 +273,7 @@ class WBTradeViewController: UIViewController {
         view.backgroundColor = .white
         //navigationBar 숨기기는 viewDidLoad에서 해줘야한다.
         self.navigationController?.isNavigationBarHidden = true
+        
         layout()
     }
     
@@ -268,6 +284,8 @@ class WBTradeViewController: UIViewController {
         self.overseasButton.layer.borderColor = UIColor(red: 253/255.0, green: 166/255.0, blue: 166/255.0, alpha: 1.0).cgColor
         self.domesticButton.layer.borderWidth = 1.0
         self.domesticButton.layer.borderColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0).cgColor
+        self.securityTextField.isEnabled = false
+        self.tickerTextField.isEnabled = false
         
         
     }
@@ -275,7 +293,7 @@ class WBTradeViewController: UIViewController {
 
     private func layout(){
         
-        [redUIView,  securityNameLabel, securityValueLabel, tickerNameLabel, tickerValueLabel, buyButton, sellButton, quantityLabel, quantityTextField, formulaLabel, formulaTextField, designatedLabel, designatedTextField].forEach{
+        [redUIView,  securityNameLabel, securityTextField, tickerNameLabel, tickerTextField, buyButton, sellButton, quantityLabel, quantityTextField, formulaLabel, formulaTextField, designatedLabel, designatedTextField].forEach{
             view.addSubview($0)
         }
         
@@ -318,7 +336,7 @@ class WBTradeViewController: UIViewController {
             $0.leading.equalToSuperview().inset(20)
         }
         
-        securityValueLabel.snp.makeConstraints{
+        securityTextField.snp.makeConstraints{
             $0.top.equalTo(redUIView.snp.bottom).offset(10)
             $0.height.equalTo(40)
             $0.width.equalTo(120)
@@ -333,7 +351,7 @@ class WBTradeViewController: UIViewController {
             $0.leading.equalToSuperview().inset(20)
         }
         
-        tickerValueLabel.snp.makeConstraints{
+        tickerTextField.snp.makeConstraints{
             $0.top.equalTo(securityNameLabel.snp.bottom).offset(8)
             $0.height.equalTo(40)
             $0.width.equalTo(120)
@@ -403,8 +421,8 @@ class WBTradeViewController: UIViewController {
     
     func setup(security: SecurityForRecommend){
         self.nowSecurity = security
-        securityValueLabel.text = security.securityName
-        tickerValueLabel.text = security.sector
+        securityTextField.text = security.securityName
+        tickerTextField.text = security.sector
     }
     //키보드 내리기
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
