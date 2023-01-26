@@ -16,51 +16,121 @@ class WBTradeViewController: UIViewController {
     
     private var nowSecurity: SecurityForRecommend?
     
+    private var isOverseas: Bool = true
+    
     // ------------------------------------------------------- variables ------------------------------------------------------ //
     
     
     
     // ------------------------------------------------------- UI Components ------------------------------------------------------ //
     
+    private lazy var redUIView: UIView = {
+        let uiview = UIView()
+        uiview.backgroundColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0)
+        uiview.layer.borderWidth = 1.0
+        uiview.layer.borderColor = UIColor.lightGray.cgColor
+        uiview.layer.cornerRadius = 4.0
+        return uiview
+    }()
+    
+    
+    private lazy var overseasButton: UIButton = {
+        let btn = UIButton()
+        btn.setTitle("해외", for: .normal)
+        //이렇게 두가지를 선택/해제시에 바꿔줌
+        btn.layer.borderWidth = 3.0
+        btn.layer.borderColor = UIColor(red: 253/255.0, green: 166/255.0, blue: 166/255.0, alpha: 1.0).cgColor
+        //이렇게 두가지를 선택/해제시에 바꿔줌
+        btn.layer.cornerRadius = 6.0
+        btn.backgroundColor = .white
+        btn.setTitleColor(.black, for: .normal)
+        btn.addTarget(self, action: #selector(overseasButtonClicked), for: .touchUpInside)
+        return btn
+    }()
+    @objc func overseasButtonClicked(){
+        print("해외 버튼 클릭")
+        if self.isOverseas{
+            return
+        }else{
+            self.isOverseas = true
+            overseasButton.layer.borderWidth = 3.0
+            overseasButton.layer.borderColor = UIColor(red: 253/255.0, green: 166/255.0, blue: 166/255.0, alpha: 1.0).cgColor
+            
+            domesticButton.layer.borderWidth = 1.0
+            domesticButton.layer.borderColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0).cgColor
+        }
+    }
+    
+    private lazy var domesticButton: UIButton = {
+        let btn = UIButton()
+        btn.setTitle("국내", for: .normal)
+        //이렇게 두가지를 선택/해제시에 바꿔줌
+        btn.layer.borderWidth = 1.0
+        btn.layer.borderColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0).cgColor
+        //이렇게 두가지를 선택/해제시에 바꿔줌
+        btn.layer.cornerRadius = 6.0
+        btn.backgroundColor = .white
+        btn.setTitleColor(.black, for: .normal)
+        btn.addTarget(self, action: #selector(domesticButtonClicked), for: .touchUpInside)
+        return btn
+    }()
    
+    @objc func domesticButtonClicked(){
+        print("국내 버튼 클릭")
+        if self.isOverseas{
+            self.isOverseas = false
+            domesticButton.layer.borderWidth = 3.0
+            domesticButton.layer.borderColor = UIColor(red: 253/255.0, green: 166/255.0, blue: 166/255.0, alpha: 1.0).cgColor
+            
+            overseasButton.layer.borderWidth = 1.0
+            overseasButton.layer.borderColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0).cgColor
+        }else{
+            return
+        }
+        
+    }
     private lazy var securityNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "종목명"
+        label.text = "종목명  :"
         label.textColor = .black
-        label.layer.borderWidth = 1.0
-        label.layer.borderColor = UIColor.magenta.cgColor
-        label.layer.cornerRadius = 6.0
+        label.font = .systemFont(ofSize: 16, weight: .bold)
         return label
     }()
     
-    private lazy var securityValueLabel: UILabel = {
-        let label = UILabel()
-        label.text = ""
-        label.textColor = .black
-        label.layer.borderWidth = 1.0
-        label.layer.borderColor = UIColor.magenta.cgColor
-        label.layer.cornerRadius = 6.0
-        return label
+    private lazy var securityValueLabel: UITextField = {
+        let tf = UITextField()
+        tf.layer.borderWidth = 2.0
+        tf.layer.borderColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0).cgColor
+        tf.layer.cornerRadius = 10.0
+        tf.backgroundColor = .systemBackground
+        tf.placeholder = "종목명 입력"
+        //textField 앞에 inset을 줘서 text가 자연스럽게 보이도록
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: tf.frame.height))
+        tf.leftView = paddingView
+        tf.leftViewMode = .always
+        return tf
     }()
     
     private lazy var tickerNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "종목코드"
+        label.text = "종목코드  :"
         label.textColor = .black
-        label.layer.borderWidth = 1.0
-        label.layer.borderColor = UIColor.magenta.cgColor
-        label.layer.cornerRadius = 6.0
+        label.font = .systemFont(ofSize: 16, weight: .bold)
         return label
     }()
     
-    private lazy var tickerValueLabel: UILabel = {
-        let label = UILabel()
-        label.text = ""
-        label.textColor = .black
-        label.layer.borderWidth = 1.0
-        label.layer.borderColor = UIColor.magenta.cgColor
-        label.layer.cornerRadius = 6.0
-        return label
+    private lazy var tickerValueLabel: UITextField = {
+        let tf = UITextField()
+        tf.layer.borderWidth = 2.0
+        tf.layer.borderColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0).cgColor
+        tf.layer.cornerRadius = 10.0
+        tf.backgroundColor = .systemBackground
+        tf.placeholder = "종목코드 입력"
+        //textField 앞에 inset을 줘서 text가 자연스럽게 보이도록
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: tf.frame.height))
+        tf.leftView = paddingView
+        tf.leftViewMode = .always
+        return tf
     }()
     
     private lazy var buyButton: UIButton = {
@@ -79,7 +149,8 @@ class WBTradeViewController: UIViewController {
     
     @objc func domesticBuyStockClicked(){
         print("호출!")
-        domesticBuyStock()
+        
+//        domesticBuyStock()
     }
     
     private lazy var sellButton: UIButton = {
@@ -96,40 +167,76 @@ class WBTradeViewController: UIViewController {
     
     private lazy var quantityLabel: UILabel = {
         let label = UILabel()
-        label.text = "수량 : "
+        label.text = "수량  :"
         label.textColor = .black
-        label.layer.borderWidth = 1.0
-        label.layer.borderColor = UIColor.magenta.cgColor
-        label.layer.cornerRadius = 6.0
+        label.font = .systemFont(ofSize: 16, weight: .bold)
         return label
     }()
     
     private lazy var quantityTextField: UITextField = {
         let tf = UITextField()
-        tf.layer.borderWidth = 1.0
-        tf.layer.borderColor = UIColor.magenta.cgColor
-        tf.layer.cornerRadius = 6.0
+        tf.layer.borderWidth = 2.0
+        tf.layer.borderColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0).cgColor
+        tf.layer.cornerRadius = 10.0
+        tf.backgroundColor = .systemBackground
+        tf.placeholder = "수량 입력"
+        //textField 앞에 inset을 줘서 text가 자연스럽게 보이도록
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: tf.frame.height))
+        tf.leftView = paddingView
+        tf.leftViewMode = .always
         return tf
     }()
     
     private lazy var formulaLabel: UILabel = {
         let label = UILabel()
-        label.text = "호가 : "
+        label.text = "호가  :"
         label.textColor = .black
-        label.layer.borderWidth = 1.0
-        label.layer.borderColor = UIColor.magenta.cgColor
-        label.layer.cornerRadius = 6.0
+        label.font = .systemFont(ofSize: 16, weight: .bold)
         return label
     }()
     
     private lazy var formulaTextField: UITextField = {
         let tf = UITextField()
-        tf.layer.borderWidth = 1.0
-        tf.layer.borderColor = UIColor.magenta.cgColor
-        tf.layer.cornerRadius = 6.0
+        tf.layer.borderWidth = 2.0
+        tf.layer.borderColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0).cgColor
+        tf.layer.cornerRadius = 10.0
+        tf.backgroundColor = .systemBackground
+        tf.placeholder = "호가방식 선택"
+        //textField 앞에 inset을 줘서 text가 자연스럽게 보이도록
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: tf.frame.height))
+        tf.leftView = paddingView
+        tf.leftViewMode = .always
         return tf
     }()
     
+    private lazy var designatedLabel: UILabel = {
+        let label = UILabel()
+        label.text = "지정가  :"
+        label.textColor = .black
+        label.font = .systemFont(ofSize: 16, weight: .bold)
+        return label
+    }()
+    
+    private lazy var designatedTextField: UITextField = {
+        let tf = UITextField()
+        tf.layer.borderWidth = 2.0
+        tf.layer.borderColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0).cgColor
+        tf.layer.cornerRadius = 10.0
+        tf.backgroundColor = .systemBackground
+        tf.placeholder = "지정가 입력"
+        //textField 앞에 inset을 줘서 text가 자연스럽게 보이도록
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: tf.frame.height))
+        tf.leftView = paddingView
+        tf.leftViewMode = .always
+        return tf
+    }()
+    
+    //가운데 border 바
+    let borderView: UIView = {
+        let v = UIView()
+        v.backgroundColor = .lightGray
+        return v
+    }()
     
     
     // ------------------------------------------------------- UI Components ------------------------------------------------------ //
@@ -151,87 +258,146 @@ class WBTradeViewController: UIViewController {
         view.backgroundColor = .white
         //navigationBar 숨기기는 viewDidLoad에서 해줘야한다.
         self.navigationController?.isNavigationBarHidden = true
-        attribute()
         layout()
     }
     
-    private func attribute(){
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        self.isOverseas = true
+        self.overseasButton.layer.borderWidth = 3.0
+        self.overseasButton.layer.borderColor = UIColor(red: 253/255.0, green: 166/255.0, blue: 166/255.0, alpha: 1.0).cgColor
+        self.domesticButton.layer.borderWidth = 1.0
+        self.domesticButton.layer.borderColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0).cgColor
+        
         
     }
+    
 
     private func layout(){
-        [securityNameLabel, securityValueLabel, tickerNameLabel, tickerValueLabel, buyButton, sellButton, quantityLabel, quantityTextField, formulaLabel, formulaTextField].forEach{
+        
+        [redUIView,  securityNameLabel, securityValueLabel, tickerNameLabel, tickerValueLabel, buyButton, sellButton, quantityLabel, quantityTextField, formulaLabel, formulaTextField, designatedLabel, designatedTextField].forEach{
             view.addSubview($0)
         }
+        
+        redUIView.snp.makeConstraints{
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(30)
+            $0.leading.equalToSuperview().inset(20)
+            $0.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(60)
+        }
+        [borderView, overseasButton, domesticButton ].forEach{
+            redUIView.addSubview($0)
+        }
+        borderView.snp.makeConstraints{
+            $0.height.equalTo(40)
+            $0.width.equalTo(2)
+            $0.centerX.equalTo(view.snp.centerX)
+            $0.centerY.equalToSuperview()
+        }
+        
+        overseasButton.snp.makeConstraints{
+            $0.width.equalTo((UIScreen.main.bounds.width / 2) - 50)
+            $0.height.equalTo(40)
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalTo(borderView.snp.leading).offset(-10)
+        }
+
+        domesticButton.snp.makeConstraints{
+            $0.width.equalTo((UIScreen.main.bounds.width / 2) - 50)
+            $0.height.equalTo(40)
+            $0.centerY.equalToSuperview()
+            $0.leading.equalTo(borderView.snp.trailing).offset(10)
+        }
+        
+    
 
         securityNameLabel.snp.makeConstraints{
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(30)
+            $0.top.equalTo(redUIView.snp.bottom).offset(10)
             $0.height.equalTo(40)
             $0.width.equalTo(120)
             $0.leading.equalToSuperview().inset(20)
         }
         
         securityValueLabel.snp.makeConstraints{
-            $0.top.equalTo(securityNameLabel.snp.top)
+            $0.top.equalTo(redUIView.snp.bottom).offset(10)
             $0.height.equalTo(40)
             $0.width.equalTo(120)
-            $0.leading.equalTo(securityNameLabel.snp.trailing).offset(30)
+            $0.leading.equalTo(view.snp.trailing).inset( UIScreen.main.bounds.width * 3 / 4)
+            $0.trailing.equalToSuperview().inset(20)
         }
         
         tickerNameLabel.snp.makeConstraints{
-            $0.top.equalTo(securityNameLabel.snp.bottom).offset(20)
+            $0.top.equalTo(securityNameLabel.snp.bottom).offset(8)
             $0.height.equalTo(40)
             $0.width.equalTo(120)
             $0.leading.equalToSuperview().inset(20)
         }
         
         tickerValueLabel.snp.makeConstraints{
-            $0.top.equalTo(securityNameLabel.snp.bottom).offset(20)
+            $0.top.equalTo(securityNameLabel.snp.bottom).offset(8)
             $0.height.equalTo(40)
             $0.width.equalTo(120)
-            $0.leading.equalTo(tickerNameLabel.snp.trailing).offset(30)
+            $0.leading.equalTo(view.snp.trailing).inset( UIScreen.main.bounds.width * 3 / 4)
+            $0.trailing.equalToSuperview().inset(20)
         }
         
         buyButton.snp.makeConstraints{
-            $0.top.equalTo(tickerNameLabel.snp.bottom).offset(20)
+            $0.top.equalTo(tickerNameLabel.snp.bottom).offset(10)
             $0.height.equalTo(60)
             $0.width.equalTo(UIScreen.main.bounds.width / 2 - 20)
             $0.leading.equalToSuperview().inset(10)
         }
         
         sellButton.snp.makeConstraints{
-            $0.top.equalTo(tickerNameLabel.snp.bottom).offset(20)
+            $0.top.equalTo(tickerNameLabel.snp.bottom).offset(10)
             $0.height.equalTo(60)
             $0.width.equalTo(UIScreen.main.bounds.width / 2 - 20)
             $0.leading.equalTo(buyButton.snp.trailing).offset(20)
         }
         
         quantityLabel.snp.makeConstraints{
-            $0.top.equalTo(buyButton.snp.bottom).offset(20)
+            $0.top.equalTo(buyButton.snp.bottom).offset(10)
             $0.height.equalTo(40)
             $0.width.equalTo(120)
             $0.leading.equalToSuperview().inset(20)
         }
         
         quantityTextField.snp.makeConstraints{
-            $0.top.equalTo(buyButton.snp.bottom).offset(20)
+            $0.top.equalTo(buyButton.snp.bottom).offset(10)
             $0.height.equalTo(40)
             $0.width.equalTo(120)
-            $0.leading.equalTo(quantityLabel.snp.trailing).offset(30)
+            $0.leading.equalTo(view.snp.trailing).inset( UIScreen.main.bounds.width * 3 / 4)
+            $0.trailing.equalToSuperview().inset(20)
         }
         
         formulaLabel.snp.makeConstraints{
-            $0.top.equalTo(quantityLabel.snp.bottom).offset(20)
+            $0.top.equalTo(quantityLabel.snp.bottom).offset(8)
             $0.height.equalTo(40)
             $0.width.equalTo(120)
             $0.leading.equalToSuperview().inset(20)
         }
         
         formulaTextField.snp.makeConstraints{
-            $0.top.equalTo(quantityLabel.snp.bottom).offset(20)
+            $0.top.equalTo(quantityLabel.snp.bottom).offset(8)
             $0.height.equalTo(40)
             $0.width.equalTo(120)
-            $0.leading.equalTo(formulaLabel.snp.trailing).offset(30)
+            $0.leading.equalTo(view.snp.trailing).inset( UIScreen.main.bounds.width * 3 / 4)
+            $0.trailing.equalToSuperview().inset(20)
+        }
+        
+        designatedLabel.snp.makeConstraints{
+            $0.top.equalTo(formulaLabel.snp.bottom).offset(8)
+            $0.height.equalTo(40)
+            $0.width.equalTo(120)
+            $0.leading.equalToSuperview().inset(20)
+        }
+        
+        designatedTextField.snp.makeConstraints{
+            $0.top.equalTo(formulaLabel.snp.bottom).offset(8)
+            $0.height.equalTo(40)
+            $0.width.equalTo(120)
+            $0.leading.equalTo(view.snp.trailing).inset( UIScreen.main.bounds.width * 3 / 4)
+            $0.trailing.equalToSuperview().inset(20)
         }
     }
     
@@ -248,7 +414,7 @@ class WBTradeViewController: UIViewController {
 
 
 extension WBTradeViewController{
-    
+    // 국내주식 매수
     private func domesticBuyStock(){
         let url = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/trading/order-cash"
         var request = URLRequest(url: URL(string: url)!)
@@ -280,5 +446,20 @@ extension WBTradeViewController{
             self.navigationController?.dismiss(animated: true)
         }
         .resume()
+    }
+    
+    // 국내주식 매도
+    private func domesticSellStock(){
+        
+    }
+    
+    // 해외주식 매수
+    private func overSeasBuyStock(){
+        
+    }
+    
+    // 해외주식 매도
+    private func overSeasSellStock(){
+        
     }
 }

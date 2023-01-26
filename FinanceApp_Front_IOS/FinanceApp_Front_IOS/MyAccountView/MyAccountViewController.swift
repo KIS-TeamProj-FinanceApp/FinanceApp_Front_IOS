@@ -329,6 +329,8 @@ class MyAccountViewController: UIViewController {
         requestAPI_Domestic()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+            //1. 현재의 틱 (self.isDomestic)에 따라 viewController 최상단 HeaderView를 업데이트)
+            self.myAccountHeader.setup(isDomestic: self.isDomestic)
             self.cvStackView.snp.updateConstraints{
                 $0.height.equalTo(44 * (self.myAccountSecurities.count + 1) )
             }
@@ -345,6 +347,8 @@ class MyAccountViewController: UIViewController {
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+            //1. 현재의 틱 (self.isDomestic)에 따라 viewController 최상단 HeaderView를 업데이트)
+            self.myAccountHeader.setup(isDomestic: self.isDomestic)
             //국내면
             if self.isDomestic{
                 self.cvStackView.snp.updateConstraints{
