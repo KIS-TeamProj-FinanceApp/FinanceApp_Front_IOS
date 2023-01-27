@@ -120,7 +120,7 @@ final class AppkeyInputViewController: UIViewController {
         postTest()
         
         print("화면 띄우기 전")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1){
             print("화면 띄우기! dispatchQueue에 들어옴")
             print("차트 조회 버튼 클릭")
            

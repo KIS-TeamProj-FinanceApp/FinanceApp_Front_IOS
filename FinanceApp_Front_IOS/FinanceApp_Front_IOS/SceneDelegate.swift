@@ -17,8 +17,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = UIWindow(windowScene: windowScene)
         
         window?.backgroundColor = .systemBackground
-        window?.rootViewController = UINavigationController(rootViewController: AccountExistenceViewController())
-//        window?.rootViewController = MainTabBarController()
+        
+        if UserDefaults.standard.string(forKey: "accessToken") != nil && UserDefaults.standard.string(forKey: "appkey") != nil && UserDefaults.standard.string(forKey: "appsecret") != nil && UserDefaults.standard.string(forKey: "name") != nil && UserDefaults.standard.string(forKey: "acntNoFront") != nil && UserDefaults.standard.string(forKey: "acntNoBack") != nil {
+            window?.rootViewController = MainTabBarController()
+        }
+        else{
+            window?.rootViewController = UINavigationController(rootViewController: AccountExistenceViewController())
+        }
+        
+
         window?.makeKeyAndVisible()
     }
 

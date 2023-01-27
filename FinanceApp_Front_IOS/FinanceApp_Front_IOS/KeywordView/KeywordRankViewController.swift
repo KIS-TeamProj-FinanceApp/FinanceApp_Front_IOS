@@ -208,7 +208,7 @@ extension KeywordRankViewController {
     private func searchKeyword(searchWord: String){
         print("getSearchword 호출" + searchWord)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1){
             print("정보 다 받아왔나?")
             print("차트 조회 버튼 클릭")
             // SwiftUI View를 출력하려면 UIHostingController로 감싸서 띄워야한다.

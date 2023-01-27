@@ -1063,7 +1063,7 @@ extension MyAccountViewController {
                    headers: ["content-type": "application/json; charset=utf-8",
                                              "authorization": UserDefaults.standard.string(forKey: "accessToken")!,
                                              "appkey": UserDefaults.standard.string(forKey: "appkey")!,
-                                             "appsecret": UserDefaults.standard.string(forKey: "appSecretKey")!,
+                                             "appsecret": UserDefaults.standard.string(forKey: "appsecret")!,
                                              "tr_id": "TTTC8434R"]
                    )
                 .responseDecodable(of: MyAccountTotalDto.self){ [weak self] response in
@@ -1132,7 +1132,7 @@ extension MyAccountViewController {
                    headers: ["content-type": "application/json; charset=utf-8",
                                              "authorization": UserDefaults.standard.string(forKey: "accessToken")!,
                                              "appkey": UserDefaults.standard.string(forKey: "appkey")!,
-                                             "appsecret": UserDefaults.standard.string(forKey: "appSecretKey")!,
+                                             "appsecret": UserDefaults.standard.string(forKey: "appsecret")!,
                                              "tr_id": "CTRP6504R"]
                    )
                 .responseDecodable(of: MyOverseasTotalDto.self){ [weak self] response in
@@ -1180,7 +1180,7 @@ extension MyAccountViewController {
   //국내 체결내역 호출
     private func requestAPI_DomesticAgreement(){
         
-        let url = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/trading/inquire-daily-ccld?CANO=73085780&ACNT_PRDT_CD=01&INQR_STRT_DT=20230123&INQR_END_DT=20230127&SLL_BUY_DVSN_CD=00&INQR_DVSN=01&PDNO&CCLD_DVSN=00&ORD_GNO_BRNO&ODNO&INQR_DVSN_3=00&INQR_DVSN_1&CTX_AREA_FK100&CTX_AREA_NK100"
+        let url = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/trading/inquire-daily-ccld?CANO=73085780&ACNT_PRDT_CD=01&INQR_STRT_DT=20230123&INQR_END_DT=20230127&SLL_BUY_DVSN_CD=00&INQR_DVSN=00&PDNO&CCLD_DVSN=00&ORD_GNO_BRNO&ODNO&INQR_DVSN_3=00&INQR_DVSN_1&CTX_AREA_FK100&CTX_AREA_NK100"
         
 //        print("지금 만든 url = " + (url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed.union( CharacterSet(["%"]))) ?? "") )
 //        print("access Token = " + UserDefaults.standard.string(forKey: "accessToken")!)
@@ -1195,7 +1195,7 @@ extension MyAccountViewController {
                    headers: ["content-type": "application/json; charset=utf-8",
                                              "authorization": UserDefaults.standard.string(forKey: "accessToken")!,
                                              "appkey": UserDefaults.standard.string(forKey: "appkey")!,
-                                             "appsecret": UserDefaults.standard.string(forKey: "appSecretKey")!,
+                                             "appsecret": UserDefaults.standard.string(forKey: "appsecret")!,
                                              "tr_id": "TTTC8001R"]
                    )
                 .responseDecodable(of: DomesticAgreementTotalDto.self){ [weak self] response in
@@ -1226,7 +1226,7 @@ extension MyAccountViewController {
     //해외 체결내역 호출
     private func requestAPI_OverseasAgreement(){
         
-        let url = "https://openapi.koreainvestment.com:9443/uapi/overseas-stock/v1/trading/inquire-ccnl?CANO=73085780&ACNT_PRDT_CD=01&PDNO=%&ORD_STRT_DT=20230123&ORD_END_DT=20230127&SLL_BUY_DVSN=00&CCLD_NCCS_DVSN=00&OVRS_EXCG_CD=%&SORT_SQN=DS&ORD_DT&ORD_GNO_BRNO&ODNO&CTX_AREA_NK200&CTX_AREA_FK200"
+        let url = "https://openapi.koreainvestment.com:9443/uapi/overseas-stock/v1/trading/inquire-ccnl?CANO=73085780&ACNT_PRDT_CD=01&PDNO=%&ORD_STRT_DT=20230123&ORD_END_DT=20230127&SLL_BUY_DVSN=00&CCLD_NCCS_DVSN=00&OVRS_EXCG_CD=%&SORT_SQN=AS&ORD_DT&ORD_GNO_BRNO&ODNO&CTX_AREA_NK200&CTX_AREA_FK200"
         
 //        print("지금 만든 url = " + (url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed.union( CharacterSet(["%"]))) ?? "") )
 //        print("access Token = " + UserDefaults.standard.string(forKey: "accessToken")!)
@@ -1241,7 +1241,7 @@ extension MyAccountViewController {
                    headers: ["content-type": "application/json; charset=utf-8",
                                              "authorization": UserDefaults.standard.string(forKey: "accessToken")!,
                                              "appkey": UserDefaults.standard.string(forKey: "appkey")!,
-                                             "appsecret": UserDefaults.standard.string(forKey: "appSecretKey")!,
+                                             "appsecret": UserDefaults.standard.string(forKey: "appsecret")!,
                                              "tr_id": "TTTS3035R"]
                    )
                 .responseDecodable(of: OverseasAgreementTotalDto.self){ [weak self] response in
