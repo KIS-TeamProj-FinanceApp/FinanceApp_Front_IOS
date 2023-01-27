@@ -56,10 +56,24 @@ struct TradingGraphViewController: View {
                 
                 Toggle("Line Graph", isOn: $isLineGraph)
                     .padding(.top)
+                Text("Hello@!")
+                    .font(.largeTitle)
+                HStack{
+                    Text("lll")
+                        .font(.headline)
+                        .foregroundColor(.red)
+                    Text("bbb")
+                    Text("bbb")
+                }
+                Button(action: buttonPressed){
+                    Text("Click Here")
+                }
+                
+               
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             .padding()
-            .navigationTitle("Swift Charts")
+            .navigationTitle("Trading")
             //MARK: Simply Updating values for segmented Tabs
             .onChange(of: currentTab){ newValue in
                 sampleAnalytics = sample_analytics
@@ -180,6 +194,9 @@ struct TradingGraphViewController: View {
         .onAppear{
             animateGraph()
         }
+    }
+    func buttonPressed(){
+        print("clickclick")
     }
     // MARK: Animating Graph
     func animateGraph(fromChange: Bool = false){

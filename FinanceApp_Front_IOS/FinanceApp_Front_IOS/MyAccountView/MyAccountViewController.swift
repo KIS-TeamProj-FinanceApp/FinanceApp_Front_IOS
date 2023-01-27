@@ -37,6 +37,10 @@ class MyAccountViewController: UIViewController {
     
     
     private var isDomestic: Bool = true
+    //주식잔고 선택한 것
+    private var isBalance: Bool = true
+    // 종목별 선택한 것
+    private var isSector: Bool = true
    
     //계좌 관련 columns
     private let myAccountColumns: [String] = ["종목명", "종목코드", "평가손익", "수익률" ,"평가금액", "보유수량", "매입금액", "매입단가", "현재가", "등락률", "금일매수", "금일매도"]
@@ -160,15 +164,11 @@ class MyAccountViewController: UIViewController {
         return stackView
     }()
     
+    
+    
+    
     private let portfolioView = PortfolioView()
     
-    //collectionView 2개를 써야한다.
-    
-    
-//
-//    private let cvScrollView = UIScrollView()
-//    private let cvContentView = UIView()
-//
     private lazy var cvStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -226,6 +226,16 @@ class MyAccountViewController: UIViewController {
         
         return collectionView
     }()
+    
+    
+    private lazy var sectorUIView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemPink
+        return view
+    }()
+    
+    
+    
     
     private let agreementScrollView = UIScrollView()
     private let agreementContentView = UIView()
@@ -312,7 +322,15 @@ class MyAccountViewController: UIViewController {
     }
     
     @objc func balanceButtonClicked(){
+        self.isBalance = true
+        
         print("balanceButtonClicked button clicked")
+        self.isSector = false
+        self.stockButton.layer.borderWidth = 3.0
+        self.stockButton.layer.borderColor = UIColor(red: 253/255.0, green: 166/255.0, blue: 176/255.0, alpha: 1.0).cgColor
+        
+        self.sectorButton.layer.borderWidth = 1.0
+        self.sectorButton.layer.borderColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0).cgColor
         self.balanceButtonBottom.backgroundColor = .darkGray
         self.agreementButtonBottom.backgroundColor = .white
       
@@ -322,6 +340,7 @@ class MyAccountViewController: UIViewController {
         self.stockSectorStackView.isHidden = false
         self.portfolioView.isHidden = false
         self.cvStackView.isHidden = false
+        self.sectorUIView.isHidden = true
         self.agreementScrollView.isHidden = true
 //        self.cvStackView.snp.updateConstraints{
 //            $0.height.equalTo(44 * (self.myAccountSecurities.count + 1) )
@@ -329,6 +348,7 @@ class MyAccountViewController: UIViewController {
     }
     
     @objc func agreementButtonClicked(){
+        self.isBalance = false
         print("agreementButtonClicked button clicked")
         self.balanceButtonBottom.backgroundColor = .white
         self.agreementButtonBottom.backgroundColor = .darkGray
@@ -339,6 +359,7 @@ class MyAccountViewController: UIViewController {
         self.stockSectorStackView.isHidden = true
         self.portfolioView.isHidden = true
         self.cvStackView.isHidden = true
+        self.sectorUIView.isHidden = true
         self.agreementScrollView.isHidden = false
 //        self.cvStackView.snp.updateConstraints{
 //            $0.height.equalTo(44 * (self.myAccountSecurities.count + 1) )
@@ -347,20 +368,37 @@ class MyAccountViewController: UIViewController {
     
     @objc func stockButtonClicked(){
         print("stockButtonClicked button clicked")
+        self.isSector = false
         self.stockButton.layer.borderWidth = 3.0
         self.stockButton.layer.borderColor = UIColor(red: 253/255.0, green: 166/255.0, blue: 176/255.0, alpha: 1.0).cgColor
         
         self.sectorButton.layer.borderWidth = 1.0
         self.sectorButton.layer.borderColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0).cgColor
+        
+        //무조건 주식잔고가 선택되어있음!!
+        
+        self.portfolioView.isHidden = false
+        self.cvStackView.isHidden = false
+        self.sectorUIView.isHidden = true
+        self.agreementScrollView.isHidden = true
     }
     
     @objc func sectorButtonClicked(){
         print("sectorButtonClicked button clicked")
+        self.isSector = true
+        
         self.sectorButton.layer.borderWidth = 3.0
         self.sectorButton.layer.borderColor = UIColor(red: 253/255.0, green: 166/255.0, blue: 176/255.0, alpha: 1.0).cgColor
         
         self.stockButton.layer.borderWidth = 1.0
         self.stockButton.layer.borderColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0).cgColor
+        
+        //무조건 주식잔고가 선택되어있음!!
+        self.portfolioView.isHidden = true
+        self.cvStackView.isHidden = true
+        self.sectorUIView.isHidden = false
+        self.agreementScrollView.isHidden = true
+        
     }
     
    
@@ -394,6 +432,7 @@ class MyAccountViewController: UIViewController {
         agreementContentView.backgroundColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0)
         agreementStackView.backgroundColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0)
         self.agreementScrollView.isHidden = true
+        self.sectorUIView.isHidden = true
         layout()
         // Header쪽에서 refresh버튼 누르는 액션을 전달받기 위해
         NotificationCenter.default.addObserver(self, selector: #selector(refreshBtnClicked), name: .refreshMyAccount, object: nil)
@@ -583,7 +622,7 @@ class MyAccountViewController: UIViewController {
             $0.height.equalTo(50)
         }
         
-        [ glView, moneyHorizontalView, borderView, stockSectorStackView, portfolioView, cvStackView, agreementScrollView, blankView].forEach{
+        [ glView, moneyHorizontalView, borderView, stockSectorStackView, portfolioView, cvStackView, sectorUIView, agreementScrollView, blankView].forEach{
             stackView.addArrangedSubview($0)
         }
         
@@ -609,6 +648,10 @@ class MyAccountViewController: UIViewController {
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(50)
         }
+        
+        //여기에 업종별 눌렀을 경우 넣을 차트
+        
+        
         
         portfolioView.snp.makeConstraints{
             $0.top.equalTo(stockSectorStackView.snp.bottom)
@@ -645,11 +688,12 @@ class MyAccountViewController: UIViewController {
 //            $0.height.equalTo(44 * (self.securities.count + 1))
 //            $0.height.equalToSuperview()
         }
+        
+        sectorUIView.snp.makeConstraints{
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(400)
+        }
 
-        
-        
-        
-        
         
         agreementScrollView.snp.makeConstraints{
             $0.top.equalTo(balanceButtonBottom.snp.bottom)
