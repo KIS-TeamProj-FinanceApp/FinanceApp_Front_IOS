@@ -450,7 +450,7 @@ class MyAccountViewController: UIViewController {
         
         
         
-        let hostingController = UIHostingController(rootView: KeywordScoreGraphViewController())
+        let hostingController = UIHostingController(rootView: PortFolioPieChartView(values: [1300, 500, 300], colors: [Color.blue, Color.green, Color.orange], names: ["Rent", "Transport", "Education"], backgroundColor: Color(red: 21 / 255, green: 24 / 255, blue: 30 / 255, opacity: 1.0), innerRadiusFraction: 0.6))
         if #available(iOS 16.0, *) {
             hostingController.sizingOptions = .preferredContentSize
         } else {

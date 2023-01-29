@@ -83,6 +83,7 @@
 		A5B77E5A2982C19C006D754F /* OverseasAgreementDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E592982C19C006D754F /* OverseasAgreementDetail.swift */; };
 		A5B77E5D2982C296006D754F /* DomesticAgreementTotalDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E5C2982C296006D754F /* DomesticAgreementTotalDto.swift */; };
 		A5B77E5F2982CA8B006D754F /* OverseasAgreementTotalDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E5E2982CA8B006D754F /* OverseasAgreementTotalDto.swift */; };
+		A5F143E229867FAB0013A365 /* PortFolioPieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F143E129867FAB0013A365 /* PortFolioPieChartView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -162,6 +163,7 @@
 		A5B77E592982C19C006D754F /* OverseasAgreementDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverseasAgreementDetail.swift; sourceTree = "<group>"; };
 		A5B77E5C2982C296006D754F /* DomesticAgreementTotalDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomesticAgreementTotalDto.swift; sourceTree = "<group>"; };
 		A5B77E5E2982CA8B006D754F /* OverseasAgreementTotalDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverseasAgreementTotalDto.swift; sourceTree = "<group>"; };
+		A5F143E129867FAB0013A365 /* PortFolioPieChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortFolioPieChartView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +182,7 @@
 		A5398BFE297E511C0062A24A /* SubComponents */ = {
 			isa = PBXGroup;
 			children = (
+				A5F143E029867F760013A365 /* SwiftUI */,
 				A5398BFC297E51190062A24A /* MyAccountHeaderView.swift */,
 				A5398BFF297E5E1F0062A24A /* GainsAndLossesView.swift */,
 				A5B77E2B2980B308006D754F /* MyAccountMoneyView.swift */,
@@ -595,6 +598,14 @@
 			path = OverseasAgreementDetail;
 			sourceTree = "<group>";
 		};
+		A5F143E029867F760013A365 /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				A5F143E129867FAB0013A365 /* PortFolioPieChartView.swift */,
+			);
+			path = SwiftUI;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -690,6 +701,7 @@
 				A5B77E412981F923006D754F /* MyOverseasSecuritiesDto.swift in Sources */,
 				A557E4042977891B00A40EEE /* ViewController.swift in Sources */,
 				A5B77E5A2982C19C006D754F /* OverseasAgreementDetail.swift in Sources */,
+				A5F143E229867FAB0013A365 /* PortFolioPieChartView.swift in Sources */,
 				A557E4462977AEB100A40EEE /* ChartViewController.swift in Sources */,
 				A5B77E2E2980BF4D006D754F /* SecurityCollectionViewCell.swift in Sources */,
 				A557E4542977B25800A40EEE /* MyFilesViewController.swift in Sources */,
