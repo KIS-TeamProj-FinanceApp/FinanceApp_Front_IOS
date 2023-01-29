@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Alamofire
+import SwiftUI
 
 class MyAccountViewController: UIViewController {
     
@@ -230,7 +231,12 @@ class MyAccountViewController: UIViewController {
     
     private lazy var sectorUIView: UIView = {
         let view = UIView()
+        
         view.backgroundColor = .systemPink
+        
+       
+        
+        
         return view
     }()
     
@@ -437,6 +443,36 @@ class MyAccountViewController: UIViewController {
         // Header쪽에서 refresh버튼 누르는 액션을 전달받기 위해
         NotificationCenter.default.addObserver(self, selector: #selector(refreshBtnClicked), name: .refreshMyAccount, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(changeMarketBtnClicked), name: .changeMarket, object: nil)
+        
+        
+        
+        
+        
+        
+        
+        let hostingController = UIHostingController(rootView: KeywordScoreGraphViewController())
+        if #available(iOS 16.0, *) {
+            hostingController.sizingOptions = .preferredContentSize
+        } else {
+            // Fallback on earlier versions
+        }
+//        hostingController.modalPresentationStyle = .popover
+//        self.present(hostingController, animated: true)
+        addChild(hostingController)
+        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+        
+        self.sectorUIView.addSubview(hostingController.view)
+        hostingController.view.snp.makeConstraints{
+            $0.edges.equalToSuperview()
+        }
+        
+//        view.addSubview(hostingController.view)
+        
+        
+        
+        
+        
+        
         
     }
     
@@ -691,7 +727,7 @@ class MyAccountViewController: UIViewController {
         
         sectorUIView.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(400)
+            $0.height.equalTo(600)
         }
 
         
