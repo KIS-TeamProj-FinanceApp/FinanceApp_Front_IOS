@@ -11,6 +11,8 @@ struct KeywordChartView: View {
     
     
     private let data: [Double]
+    //이평선을 위해
+    private let data2: [Double]
     //그래프에서 Y축 수치를 알아서  알맞은 사이즈로 그래프를 그리기 위해 Data에서 Y축값
     private let maxY: Double
     private let minY: Double
@@ -21,6 +23,7 @@ struct KeywordChartView: View {
     
     init(chartData: [Double]){
         self.data = chartData
+        self.data2 =  [100.0, 105.2,100.0, 105.2,100.0, 105.2,100.0, 105.2,100.0, 105.2]
         maxY = data.max() ?? 0
         minY = data.min() ?? 0
         
@@ -30,6 +33,7 @@ struct KeywordChartView: View {
         endingDate = Date()
         startingData = endingDate.addingTimeInterval(-7*24*60*60)
         
+        
     }
     
     //300
@@ -37,6 +41,7 @@ struct KeywordChartView: View {
     // 3
     
     var body: some View {
+        
         VStack {
             keywordChartView
                 .frame(height: 200)
@@ -55,6 +60,8 @@ struct KeywordChartView: View {
                 }
             }
         }
+//        .background(Color(UIColor.black))
+        
     }
 }
 
@@ -86,8 +93,33 @@ extension KeywordChartView {
             .shadow(color: lineColor.opacity(0.2), radius: 10, x: 0.0, y: 30)
             .shadow(color: lineColor.opacity(0.1), radius: 10, x: 0.0, y: 40)
             
+            //두개의 그래프를 함께 그림
+            Path{ path in
+                for index in data2.indices {
+                    
+                    let xPosition = geometry.size.width / CGFloat(data2.count) * CGFloat(index + 1)
+                    //최대, 최솟값의 차를 y축 길이로
+                    let yAxis = maxY - minY
+                    //지금 data의 y축 위치 지정 (비율로), 그리고나서 전체 height곲해줌
+                    let yPosition = CGFloat((data2[index] - minY) / yAxis) * geometry.size.height - 50
+                    
+                    if index == 0 {
+                        path.move(to: CGPoint(x: xPosition, y: yPosition))
+                    }
+                    path.addLine(to: CGPoint(x: xPosition, y: yPosition))
+                }
+            }
+            .trim(from: 0, to: percentage)
+            .stroke(Color(UIColor.blue), style: StrokeStyle(lineWidth: 2, lineCap: .round, lineJoin: .round) )
+            .shadow(color: lineColor, radius: 10, x: 0.0, y: 10)
+            .shadow(color: lineColor.opacity(0.5), radius: 10, x: 0.0, y: 20)
+            .shadow(color: lineColor.opacity(0.2), radius: 10, x: 0.0, y: 30)
+            .shadow(color: lineColor.opacity(0.1), radius: 10, x: 0.0, y: 40)
         }
+        
     }
+    
+
     
     private var chartBackground: some View {
         VStack{
