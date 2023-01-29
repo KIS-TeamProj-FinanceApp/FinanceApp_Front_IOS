@@ -213,14 +213,15 @@ extension KeywordRankViewController {
             print("차트 조회 버튼 클릭")
             // SwiftUI View를 출력하려면 UIHostingController로 감싸서 띄워야한다.
            
-            let hostingController = UIHostingController(rootView: KeywordScoreGraphViewController())
+            let hostingController = UIHostingController(rootView: KeywordScoreGraphViewController(keyword: searchWord))
             if #available(iOS 16.0, *) {
                 hostingController.sizingOptions = .preferredContentSize
             } else {
                 // Fallback on earlier versions
             }
             hostingController.modalPresentationStyle = .popover
-            self.present(hostingController, animated: true)
+            self.navigationController?.pushViewController(hostingController, animated: true)
+//            self.present(hostingController, animated: true)
         }
     }
 }

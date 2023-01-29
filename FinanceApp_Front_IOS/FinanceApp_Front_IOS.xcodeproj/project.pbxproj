@@ -84,6 +84,8 @@
 		A5B77E5D2982C296006D754F /* DomesticAgreementTotalDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E5C2982C296006D754F /* DomesticAgreementTotalDto.swift */; };
 		A5B77E5F2982CA8B006D754F /* OverseasAgreementTotalDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E5E2982CA8B006D754F /* OverseasAgreementTotalDto.swift */; };
 		A5F143E229867FAB0013A365 /* PortFolioPieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F143E129867FAB0013A365 /* PortFolioPieChartView.swift */; };
+		A5F143E729869E720013A365 /* KeywordChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F143E629869E720013A365 /* KeywordChartView.swift */; };
+		A5F143EA2986AC570013A365 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F143E92986AC570013A365 /* Date.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -164,6 +166,8 @@
 		A5B77E5C2982C296006D754F /* DomesticAgreementTotalDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomesticAgreementTotalDto.swift; sourceTree = "<group>"; };
 		A5B77E5E2982CA8B006D754F /* OverseasAgreementTotalDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverseasAgreementTotalDto.swift; sourceTree = "<group>"; };
 		A5F143E129867FAB0013A365 /* PortFolioPieChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortFolioPieChartView.swift; sourceTree = "<group>"; };
+		A5F143E629869E720013A365 /* KeywordChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordChartView.swift; sourceTree = "<group>"; };
+		A5F143E92986AC570013A365 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -424,6 +428,8 @@
 			children = (
 				A557E47A297D020900A40EEE /* KeywordRankViewController.swift */,
 				A557E488297D0B0C00A40EEE /* KeywordScoreGraphViewController.swift */,
+				A5F143E329869E480013A365 /* SubComponent */,
+				A5F143E82986AC490013A365 /* Extensions */,
 			);
 			path = KeywordView;
 			sourceTree = "<group>";
@@ -606,6 +612,22 @@
 			path = SwiftUI;
 			sourceTree = "<group>";
 		};
+		A5F143E329869E480013A365 /* SubComponent */ = {
+			isa = PBXGroup;
+			children = (
+				A5F143E629869E720013A365 /* KeywordChartView.swift */,
+			);
+			path = SubComponent;
+			sourceTree = "<group>";
+		};
+		A5F143E82986AC490013A365 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A5F143E92986AC570013A365 /* Date.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -691,6 +713,7 @@
 				A557E499297D597C00A40EEE /* NowFutureLabelView.swift in Sources */,
 				A5B77E5F2982CA8B006D754F /* OverseasAgreementTotalDto.swift in Sources */,
 				A557E471297A369200A40EEE /* AccountNumInputViewController.swift in Sources */,
+				A5F143E729869E720013A365 /* KeywordChartView.swift in Sources */,
 				A557E41F2977A98B00A40EEE /* HomeViewController.swift in Sources */,
 				A557E484297D025F00A40EEE /* MyAccountViewController.swift in Sources */,
 				A557E4412977AE6A00A40EEE /* GetERAPI.swift in Sources */,
@@ -714,6 +737,7 @@
 				A557E46B297A18C500A40EEE /* AccessToken.swift in Sources */,
 				A557E489297D0B0C00A40EEE /* KeywordScoreGraphViewController.swift in Sources */,
 				A557E41A2977A87200A40EEE /* MainTabBarController.swift in Sources */,
+				A5F143EA2986AC570013A365 /* Date.swift in Sources */,
 				A557E4282977AB6C00A40EEE /* ShowDataViewCollectionViewCell.swift in Sources */,
 				A557E477297A7D3300A40EEE /* MainViewController.swift in Sources */,
 				A557E481297D024600A40EEE /* TradingViewController.swift in Sources */,
