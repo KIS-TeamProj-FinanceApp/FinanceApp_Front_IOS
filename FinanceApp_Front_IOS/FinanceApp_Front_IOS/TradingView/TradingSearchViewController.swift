@@ -22,7 +22,23 @@ class TradingSearchViewController: UIViewController {
     private var securityArr: [String] = ["임시 종목 1", "임시 종목 2", "임시 종목 3", "임시 종목 4", "임시 종목 5", "임시 종목 6", "임시 종목 7", "임시 종목 8", "임시 종목 9", "임시 종목 10"]
 
     private var isHoga: Bool = true
+    private var isDomestic: Bool = true
     
+    private lazy var rightButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(title: "국내", style: .plain, target: self, action: #selector(rightButtonClicked))
+        return button
+    }()
+    
+    @objc func rightButtonClicked(){
+        if self.isDomestic {
+            self.isDomestic = false
+            self.rightButton.title = "해외"
+        }else{
+            self.isDomestic = true
+            self.rightButton.title = "국내"
+        }
+        print(self.isDomestic)
+    }
     
     
     // ------------------------------------------------------- variables ------------------------------------------------------ //
@@ -131,6 +147,9 @@ class TradingSearchViewController: UIViewController {
         self.tradingView.isHidden = false
         self.tradingChartViewUIView.isHidden = true
         
+        self.isDomestic = true
+        self.rightButton.title = "국내"
+        
     }
     
     @objc func hogaButtonClicked(){
@@ -200,7 +219,7 @@ class TradingSearchViewController: UIViewController {
         navigationItem.title = "종목 검색"
         uiSc.obscuresBackgroundDuringPresentation = false
         uiSc.searchBar.delegate = self
-        
+        self.navigationItem.rightBarButtonItem = self.rightButton
         // embed UISearchController
         navigationItem.searchController = uiSc
     }

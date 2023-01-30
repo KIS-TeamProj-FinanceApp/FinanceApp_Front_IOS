@@ -17,7 +17,7 @@ class MainViewController: UIViewController {
     // 4. name
     // 5. acntNoFront
     // 6. acntNoBack
-  
+    
     private lazy var tempLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black

@@ -11,7 +11,6 @@ import Alamofire
 import SwiftUI
 
 class MyAccountViewController: UIViewController {
-    
 
     private var myAccountSecurities: [MyAccountSecurities] = [MyAccountSecurities(prdt_name: "", pdno: "", evlu_pfls_amt: "", evlu_pfls_rt: "", evlu_amt: "", hldg_qty: "", pchs_amt: "", pchs_avg_pric: "", prpr: "", fltt_rt: "", thdt_buyqty: "", thdt_sll_qty: "")]
     //배열에 하나밖에 안 나옴 어차피
