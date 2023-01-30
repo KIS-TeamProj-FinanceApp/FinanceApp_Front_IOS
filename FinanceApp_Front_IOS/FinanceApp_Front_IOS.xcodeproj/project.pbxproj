@@ -64,6 +64,8 @@
 		A557E49B297D626200A40EEE /* SectorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E49A297D626200A40EEE /* SectorCollectionViewCell.swift */; };
 		A557E49E297D699500A40EEE /* WBTradeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E49D297D699500A40EEE /* WBTradeViewController.swift */; };
 		A557E4A0297D7E6300A40EEE /* TradingGraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E49F297D7E6300A40EEE /* TradingGraphViewController.swift */; };
+		A58837FF298797C40093F5D8 /* DomesticSectorDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58837FE298797C40093F5D8 /* DomesticSectorDto.swift */; };
+		A5883802298797EF0093F5D8 /* DomesticSector.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5883801298797EF0093F5D8 /* DomesticSector.swift */; };
 		A5B77E2C2980B308006D754F /* MyAccountMoneyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E2B2980B308006D754F /* MyAccountMoneyView.swift */; };
 		A5B77E2E2980BF4D006D754F /* SecurityCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E2D2980BF4D006D754F /* SecurityCollectionViewCell.swift */; };
 		A5B77E302980C6A5006D754F /* SecurityNameCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E2F2980C6A5006D754F /* SecurityNameCollectionViewCell.swift */; };
@@ -87,6 +89,10 @@
 		A5F143E729869E720013A365 /* KeywordChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F143E629869E720013A365 /* KeywordChartView.swift */; };
 		A5F143EA2986AC570013A365 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F143E92986AC570013A365 /* Date.swift */; };
 		A5F143EF298746790013A365 /* TradingHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F143EE298746790013A365 /* TradingHeaderView.swift */; };
+		A5F143F2298754920013A365 /* TradingChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F143F1298754920013A365 /* TradingChartView.swift */; };
+		A5F143F4298754B40013A365 /* TradingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F143F3298754B40013A365 /* TradingView.swift */; };
+		A5F143F6298763A90013A365 /* DomesticSecurityTotal.csv in Resources */ = {isa = PBXBuildFile; fileRef = A5F143F5298763A90013A365 /* DomesticSecurityTotal.csv */; };
+		A5F1440D298779D50013A365 /* DomesticSecurity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F1440C298779D50013A365 /* DomesticSecurity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -147,6 +153,8 @@
 		A557E49A297D626200A40EEE /* SectorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectorCollectionViewCell.swift; sourceTree = "<group>"; };
 		A557E49D297D699500A40EEE /* WBTradeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WBTradeViewController.swift; sourceTree = "<group>"; };
 		A557E49F297D7E6300A40EEE /* TradingGraphViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingGraphViewController.swift; sourceTree = "<group>"; };
+		A58837FE298797C40093F5D8 /* DomesticSectorDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomesticSectorDto.swift; sourceTree = "<group>"; };
+		A5883801298797EF0093F5D8 /* DomesticSector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomesticSector.swift; sourceTree = "<group>"; };
 		A5B77E2B2980B308006D754F /* MyAccountMoneyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountMoneyView.swift; sourceTree = "<group>"; };
 		A5B77E2D2980BF4D006D754F /* SecurityCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityCollectionViewCell.swift; sourceTree = "<group>"; };
 		A5B77E2F2980C6A5006D754F /* SecurityNameCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityNameCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -170,6 +178,10 @@
 		A5F143E629869E720013A365 /* KeywordChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordChartView.swift; sourceTree = "<group>"; };
 		A5F143E92986AC570013A365 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		A5F143EE298746790013A365 /* TradingHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingHeaderView.swift; sourceTree = "<group>"; };
+		A5F143F1298754920013A365 /* TradingChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingChartView.swift; sourceTree = "<group>"; };
+		A5F143F3298754B40013A365 /* TradingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingView.swift; sourceTree = "<group>"; };
+		A5F143F5298763A90013A365 /* DomesticSecurityTotal.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DomesticSecurityTotal.csv; sourceTree = "<group>"; };
+		A5F1440C298779D50013A365 /* DomesticSecurity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomesticSecurity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,6 +230,7 @@
 		A557E3FE2977891B00A40EEE /* FinanceApp_Front_IOS */ = {
 			isa = PBXGroup;
 			children = (
+				A5F143F5298763A90013A365 /* DomesticSecurityTotal.csv */,
 				A557E3FF2977891B00A40EEE /* AppDelegate.swift */,
 				A557E4012977891B00A40EEE /* SceneDelegate.swift */,
 				A557E4032977891B00A40EEE /* ViewController.swift */,
@@ -454,6 +467,7 @@
 				A557E480297D024600A40EEE /* TradingSearchViewController.swift */,
 				A557E49F297D7E6300A40EEE /* TradingGraphViewController.swift */,
 				A5F143ED2987465E0013A365 /* SubComponents */,
+				A5F1440B298779BC0013A365 /* Entity */,
 			);
 			path = TradingView;
 			sourceTree = "<group>";
@@ -513,6 +527,22 @@
 			path = SectorCollectionView;
 			sourceTree = "<group>";
 		};
+		A58837FD298797A70093F5D8 /* DomesticSector */ = {
+			isa = PBXGroup;
+			children = (
+				A58837FE298797C40093F5D8 /* DomesticSectorDto.swift */,
+			);
+			path = DomesticSector;
+			sourceTree = "<group>";
+		};
+		A5883800298797DA0093F5D8 /* DomesticSector */ = {
+			isa = PBXGroup;
+			children = (
+				A5883801298797EF0093F5D8 /* DomesticSector.swift */,
+			);
+			path = DomesticSector;
+			sourceTree = "<group>";
+		};
 		A5B77E3129810BEC006D754F /* Dto */ = {
 			isa = PBXGroup;
 			children = (
@@ -520,6 +550,7 @@
 				A5B77E422981F927006D754F /* Overseas */,
 				A5B77E512982C138006D754F /* DomesticAgreementDetail */,
 				A5B77E572982C181006D754F /* OverseasAgreementDetail */,
+				A58837FD298797A70093F5D8 /* DomesticSector */,
 			);
 			path = Dto;
 			sourceTree = "<group>";
@@ -531,6 +562,7 @@
 				A5B77E4A2981F96E006D754F /* Overseas */,
 				A5B77E542982C158006D754F /* DomesticAgreementDetail */,
 				A5B77E5B2982C1A0006D754F /* OverseasAgreementDetail */,
+				A5883800298797DA0093F5D8 /* DomesticSector */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -635,8 +667,26 @@
 			isa = PBXGroup;
 			children = (
 				A5F143EE298746790013A365 /* TradingHeaderView.swift */,
+				A5F143F3298754B40013A365 /* TradingView.swift */,
+				A5F143F0298754530013A365 /* SwiftUI */,
 			);
 			path = SubComponents;
+			sourceTree = "<group>";
+		};
+		A5F143F0298754530013A365 /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				A5F143F1298754920013A365 /* TradingChartView.swift */,
+			);
+			path = SwiftUI;
+			sourceTree = "<group>";
+		};
+		A5F1440B298779BC0013A365 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				A5F1440C298779D50013A365 /* DomesticSecurity.swift */,
+			);
+			path = Entity;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -707,6 +757,7 @@
 			files = (
 				A557E40C2977891E00A40EEE /* LaunchScreen.storyboard in Resources */,
 				A557E4092977891E00A40EEE /* Assets.xcassets in Resources */,
+				A5F143F6298763A90013A365 /* DomesticSecurityTotal.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -718,6 +769,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A557E49B297D626200A40EEE /* SectorCollectionViewCell.swift in Sources */,
+				A58837FF298797C40093F5D8 /* DomesticSectorDto.swift in Sources */,
 				A557E491297D2C1600A40EEE /* WBRankTableView.swift in Sources */,
 				A5B77E492981F96B006D754F /* MyOverseasSecurities.swift in Sources */,
 				A557E48B297D114400A40EEE /* WBRankHeaderView.swift in Sources */,
@@ -727,6 +779,7 @@
 				A5F143E729869E720013A365 /* KeywordChartView.swift in Sources */,
 				A557E41F2977A98B00A40EEE /* HomeViewController.swift in Sources */,
 				A557E484297D025F00A40EEE /* MyAccountViewController.swift in Sources */,
+				A5F143F4298754B40013A365 /* TradingView.swift in Sources */,
 				A557E4412977AE6A00A40EEE /* GetERAPI.swift in Sources */,
 				A557E42A2977AB8100A40EEE /* GridCollectionViewLayout.swift in Sources */,
 				A5B77E3629810C30006D754F /* MyAccountSecurities.swift in Sources */,
@@ -734,6 +787,7 @@
 				A5B77E4C2981F977006D754F /* MyOverseasMoney.swift in Sources */,
 				A5B77E412981F923006D754F /* MyOverseasSecuritiesDto.swift in Sources */,
 				A557E4042977891B00A40EEE /* ViewController.swift in Sources */,
+				A5F1440D298779D50013A365 /* DomesticSecurity.swift in Sources */,
 				A5B77E5A2982C19C006D754F /* OverseasAgreementDetail.swift in Sources */,
 				A5F143E229867FAB0013A365 /* PortFolioPieChartView.swift in Sources */,
 				A557E4462977AEB100A40EEE /* ChartViewController.swift in Sources */,
@@ -747,6 +801,7 @@
 				A557E46F297A215400A40EEE /* AccessTokenDto.swift in Sources */,
 				A557E46B297A18C500A40EEE /* AccessToken.swift in Sources */,
 				A557E489297D0B0C00A40EEE /* KeywordScoreGraphViewController.swift in Sources */,
+				A5F143F2298754920013A365 /* TradingChartView.swift in Sources */,
 				A557E41A2977A87200A40EEE /* MainTabBarController.swift in Sources */,
 				A5F143EA2986AC570013A365 /* Date.swift in Sources */,
 				A557E4282977AB6C00A40EEE /* ShowDataViewCollectionViewCell.swift in Sources */,
@@ -788,6 +843,7 @@
 				A557E42C2977AC4D00A40EEE /* ButtonListViewCellCell.swift in Sources */,
 				A557E4492977B03D00A40EEE /* SiteView.swift in Sources */,
 				A557E44C2977B05E00A40EEE /* SwiftUIChartView.swift in Sources */,
+				A5883802298797EF0093F5D8 /* DomesticSector.swift in Sources */,
 				A557E493297D566C00A40EEE /* SecurityForRecommend.swift in Sources */,
 				A557E473297A528500A40EEE /* MyAccountDto.swift in Sources */,
 				A557E4382977ACF800A40EEE /* ExchangeRateCellData.swift in Sources */,

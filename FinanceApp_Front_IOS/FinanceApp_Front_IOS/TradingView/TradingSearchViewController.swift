@@ -31,8 +31,6 @@ class TradingSearchViewController: UIViewController {
     
     // ------------------------------------------------------- UI Components ------------------------------------------------------ //
     
-    
-    
     private let uiSc: UISearchController = {
         let searchController = UISearchController()
         searchController.searchBar.placeholder = "종목명을 검색해주세요"
@@ -87,19 +85,7 @@ class TradingSearchViewController: UIViewController {
         return btn
     }()
     
-    @objc func hogaButtonClicked(){
-        self.isHoga = true
-        
-        self.hogaButtonBottom.backgroundColor = .darkGray
-        self.chartButtonBottom.backgroundColor = .white
-    }
     
-    @objc func chartButtonClicked(){
-        self.isHoga = false
-
-        self.hogaButtonBottom.backgroundColor = .white
-        self.chartButtonBottom.backgroundColor = .darkGray
-    }
     
     private let scrollView = UIScrollView()
     private let contentView = UIView()
@@ -112,6 +98,22 @@ class TradingSearchViewController: UIViewController {
         return stackView
     }()
     
+    private let tradingView = TradingView()
+    
+    private var tradingChartViewUIView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .red
+        return view
+    }()
+    
+    let blankView: UIView = {
+        let v = UIView()
+        v.backgroundColor = .white
+        return v
+    }()
+    
+    
+//    TradingChartView(chartData: [100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2])
     
     // ------------------------------------------------------- UI Components ------------------------------------------------------ //
 
@@ -119,25 +121,67 @@ class TradingSearchViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.prefersLargeTitles = false
 //        let ur = UserDefaults.standard.array(forKey: "urls") as? [String] ?? ["저장된 URL이 없음"]
 //        print(type(of: ur))
 //        print(ur)
         self.uiSc.isActive = true
         self.uiSc.isEditing = true
+        
+        self.tradingView.isHidden = false
+        self.tradingChartViewUIView.isHidden = true
+        
     }
+    
+    @objc func hogaButtonClicked(){
+        self.isHoga = true
+        
+        self.hogaButtonBottom.backgroundColor = .darkGray
+        self.chartButtonBottom.backgroundColor = .white
+        
+        self.tradingView.isHidden = false
+        self.tradingChartViewUIView.isHidden = true
+    }
+    
+    @objc func chartButtonClicked(){
+        self.isHoga = false
+
+        self.hogaButtonBottom.backgroundColor = .white
+        self.chartButtonBottom.backgroundColor = .darkGray
+        
+        self.tradingView.isHidden = true
+        self.tradingChartViewUIView.isHidden = false
+    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setNavigationItems()
         
-        self.scrollView.backgroundColor = .yellow
+        self.scrollView.backgroundColor = .white
         self.contentView.backgroundColor = .blue
         self.stackView.backgroundColor = .cyan
         
         view.backgroundColor = .systemBackground
-        // DataSource, Delegate 설정 시 구분을 위해 tag 설정
+        
+        
+        let hostingController = UIHostingController(rootView: TradingChartView(chartData: [100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2]) )
+        if #available(iOS 16.0, *) {
+            hostingController.sizingOptions = .preferredContentSize
+        } else {
+            // Fallback on earlier versions
+        }
+//        hostingController.modalPresentationStyle = .popover
+//        self.present(hostingController, animated: true)
+        addChild(hostingController)
+        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+
+        self.tradingChartViewUIView.addSubview(hostingController.view)
+        hostingController.view.snp.makeConstraints{
+            $0.edges.equalToSuperview()
+        }
+
         layout()
         
     }
@@ -218,22 +262,33 @@ class TradingSearchViewController: UIViewController {
             $0.edges.equalToSuperview()
         }
         
-//        [].forEach{
-//            stackView.addArrangedSubview($0)
-//        }
+        
+        [tradingView, tradingChartViewUIView, blankView].forEach{
+            stackView.addArrangedSubview($0)
+        }
+        
+        tradingView.snp.makeConstraints{
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(600)
+//            $0.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        tradingChartViewUIView.snp.makeConstraints{
+//            $0.top.equalTo(balanceButtonBottom.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(400)
+    //            $0.height.equalTo(100)
+//            $0.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+        blankView.snp.makeConstraints{
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(50)
+    //            $0.height.equalTo(100)
+//            $0.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
         
     }
-    
-//    @objc func pushGraphView(){
-//        let hostingController = UIHostingController(rootView: TradingGraphViewController())
-//        if #available(iOS 16.0, *) {
-//            hostingController.sizingOptions = .preferredContentSize
-//        } else {
-//            // Fallback on earlier versions
-//        }
-//        hostingController.modalPresentationStyle = .popover
-//        self.navigationController?.pushViewController(hostingController, animated: true)
-//    }
+
 }
 
 extension TradingSearchViewController: UISearchBarDelegate{
@@ -286,4 +341,11 @@ extension TradingSearchViewController: UISearchBarDelegate{
 }
 
 
+
+// 키보드 내리기 위한 코드
+extension TradingSearchViewController {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+            self.view.endEditing(true)
+        }
+}
 

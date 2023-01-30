@@ -12,12 +12,7 @@ import SwiftUI
 
 class MyAccountViewController: UIViewController {
     
-    
-//    private var appKey: String = "PSbri9T298VyxfJ004x9MnCQnx7gKJR8v658"
-//    private var appSecretKey: String = "VUn2CzaKPT1oTzwfBiXlY2ASg8SEndHMk/h5ukdZOElQVP5dfnfnv3OiTqw3aKYGR1NRYg17q05zOFlFhW8CdwYzMPI2wmqB9cNgx2f03O1ROveEw6Kr/CeGojxZBPMVU2MMzun4Gapcq1zu+lWYhbkDK/fAfmeCD+ftD2WMWPrJw9UBG0c="
-//    private var accessToken: String = "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0b2tlbiIsImF1ZCI6ImZjZTk0OTJhLWViODEtNDk2OS1iYzc1LTc2MDI1MTM5YTc2NyIsImlzcyI6InVub2d3IiwiZXhwIjoxNjc0Nzk4NDMyLCJpYXQiOjE2NzQ3MTIwMzIsImp0aSI6IlBTYnJpOVQyOThWeXhmSjAwNHg5TW5DUW54N2dLSlI4djY1OCJ9.-7-80CZXIOPo36d3SWET4qCvJT2dAgSj0nDcYJ99QkT64-tlssj3rVCcTglHDcbYE_-CFcvCG5tjmvDySfArQA"
-//
-//
+
     private var myAccountSecurities: [MyAccountSecurities] = [MyAccountSecurities(prdt_name: "", pdno: "", evlu_pfls_amt: "", evlu_pfls_rt: "", evlu_amt: "", hldg_qty: "", pchs_amt: "", pchs_avg_pric: "", prpr: "", fltt_rt: "", thdt_buyqty: "", thdt_sll_qty: "")]
     //배열에 하나밖에 안 나옴 어차피
     private var myAccountMoney: [MyAccountMoney] = [MyAccountMoney(evlu_pfls_smtl_amt: "", dnca_tot_amt: "", d2_auto_rdpt_amt: "", scts_evlu_amt: "", pchs_amt_smtl_amt: "")]
@@ -35,6 +30,9 @@ class MyAccountViewController: UIViewController {
     //체결내역 - 해외
     private var myOverseasAgreement: [OverseasAgreementDetail] = [OverseasAgreementDetail(prdt_name: "", sll_buy_dvsn_cd_name: "", sll_buy_dvsn_cd: "", ft_ord_qty: "", ft_ccld_unpr3: "", ft_ccld_qty: "", ft_ccld_amt3: "", odno: "", ord_dt: "", ord_tmd: "")]
     
+    //업종 계산하여 놓을 곳
+    private var myDomesticSectors: [String: Double] = [:]
+    private var myOverseasSectors: [String: Double] = [:]
     
     
     private var isDomestic: Bool = true
@@ -311,6 +309,35 @@ class MyAccountViewController: UIViewController {
         return collectionView
     }()
     
+    private lazy var domesticHostingController: UIHostingController = {
+        let hostingController = UIHostingController(rootView:  PortFolioPieChartView(values: [1300, 500, 300, 100, 200, 400], colors: [Color.blue, Color.green, Color.orange, Color.red, Color.cyan, Color.white], names: ["Rent", "Transport", "Education", "1", "2", "3"], backgroundColor: Color(red: 21 / 255, green: 24 / 255, blue: 30 / 255, opacity: 1.0), innerRadiusFraction: 0.6))
+        if #available(iOS 16.0, *) {
+            hostingController.sizingOptions = .preferredContentSize
+        } else {
+            // Fallback on earlier versions
+        }
+
+        addChild(hostingController)
+        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+
+        return hostingController
+    }()
+    
+    private lazy var overseasHostingController: UIHostingController = {
+        let hostingController = UIHostingController(rootView: PortFolioPieChartView(values: [100, 500, 300], colors: [Color.blue, Color.green, Color.orange], names: ["Rent", "Transport", "Education"], backgroundColor: Color(red: 21 / 255, green: 24 / 255, blue: 30 / 255, opacity: 1.0), innerRadiusFraction: 0.6))
+        if #available(iOS 16.0, *) {
+            hostingController.sizingOptions = .preferredContentSize
+        } else {
+            // Fallback on earlier versions
+        }
+
+        addChild(hostingController)
+        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+
+        return hostingController
+    }()
+    
+    
     
     let blankView: UIView = {
         let v = UIView()
@@ -323,6 +350,7 @@ class MyAccountViewController: UIViewController {
     
     @objc func accountNumClicked(){
         print("accountNumClicked button clicked")
+       
     }
     
     @objc func balanceButtonClicked(){
@@ -388,21 +416,94 @@ class MyAccountViewController: UIViewController {
     }
     
     @objc func sectorButtonClicked(){
-        print("sectorButtonClicked button clicked")
         self.isSector = true
+        //일단 초기화
+        self.myDomesticSectors = [:]
+        print("원래")
+        print(self.myDomesticSectors)
         
-        self.sectorButton.layer.borderWidth = 3.0
-        self.sectorButton.layer.borderColor = UIColor(red: 253/255.0, green: 166/255.0, blue: 176/255.0, alpha: 1.0).cgColor
+
+        requestAPI_DomesticSector()
+
         
-        self.stockButton.layer.borderWidth = 1.0
-        self.stockButton.layer.borderColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0).cgColor
         
-        //무조건 주식잔고가 선택되어있음!!
-        self.portfolioView.isHidden = true
-        self.cvStackView.isHidden = true
-        self.sectorUIView.isHidden = false
-        self.agreementScrollView.isHidden = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+            print("나중")
+            print(self.myDomesticSectors)
+            
+            //------------------------------- PieChart 바꾸는 부분 -------------------------------//
+            
+            if self.isDomestic{
+                var tempArr: [( Double, String)] = []
+
+                var now_colors: [Color] = []
+//                let stride: Double = 100.0 / Double(self.myDomesticSectors.count)
+
+//                for i in 0 ..< self.myDomesticSectors.count {
+//                    now_colors.append(Color(uiColor: UIColor(red: (153 + (stride * (i + 1))) / 255.0, green: (106 + (stride * (i + 1))) / 255.0, blue: (106 + (stride * (i + 1))) / 255.0, alpha: 1.0)))
+//
+//                }
+
+                for key in self.myDomesticSectors.keys{
+                    tempArr.append((self.myDomesticSectors[key]!, key))
+                }
+                tempArr.sort{ a, b -> Bool in
+                    return a.0 > b.0
+                }
+                let now_values: [Double] = tempArr.map{ a -> Double in
+                    a.0
+                }
+                let now_names: [String] = tempArr.map{ a -> String in
+                    a.1
+                }
+                self.domesticHostingController.view.snp.removeConstraints()
+                self.domesticHostingController = UIHostingController(rootView:  PortFolioPieChartView(values: now_values, colors: [Color.blue, Color.green, Color.orange, Color.red, Color.cyan, Color.brown, Color.mint, Color.yellow, Color.purple, Color.mint, Color.indigo], names: now_names, backgroundColor: Color(red: 21 / 255, green: 24 / 255, blue: 30 / 255, opacity: 1.0), innerRadiusFraction: 0.6))
+    //            self.domesticHostingController.rootView = PortFolioPieChartView(values: [1300, 500, 300, 100, 200], colors: [Color.blue, Color.green, Color.orange, Color.red, Color.cyan], names: ["Rent", "Transport", "Education", "1", "2"], backgroundColor: Color(red: 21 / 255, green: 24 / 255, blue: 30 / 255, opacity: 1.0), innerRadiusFraction: 0.6)
+                
+                if #available(iOS 16.0, *) {
+                    self.domesticHostingController.sizingOptions = .preferredContentSize
+                } else {
+                    // Fallback on earlier versions
+                }
+
+                self.addChild(self.domesticHostingController)
+                self.domesticHostingController.view.translatesAutoresizingMaskIntoConstraints = false
+                
+                self.domesticHostingController.view.snp.removeConstraints()
         
+                self.sectorUIView.addSubview(self.domesticHostingController.view)
+                
+                self.domesticHostingController.view.snp.makeConstraints{
+                    $0.edges.equalToSuperview()
+                }
+            }else {
+                
+            }
+            
+//
+            print("다끝남!! ")
+            //------------------------------- PieChart 바꾸는 부분 -------------------------------//
+               
+            
+            print("sectorButtonClicked button clicked")
+            self.isSector = true
+            
+            self.sectorButton.layer.borderWidth = 3.0
+            self.sectorButton.layer.borderColor = UIColor(red: 253/255.0, green: 166/255.0, blue: 176/255.0, alpha: 1.0).cgColor
+            
+            self.stockButton.layer.borderWidth = 1.0
+            self.stockButton.layer.borderColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0).cgColor
+            
+            //무조건 주식잔고가 선택되어있음!!
+            self.portfolioView.isHidden = true
+            self.cvStackView.isHidden = true
+            self.sectorUIView.isHidden = false
+            self.agreementScrollView.isHidden = true
+            
+            
+        }
+        
+    
     }
     
    
@@ -443,22 +544,25 @@ class MyAccountViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(changeMarketBtnClicked), name: .changeMarket, object: nil)
         
         
-        let hostingController = UIHostingController(rootView: PortFolioPieChartView(values: [1300, 500, 300], colors: [Color.blue, Color.green, Color.orange], names: ["Rent", "Transport", "Education"], backgroundColor: Color(red: 21 / 255, green: 24 / 255, blue: 30 / 255, opacity: 1.0), innerRadiusFraction: 0.6))
-        if #available(iOS 16.0, *) {
-            hostingController.sizingOptions = .preferredContentSize
-        } else {
-            // Fallback on earlier versions
-        }
-//        hostingController.modalPresentationStyle = .popover
-//        self.present(hostingController, animated: true)
-        addChild(hostingController)
-        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
-
-        self.sectorUIView.addSubview(hostingController.view)
-        hostingController.view.snp.makeConstraints{
-            $0.edges.equalToSuperview()
-        }
+//        hostingController.view.snp.removeConstraints()
         
+        
+//        let hostingController = UIHostingController(rootView: PortFolioPieChartView(values: [1300, 500, 300], colors: [Color.blue, Color.green, Color.orange], names: ["Rent", "Transport", "Education"], backgroundColor: Color(red: 21 / 255, green: 24 / 255, blue: 30 / 255, opacity: 1.0), innerRadiusFraction: 0.6))
+//        if #available(iOS 16.0, *) {
+//            hostingController.sizingOptions = .preferredContentSize
+//        } else {
+//            // Fallback on earlier versions
+//        }
+////        hostingController.modalPresentationStyle = .popover
+////        self.present(hostingController, animated: true)
+//        addChild(hostingController)
+//        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+//
+//        self.sectorUIView.addSubview(hostingController.view)
+//        hostingController.view.snp.makeConstraints{
+//            $0.edges.equalToSuperview()
+//        }
+//        
 //        view.addSubview(hostingController.view)
 
         
@@ -485,8 +589,15 @@ class MyAccountViewController: UIViewController {
             self.agreementCvStackView.snp.updateConstraints{
                 $0.height.equalTo(44 * (self.myDomesticAgreement.count + 1) )
             }
-        
+            
+            
+            self.sectorUIView.addSubview(self.domesticHostingController.view)
+            
+            self.domesticHostingController.view.snp.makeConstraints{
+                $0.edges.equalToSuperview()
+            }
         }
+        
     }
     //여기도 끝
     @objc func refreshBtnClicked(){
@@ -511,6 +622,60 @@ class MyAccountViewController: UIViewController {
                 self.agreementCvStackView.snp.updateConstraints{
                     $0.height.equalTo(44 * (self.myDomesticAgreement.count + 1) )
                 }
+                self.overseasHostingController.view.snp.removeConstraints()
+//                self.domesticHostingController.rootView.values = [100.0, 100.0, 100.0]
+//                self.sectorUIView.addSubview(self.domesticHostingController.view)
+//                self.domesticHostingController.view.snp.makeConstraints{
+//                    $0.edges.equalToSuperview()
+//                }
+                // -------------------------------------------- 바꾸는 부분 ----------------------------------------------- //
+                
+                var tempArr: [( Double, String)] = []
+
+                var now_colors: [Color] = []
+//                let stride: Double = 100.0 / Double(self.myDomesticSectors.count)
+
+//                for i in 0 ..< self.myDomesticSectors.count {
+//                    now_colors.append(Color(uiColor: UIColor(red: (153 + (stride * (i + 1))) / 255.0, green: (106 + (stride * (i + 1))) / 255.0, blue: (106 + (stride * (i + 1))) / 255.0, alpha: 1.0)))
+//
+//                }
+
+                for key in self.myDomesticSectors.keys{
+                    tempArr.append((self.myDomesticSectors[key]!, key))
+                }
+                tempArr.sort{ a, b -> Bool in
+                    return a.0 > b.0
+                }
+                let now_values: [Double] = tempArr.map{ a -> Double in
+                    a.0
+                }
+                let now_names: [String] = tempArr.map{ a -> String in
+                    a.1
+                }
+                
+                self.domesticHostingController.view.snp.removeConstraints()
+                self.domesticHostingController = UIHostingController(rootView:  PortFolioPieChartView(values: now_values, colors: [Color.blue, Color.green, Color.orange, Color.red, Color.cyan, Color.brown, Color.mint, Color.yellow, Color.purple, Color.mint, Color.indigo] , names: now_names, backgroundColor: Color(red: 21 / 255, green: 24 / 255, blue: 30 / 255, opacity: 1.0), innerRadiusFraction: 0.6))
+    //            self.domesticHostingController.rootView = PortFolioPieChartView(values: [1300, 500, 300, 100, 200], colors: [Color.blue, Color.green, Color.orange, Color.red, Color.cyan], names: ["Rent", "Transport", "Education", "1", "2"], backgroundColor: Color(red: 21 / 255, green: 24 / 255, blue: 30 / 255, opacity: 1.0), innerRadiusFraction: 0.6)
+                
+                if #available(iOS 16.0, *) {
+                    self.domesticHostingController.sizingOptions = .preferredContentSize
+                } else {
+                    // Fallback on earlier versions
+                }
+
+                self.addChild(self.domesticHostingController)
+                self.domesticHostingController.view.translatesAutoresizingMaskIntoConstraints = false
+                
+                self.domesticHostingController.view.snp.removeConstraints()
+        
+                self.sectorUIView.addSubview(self.domesticHostingController.view)
+                
+                self.domesticHostingController.view.snp.makeConstraints{
+                    $0.edges.equalToSuperview()
+                }
+                // -------------------------------------------- 바꾸는 부분 ----------------------------------------------- //
+                
+                
             }//해외면
             else {
                 self.cvStackView.snp.updateConstraints{
@@ -518,6 +683,12 @@ class MyAccountViewController: UIViewController {
                 }
                 self.agreementCvStackView.snp.updateConstraints{
                     $0.height.equalTo(44 * (self.myOverseasAgreement.count + 1) )
+                }
+                
+                self.domesticHostingController.view.snp.removeConstraints()
+                self.sectorUIView.addSubview(self.overseasHostingController.view)
+                self.overseasHostingController.view.snp.makeConstraints{
+                    $0.edges.equalToSuperview()
                 }
             }
         }
@@ -549,6 +720,57 @@ class MyAccountViewController: UIViewController {
                 self.agreementCvStackView.snp.updateConstraints{
                     $0.height.equalTo(44 * (self.myDomesticAgreement.count + 1) )
                 }
+//                self.overseasHostingController.removeFromParent()
+                self.overseasHostingController.view.snp.removeConstraints()
+//                self.sectorUIView.addSubview(self.domesticHostingController.view)
+//                self.domesticHostingController.view.snp.makeConstraints{
+//                    $0.edges.equalToSuperview()
+//                }
+                
+                // -------------------------------------------- 바꾸는 부분 ----------------------------------------------- //
+                var tempArr: [( Double, String)] = []
+
+                var now_colors: [Color] = []
+//                let stride: Double = 100.0 / Double(self.myDomesticSectors.count)
+
+//                for i in 0 ..< self.myDomesticSectors.count {
+//                    now_colors.append(Color(uiColor: UIColor(red: (153 + (stride * (i + 1))) / 255.0, green: (106 + (stride * (i + 1))) / 255.0, blue: (106 + (stride * (i + 1))) / 255.0, alpha: 1.0)))
+//
+//                }
+
+                for key in self.myDomesticSectors.keys{
+                    tempArr.append((self.myDomesticSectors[key]!, key))
+                }
+                tempArr.sort{ a, b -> Bool in
+                    return a.0 > b.0
+                }
+                let now_values: [Double] = tempArr.map{ a -> Double in
+                    a.0
+                }
+                let now_names: [String] = tempArr.map{ a -> String in
+                    a.1
+                }
+                self.domesticHostingController.view.snp.removeConstraints()
+                self.domesticHostingController = UIHostingController(rootView:  PortFolioPieChartView(values: now_values, colors: [Color.blue, Color.green, Color.orange, Color.red, Color.cyan, Color.brown, Color.mint, Color.yellow, Color.purple, Color.mint, Color.indigo], names: now_names, backgroundColor: Color(red: 21 / 255, green: 24 / 255, blue: 30 / 255, opacity: 1.0), innerRadiusFraction: 0.6))
+    //            self.domesticHostingController.rootView = PortFolioPieChartView(values: [1300, 500, 300, 100, 200], colors: [Color.blue, Color.green, Color.orange, Color.red, Color.cyan], names: ["Rent", "Transport", "Education", "1", "2"], backgroundColor: Color(red: 21 / 255, green: 24 / 255, blue: 30 / 255, opacity: 1.0), innerRadiusFraction: 0.6)
+                
+                if #available(iOS 16.0, *) {
+                    self.domesticHostingController.sizingOptions = .preferredContentSize
+                } else {
+                    // Fallback on earlier versions
+                }
+
+                self.addChild(self.domesticHostingController)
+                self.domesticHostingController.view.translatesAutoresizingMaskIntoConstraints = false
+                
+                self.domesticHostingController.view.snp.removeConstraints()
+        
+                self.sectorUIView.addSubview(self.domesticHostingController.view)
+                
+                self.domesticHostingController.view.snp.makeConstraints{
+                    $0.edges.equalToSuperview()
+                }
+                // -------------------------------------------- 바꾸는 부분 ----------------------------------------------- //
             }//해외면
             else {
                 self.cvStackView.snp.updateConstraints{
@@ -556,6 +778,12 @@ class MyAccountViewController: UIViewController {
                 }
                 self.agreementCvStackView.snp.updateConstraints{
                     $0.height.equalTo(44 * (self.myOverseasAgreement.count + 1) )
+                }
+//                self.domesticHostingController.removeFromParent()
+                self.domesticHostingController.view.snp.removeConstraints()
+                self.sectorUIView.addSubview(self.overseasHostingController.view)
+                self.overseasHostingController.view.snp.makeConstraints{
+                    $0.edges.equalToSuperview()
                 }
             }
         }
@@ -713,11 +941,16 @@ class MyAccountViewController: UIViewController {
 //            $0.height.equalToSuperview()
         }
         
+        
+//        sectorUIView.addSubview(hostingController.view)
+//        hostingController.view.snp.makeConstraints{
+//            $0.edges.equalToSuperview()
+//        }
         sectorUIView.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(600)
+            $0.height.equalTo(1000)
         }
-
+        
         
         agreementScrollView.snp.makeConstraints{
             $0.top.equalTo(balanceButtonBottom.snp.bottom)
@@ -1343,5 +1576,63 @@ extension MyAccountViewController {
 
 //        print(str[str.startIndex ... three])
         return String(str[str.startIndex ... three])
+    }
+    
+    
+    
+    // Domestic 업종 관려 ㄴget
+    //여기서
+    private func requestAPI_DomesticSector(){
+//        var dict: [String: Double] = [:]
+        
+        for i in myAccountSecurities{
+            print(i.pdno, i.evlu_amt)
+        
+            let url = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/quotations/inquire-price?FID_COND_MRKT_DIV_CODE=J&FID_INPUT_ISCD=\(i.pdno)"
+            
+            AF.request(url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "" ,
+                       method: .get,
+                       headers: ["content-type": "application/json; charset=utf-8",
+                                 "authorization": UserDefaults.standard.string(forKey: "accessToken")!,
+                                 "appkey": UserDefaults.standard.string(forKey: "appkey")!,
+                                 "appsecret": UserDefaults.standard.string(forKey: "appsecret")!,
+                                 "tr_id": "FHKST01010100"]
+            )
+            .responseDecodable(of: DomesticSectorTotalDto.self){ [weak self] response in
+                // success 이외의 응답을 받으면, else문에 걸려 함수 종료
+                guard
+                    let self = self,
+                    case .success(let data) = response.result else {
+                    print("못함.... response는")
+                    print(response)
+                    return }
+                //데이터 받아옴
+                let now_upjong = data.output.bstp_kor_isnm
+                print("지금 업종 : ")
+                print(now_upjong)
+                print(i.evlu_amt)
+                
+                if(self.myDomesticSectors[now_upjong] == nil){
+                    self.myDomesticSectors[now_upjong] = Double(i.evlu_amt)!
+                    print(self.myDomesticSectors)
+                }
+                else {
+                    self.myDomesticSectors[now_upjong] = self.myDomesticSectors[now_upjong]! + Double(i.evlu_amt)!
+                    print(self.myDomesticSectors)
+                }
+                
+            }.resume()
+        }
+
+        
+        
+    }
+    
+    
+    // Overseas 업종 관련 get
+    // 여기서
+    private func requestAPI_OverseasSector(securityCode: String){
+        
+       
     }
 }
