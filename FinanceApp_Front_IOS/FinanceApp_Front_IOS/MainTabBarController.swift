@@ -30,7 +30,7 @@ class MainTabBarController: UITabBarController{
     }()
     
     private lazy var thirdViewController: UIViewController = {
-        let vc = TradingViewController()
+        let vc = TradingSearchViewController()
         let tabBarItem = UITabBarItem(title: "Trading", image: UIImage(systemName: "chart.bar.xaxis"), tag: 0)
         
         vc.tabBarItem = tabBarItem

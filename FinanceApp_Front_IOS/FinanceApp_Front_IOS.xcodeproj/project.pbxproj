@@ -52,7 +52,7 @@
 		A557E477297A7D3300A40EEE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E476297A7D3300A40EEE /* MainViewController.swift */; };
 		A557E47B297D020900A40EEE /* KeywordRankViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E47A297D020900A40EEE /* KeywordRankViewController.swift */; };
 		A557E47E297D023000A40EEE /* WBRankViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E47D297D023000A40EEE /* WBRankViewController.swift */; };
-		A557E481297D024600A40EEE /* TradingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E480297D024600A40EEE /* TradingViewController.swift */; };
+		A557E481297D024600A40EEE /* TradingSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E480297D024600A40EEE /* TradingSearchViewController.swift */; };
 		A557E484297D025F00A40EEE /* MyAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E483297D025F00A40EEE /* MyAccountViewController.swift */; };
 		A557E489297D0B0C00A40EEE /* KeywordScoreGraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E488297D0B0C00A40EEE /* KeywordScoreGraphViewController.swift */; };
 		A557E48B297D114400A40EEE /* WBRankHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E48A297D114400A40EEE /* WBRankHeaderView.swift */; };
@@ -86,6 +86,7 @@
 		A5F143E229867FAB0013A365 /* PortFolioPieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F143E129867FAB0013A365 /* PortFolioPieChartView.swift */; };
 		A5F143E729869E720013A365 /* KeywordChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F143E629869E720013A365 /* KeywordChartView.swift */; };
 		A5F143EA2986AC570013A365 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F143E92986AC570013A365 /* Date.swift */; };
+		A5F143EF298746790013A365 /* TradingHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F143EE298746790013A365 /* TradingHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -134,7 +135,7 @@
 		A557E476297A7D3300A40EEE /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		A557E47A297D020900A40EEE /* KeywordRankViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordRankViewController.swift; sourceTree = "<group>"; };
 		A557E47D297D023000A40EEE /* WBRankViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WBRankViewController.swift; sourceTree = "<group>"; };
-		A557E480297D024600A40EEE /* TradingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingViewController.swift; sourceTree = "<group>"; };
+		A557E480297D024600A40EEE /* TradingSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingSearchViewController.swift; sourceTree = "<group>"; };
 		A557E483297D025F00A40EEE /* MyAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountViewController.swift; sourceTree = "<group>"; };
 		A557E488297D0B0C00A40EEE /* KeywordScoreGraphViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordScoreGraphViewController.swift; sourceTree = "<group>"; };
 		A557E48A297D114400A40EEE /* WBRankHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WBRankHeaderView.swift; sourceTree = "<group>"; };
@@ -168,6 +169,7 @@
 		A5F143E129867FAB0013A365 /* PortFolioPieChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortFolioPieChartView.swift; sourceTree = "<group>"; };
 		A5F143E629869E720013A365 /* KeywordChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordChartView.swift; sourceTree = "<group>"; };
 		A5F143E92986AC570013A365 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		A5F143EE298746790013A365 /* TradingHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -449,8 +451,9 @@
 		A557E482297D024B00A40EEE /* TradingView */ = {
 			isa = PBXGroup;
 			children = (
-				A557E480297D024600A40EEE /* TradingViewController.swift */,
+				A557E480297D024600A40EEE /* TradingSearchViewController.swift */,
 				A557E49F297D7E6300A40EEE /* TradingGraphViewController.swift */,
+				A5F143ED2987465E0013A365 /* SubComponents */,
 			);
 			path = TradingView;
 			sourceTree = "<group>";
@@ -628,6 +631,14 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		A5F143ED2987465E0013A365 /* SubComponents */ = {
+			isa = PBXGroup;
+			children = (
+				A5F143EE298746790013A365 /* TradingHeaderView.swift */,
+			);
+			path = SubComponents;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -740,9 +751,10 @@
 				A5F143EA2986AC570013A365 /* Date.swift in Sources */,
 				A557E4282977AB6C00A40EEE /* ShowDataViewCollectionViewCell.swift in Sources */,
 				A557E477297A7D3300A40EEE /* MainViewController.swift in Sources */,
-				A557E481297D024600A40EEE /* TradingViewController.swift in Sources */,
+				A557E481297D024600A40EEE /* TradingSearchViewController.swift in Sources */,
 				A5B77E442981F941006D754F /* MyOverseasMoneyDto.swift in Sources */,
 				A5398C00297E5E1F0062A24A /* GainsAndLossesView.swift in Sources */,
+				A5F143EF298746790013A365 /* TradingHeaderView.swift in Sources */,
 				A557E4332977ACB500A40EEE /* ButtonListViewLayout.swift in Sources */,
 				A5B77E3829810D07006D754F /* MyAccountMoneyDto.swift in Sources */,
 				A557E4352977ACCD00A40EEE /* ExchangeRate.swift in Sources */,
