@@ -15,7 +15,7 @@ import SwiftUI
 
 class TradingSearchViewController: UIViewController {
     
-    // ------------------------------------------------------- variables ------------------------------------------------------ //
+    // ------------------------------------------------------------------------ variables ----------------------------------------------------------------------- //
     
     
     
@@ -44,11 +44,41 @@ class TradingSearchViewController: UIViewController {
     
     private var domesticNowPrice: DomesticNowPrice? = nil
     
+    
+    //일간 차트
+    private var dayOverseasPrice: [OverseasPrice] = []
+    // 주간 이평선을 위해
+    private var weekOverseasPrice: [OverseasPrice] = []
+    // 월간 이평선을 위해
+    private var monthOverseasPrice: [OverseasPrice] = []
+    
+    //일간 차트 종가
+    private var dayOverseasClosePrice: [Double] = []
+    // 주간 이평선 종가
+    private var weekOverseasClosePrice: [Double] = []
+    // 월간 이평선 종가
+    private var monthOverseasClosePrice: [Double] = []
+    
+    private var overseasNowPrice: OverseasNowPrice? = nil
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     let dateFormatter = DateFormatter()
     
     
-    // ------------------------------------------------------- variables ------------------------------------------------------ //
+    // ------------------------------------------------------------------------ variables ----------------------------------------------------------------------- //
     
+    
+    
+    // ------------------------------------------------------------------------ UI Components ----------------------------------------------------------------------- //
     private lazy var leftButton: UIBarButtonItem = {
         let button = UIBarButtonItem(title: "국내", style: .plain, target: self, action: #selector(leftButtonClicked))
         return button
@@ -56,7 +86,7 @@ class TradingSearchViewController: UIViewController {
     
     
     private lazy var rightButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(image: UIImage(systemName: "arrow.counterclockwise"), style: .plain, target: self, action: #selector(rightButtonClicked))
+        let button = UIBarButtonItem(image: UIImage(systemName: "arrow.counterclockwise"), style: .plain, target: self, action: #selector(rightRefreshButtonClicked))
         return button
     }()
     
@@ -65,16 +95,79 @@ class TradingSearchViewController: UIViewController {
         if self.isDomestic {
             self.isDomestic = false
             self.leftButton.title = "해외"
+            self.formulaTextField.text = "지정가"
+            self.formulaTextField.isEnabled = false
         }else{
             self.isDomestic = true
             self.leftButton.title = "국내"
+            self.formulaTextField.text = ""
+            self.formulaTextField.isEnabled = true
         }
         print(self.isDomestic)
     }
     
     
-    @objc func rightButtonClicked(){
+    @objc func rightRefreshButtonClicked(){
         print("rightButtonClicked")
+        
+        
+        if self.isDomestic{
+            
+            // Header부분 업데이트
+            requestAPI_DomesticPrice_now(jongmokName: self.nowTicker)
+            requestAPI_DomesticPrice_former(dayWeekMonth: "D")
+            requestAPI_DomesticPrice_former(dayWeekMonth: "W")
+            requestAPI_DomesticPrice_former(dayWeekMonth: "M")
+            // 여기서 모든 로직이 돌아가야함
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+                // -------------------------------------------- 바꾸는 부분 ----------------------------------------------- //
+                self.chartHostingController.view.snp.removeConstraints()
+                self.chartHostingController = UIHostingController(rootView:  TradingChartView(dailyData: self.dayDomesticClosePrice, weeklyData: self.weekDomesticClosePrice, monthlyData: self.monthDomesticClosePrice, startDate: self.dateFormatter.date(from: self.dayDomesticPrice.last!.stck_bsop_date)!, endDate: self.dateFormatter.date(from: self.dayDomesticPrice.first!.stck_bsop_date )!))
+    //            self.domesticHostingController.rootView = PortFolioPieChartView(values: [1300, 500, 300, 100, 200], colors: [Color.blue, Color.green, Color.orange, Color.red, Color.cyan], names: ["Rent", "Transport", "Education", "1", "2"], backgroundColor: Color(red: 21 / 255, green: 24 / 255, blue: 30 / 255, opacity: 1.0), innerRadiusFraction: 0.6)
+                
+                if #available(iOS 16.0, *) {
+                    self.chartHostingController.sizingOptions = .preferredContentSize
+                } else {
+                    // Fallback on earlier versions
+                }
+
+                self.addChild(self.chartHostingController)
+                self.chartHostingController.view.translatesAutoresizingMaskIntoConstraints = false
+                
+    //            self.domesticHostingController.view.snp.removeConstraints()
+        
+                self.tradingChartViewUIView.addSubview(self.chartHostingController.view)
+                
+                self.chartHostingController.view.snp.makeConstraints{
+                    $0.edges.equalToSuperview()
+                }
+                // -------------------------------------------- 바꾸는 부분 ----------------------------------------------- //
+            }
+        }else{
+           
+            requestAPI_OverseasPrice()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+                self.chartHostingController.view.snp.removeConstraints()
+                self.chartHostingController = UIHostingController(rootView:  TradingChartView(dailyData: self.dayOverseasClosePrice, weeklyData: self.dayOverseasClosePrice, monthlyData: self.dayOverseasClosePrice, startDate: self.dateFormatter.date(from: self.dayOverseasPrice.last!.stck_bsop_date)!, endDate: self.dateFormatter.date(from: self.dayDomesticPrice.first!.stck_bsop_date )!))
+
+                
+                if #available(iOS 16.0, *) {
+                    self.chartHostingController.sizingOptions = .preferredContentSize
+                } else {
+                    // Fallback on earlier versions
+                }
+
+                self.addChild(self.chartHostingController)
+                self.chartHostingController.view.translatesAutoresizingMaskIntoConstraints = false
+                
+                self.tradingChartViewUIView.addSubview(self.chartHostingController.view)
+                
+                self.chartHostingController.view.snp.makeConstraints{
+                    $0.edges.equalToSuperview()
+                }
+            }
+        }
     }
     
     
@@ -178,9 +271,245 @@ class TradingSearchViewController: UIViewController {
         v.backgroundColor = .white
         return v
     }()
+    // ------------------------------------------------------------------------ UI Components ----------------------------------------------------------------------- //
+    
+
+    // ------------------------------------------------------------------------ 매수/매도 UI Components ----------------------------------------------------------------------- //
+    
+    // ------------------------------------------------------- variables ------------------------------------------------------ //
     
     
-//    TradingChartView(chartData: [100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2])
+    private var nowSecurity: SecurityForRecommend?
+    
+    
+    // 우리가 제공할 호가방식 목록
+    private let hogaList: [String] = ["시장가", "지정가"]
+    // 지금 선택한 투자자를 담을 변수
+    private var selectedHoga: String = ""
+    
+    // ------------------------------------------------------- variables ------------------------------------------------------ //
+    
+    
+    
+    // ------------------------------------------------------- UI Components ------------------------------------------------------ //
+    
+    private lazy var redUIView: UIView = {
+        let uiview = UIView()
+        uiview.backgroundColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0)
+        uiview.layer.borderWidth = 1.0
+        uiview.layer.borderColor = UIColor.lightGray.cgColor
+        uiview.layer.cornerRadius = 4.0
+        return uiview
+    }()
+    
+    
+    private lazy var securityNameLabel: UILabel = {
+        let label = UILabel()
+        label.text = "종목명  :"
+        label.textColor = .black
+        label.font = .systemFont(ofSize: 16, weight: .bold)
+        return label
+    }()
+    
+    private lazy var securityTextField: UITextField = {
+        let tf = UITextField()
+        tf.layer.borderWidth = 2.0
+        tf.layer.borderColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0).cgColor
+        tf.layer.cornerRadius = 10.0
+        tf.backgroundColor = .systemBackground
+        tf.placeholder = "종목명 입력"
+        //textField 앞에 inset을 줘서 text가 자연스럽게 보이도록
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: tf.frame.height))
+        tf.leftView = paddingView
+        tf.leftViewMode = .always
+        return tf
+    }()
+    
+    private lazy var tickerNameLabel: UILabel = {
+        let label = UILabel()
+        label.text = "종목코드  :"
+        label.textColor = .black
+        label.font = .systemFont(ofSize: 16, weight: .bold)
+        return label
+    }()
+    
+    private lazy var tickerTextField: UITextField = {
+        let tf = UITextField()
+        tf.layer.borderWidth = 2.0
+        tf.layer.borderColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0).cgColor
+        tf.layer.cornerRadius = 10.0
+        tf.backgroundColor = .systemBackground
+        tf.placeholder = "종목코드 입력"
+        //textField 앞에 inset을 줘서 text가 자연스럽게 보이도록
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: tf.frame.height))
+        tf.leftView = paddingView
+        tf.leftViewMode = .always
+        return tf
+    }()
+    
+    private lazy var buyButton: UIButton = {
+        let btn = UIButton()
+        btn.layer.cornerRadius = 8.0
+        btn.layer.borderWidth = 2.0
+        btn.layer.borderColor = UIColor(red: 253/255.0, green: 166/255.0, blue: 166/255.0, alpha: 1.0).cgColor
+        btn.backgroundColor = .white
+        
+        btn.setTitle("매수", for: .normal)
+        btn.setTitleColor(.black, for: .normal)
+        btn.titleLabel?.font = .systemFont(ofSize: 14.0, weight: .bold)
+        btn.addTarget(self, action: #selector(buyStockClicked), for: .touchUpInside)
+        return btn
+    }()
+    
+    
+    private lazy var sellButton: UIButton = {
+        let btn = UIButton()
+        btn.layer.cornerRadius = 8.0
+        btn.layer.borderWidth = 2.0
+        btn.layer.borderColor = UIColor(red: 253/255.0, green: 166/255.0, blue: 166/255.0, alpha: 1.0).cgColor
+        btn.backgroundColor = .white
+        btn.setTitle("매도", for: .normal)
+        btn.setTitleColor(.black, for: .normal)
+        btn.titleLabel?.font = .systemFont(ofSize: 14.0, weight: .bold)
+        btn.addTarget(self, action: #selector(sellStockClicked), for: .touchUpInside)
+        return btn
+    }()
+    
+    @objc func buyStockClicked(){
+        
+        //해외
+        if !self.isDomestic{
+            print("매수버튼 호출! - 해외")
+            overSeasBuyStock()
+        }else {
+            print("매수버튼 호출! - 국내")
+            domesticBuyStock()
+        }
+//
+    }
+    
+    @objc func sellStockClicked(){
+        
+        if !self.isDomestic{
+            print("매도버튼 호출! - 해외")
+            overSeasSellStock()
+        }else {
+            print("매도버튼 호출! - 국내")
+            domesticSellStock()
+        }
+    }
+    
+    private lazy var quantityLabel: UILabel = {
+        let label = UILabel()
+        label.text = "수량  :"
+        label.textColor = .black
+        label.font = .systemFont(ofSize: 16, weight: .bold)
+        return label
+    }()
+    
+    private lazy var quantityTextField: UITextField = {
+        let tf = UITextField()
+        tf.layer.borderWidth = 2.0
+        tf.layer.borderColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0).cgColor
+        tf.layer.cornerRadius = 10.0
+        tf.backgroundColor = .systemBackground
+        tf.placeholder = "수량 입력"
+        //textField 앞에 inset을 줘서 text가 자연스럽게 보이도록
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: tf.frame.height))
+        tf.leftView = paddingView
+        tf.leftViewMode = .always
+        return tf
+    }()
+    
+    private lazy var formulaLabel: UILabel = {
+        let label = UILabel()
+        label.text = "호가  :"
+        label.textColor = .black
+        label.font = .systemFont(ofSize: 16, weight: .bold)
+        return label
+    }()
+    
+    private lazy var formulaTextField: UITextField = {
+        let tf = UITextField()
+        tf.layer.borderWidth = 2.0
+        tf.layer.borderColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0).cgColor
+        tf.layer.cornerRadius = 10.0
+        tf.backgroundColor = .systemBackground
+        tf.placeholder = "호가방식 선택"
+        //textField 앞에 inset을 줘서 text가 자연스럽게 보이도록
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: tf.frame.height))
+        tf.leftView = paddingView
+        tf.leftViewMode = .always
+        return tf
+    }()
+    
+    private lazy var designatedLabel: UILabel = {
+        let label = UILabel()
+        label.text = "지정가  :"
+        label.textColor = .black
+        label.font = .systemFont(ofSize: 16, weight: .bold)
+        return label
+    }()
+    
+    private lazy var designatedTextField: UITextField = {
+        let tf = UITextField()
+        tf.layer.borderWidth = 2.0
+        tf.layer.borderColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0).cgColor
+        tf.layer.cornerRadius = 10.0
+        tf.backgroundColor = .systemBackground
+        tf.placeholder = "지정가 입력"
+        //textField 앞에 inset을 줘서 text가 자연스럽게 보이도록
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: tf.frame.height))
+        tf.leftView = paddingView
+        tf.leftViewMode = .always
+        return tf
+    }()
+    
+    //가운데 border 바
+    let borderView: UIView = {
+        let v = UIView()
+        v.backgroundColor = .lightGray
+        return v
+    }()
+    
+    private lazy var hogaPicker: UIPickerView = {
+        let pv = UIPickerView()
+        pv.frame = CGRect(x: 2000, y: 2000, width: 200, height: 200)
+        //숨겨놔야함
+//        pv.isHidden = true
+        pv.delegate = self
+        pv.dataSource = self
+
+        return pv
+    }()
+    
+    
+    // ------------------------------------------------------- UI Components ------------------------------------------------------ //
+    
+    func createToolBar(){
+        let toolBar = UIToolbar()
+        toolBar.sizeToFit()
+        let doneBtn = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(self.dismissKeyboard))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        toolBar.setItems([flexibleSpace,doneBtn], animated: false)
+        formulaTextField.inputAccessoryView = toolBar
+    }
+
+    @objc private func dismissKeyboard(){
+        self.formulaTextField.endEditing(true)
+    }
+    //키보드 내리기
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+            self.view.endEditing(true)
+        }
+    
+    func setupTradeView(){
+//        self.nowSecurity = security
+//        securityTextField.text = security.securityName
+//        tickerTextField.text = security.sector
+    }
+    
+    // ------------------------------------------------------------------------ 매수/매도 UI Components ----------------------------------------------------------------------- //
     
     // ------------------------------------------------------- UI Components ------------------------------------------------------ //
     
@@ -212,6 +541,8 @@ class TradingSearchViewController: UIViewController {
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        self.formulaTextField.inputView = self.hogaPicker
+        createToolBar()
         
         layout()
     }
@@ -245,8 +576,22 @@ class TradingSearchViewController: UIViewController {
         self.tradingChartViewUIView.isHidden = true
         
         self.isDomestic = true
-        self.rightButton.title = "국내"
+        self.leftButton.title = "국내"
         self.nowTicker = "071050"
+        
+        // ---------------------- 매수매도 창 ---------------------- //
+        self.formulaTextField.text = ""
+        self.formulaTextField.isEnabled = true
+        self.securityTextField.text = ""
+        self.tickerTextField.text = ""
+        self.quantityTextField.text = ""
+        self.formulaTextField.text = ""
+        self.designatedTextField.text = ""
+       
+//        self.securityTextField.isEnabled = false
+//        self.tickerTextField.isEnabled = false
+        // ---------------------- 매수매도 창 ---------------------- //
+        
         // Header부분 업데이트
         requestAPI_DomesticPrice_now(jongmokName: "한국금융지주")
         requestAPI_DomesticPrice_former(dayWeekMonth: "D")
@@ -365,9 +710,111 @@ class TradingSearchViewController: UIViewController {
         
         tradingView.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(600)
+            $0.height.equalTo(1000)
 //            $0.bottom.equalTo(view.safeAreaLayoutGuide)
         }
+        
+        [ securityNameLabel, securityTextField, tickerNameLabel, tickerTextField, buyButton, sellButton, quantityLabel, quantityTextField, formulaLabel, formulaTextField, designatedLabel, designatedTextField].forEach{
+            tradingView.addSubview($0)
+        }
+    
+
+        securityNameLabel.snp.makeConstraints{
+            $0.top.equalToSuperview().offset(10)
+            $0.height.equalTo(40)
+            $0.width.equalTo(120)
+            $0.leading.equalToSuperview().inset(20)
+        }
+        
+        securityTextField.snp.makeConstraints{
+            $0.top.equalToSuperview().offset(10)
+            $0.height.equalTo(40)
+            $0.width.equalTo(120)
+            $0.leading.equalTo(view.snp.trailing).inset( UIScreen.main.bounds.width * 3 / 4)
+            $0.trailing.equalToSuperview().inset(20)
+        }
+        
+        tickerNameLabel.snp.makeConstraints{
+            $0.top.equalTo(securityNameLabel.snp.bottom).offset(8)
+            $0.height.equalTo(40)
+            $0.width.equalTo(120)
+            $0.leading.equalToSuperview().inset(20)
+        }
+        
+        tickerTextField.snp.makeConstraints{
+            $0.top.equalTo(securityNameLabel.snp.bottom).offset(8)
+            $0.height.equalTo(40)
+            $0.width.equalTo(120)
+            $0.leading.equalTo(view.snp.trailing).inset( UIScreen.main.bounds.width * 3 / 4)
+            $0.trailing.equalToSuperview().inset(20)
+        }
+        
+       
+        
+        quantityLabel.snp.makeConstraints{
+            $0.top.equalTo(tickerNameLabel.snp.bottom).offset(10)
+            $0.height.equalTo(40)
+            $0.width.equalTo(120)
+            $0.leading.equalToSuperview().inset(20)
+        }
+        
+        quantityTextField.snp.makeConstraints{
+            $0.top.equalTo(tickerNameLabel.snp.bottom).offset(10)
+            $0.height.equalTo(40)
+            $0.width.equalTo(120)
+            $0.leading.equalTo(view.snp.trailing).inset( UIScreen.main.bounds.width * 3 / 4)
+            $0.trailing.equalToSuperview().inset(20)
+        }
+        
+        formulaLabel.snp.makeConstraints{
+            $0.top.equalTo(quantityLabel.snp.bottom).offset(8)
+            $0.height.equalTo(40)
+            $0.width.equalTo(120)
+            $0.leading.equalToSuperview().inset(20)
+        }
+        
+        formulaTextField.snp.makeConstraints{
+            $0.top.equalTo(quantityLabel.snp.bottom).offset(8)
+            $0.height.equalTo(40)
+            $0.width.equalTo(120)
+            $0.leading.equalTo(view.snp.trailing).inset( UIScreen.main.bounds.width * 3 / 4)
+            $0.trailing.equalToSuperview().inset(20)
+        }
+        
+        designatedLabel.snp.makeConstraints{
+            $0.top.equalTo(formulaLabel.snp.bottom).offset(8)
+            $0.height.equalTo(40)
+            $0.width.equalTo(120)
+            $0.leading.equalToSuperview().inset(20)
+        }
+        
+        designatedTextField.snp.makeConstraints{
+            $0.top.equalTo(formulaLabel.snp.bottom).offset(8)
+            $0.height.equalTo(40)
+            $0.width.equalTo(120)
+            $0.leading.equalTo(view.snp.trailing).inset( UIScreen.main.bounds.width * 3 / 4)
+            $0.trailing.equalToSuperview().inset(20)
+        }
+        
+        buyButton.snp.makeConstraints{
+            $0.top.equalTo(designatedLabel.snp.bottom).offset(20)
+            $0.height.equalTo(60)
+            $0.width.equalTo(UIScreen.main.bounds.width / 2 - 40)
+            $0.leading.equalToSuperview().inset(20)
+        }
+        
+        sellButton.snp.makeConstraints{
+            $0.top.equalTo(designatedLabel.snp.bottom).offset(20)
+            $0.height.equalTo(60)
+            $0.width.equalTo(UIScreen.main.bounds.width / 2 - 40)
+            $0.leading.equalTo(buyButton.snp.trailing).offset(40)
+        }
+        
+        
+        
+        
+
+        
         
         tradingChartViewUIView.snp.makeConstraints{
 //            $0.top.equalTo(balanceButtonBottom.snp.bottom)
@@ -416,51 +863,67 @@ extension TradingSearchViewController: UISearchBarDelegate{
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         print("searchButton clicked!!")
         print(searchBar.text)
-        //한국금융지주로 설정
-        self.nowTicker = searchBar.text ?? "071050"
-        // Header부분 업데이트
-        requestAPI_DomesticPrice_now(jongmokName: self.nowTicker)
-        requestAPI_DomesticPrice_former(dayWeekMonth: "D")
-        requestAPI_DomesticPrice_former(dayWeekMonth: "W")
-        requestAPI_DomesticPrice_former(dayWeekMonth: "M")
-        // 여기서 모든 로직이 돌아가야함
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1){
-            // -------------------------------------------- 바꾸는 부분 ----------------------------------------------- //
-            self.chartHostingController.view.snp.removeConstraints()
-            self.chartHostingController = UIHostingController(rootView:  TradingChartView(dailyData: self.dayDomesticClosePrice, weeklyData: self.weekDomesticClosePrice, monthlyData: self.monthDomesticClosePrice, startDate: self.dateFormatter.date(from: self.dayDomesticPrice.last!.stck_bsop_date)!, endDate: self.dateFormatter.date(from: self.dayDomesticPrice.first!.stck_bsop_date )!))
-//            self.domesticHostingController.rootView = PortFolioPieChartView(values: [1300, 500, 300, 100, 200], colors: [Color.blue, Color.green, Color.orange, Color.red, Color.cyan], names: ["Rent", "Transport", "Education", "1", "2"], backgroundColor: Color(red: 21 / 255, green: 24 / 255, blue: 30 / 255, opacity: 1.0), innerRadiusFraction: 0.6)
+        if self.isDomestic{
+            //한국금융지주로 설정
+            self.nowTicker = searchBar.text ?? "071050"
+            // Header부분 업데이트
+            requestAPI_DomesticPrice_now(jongmokName: self.nowTicker)
+            requestAPI_DomesticPrice_former(dayWeekMonth: "D")
+            requestAPI_DomesticPrice_former(dayWeekMonth: "W")
+            requestAPI_DomesticPrice_former(dayWeekMonth: "M")
+            // 여기서 모든 로직이 돌아가야함
             
-            if #available(iOS 16.0, *) {
-                self.chartHostingController.sizingOptions = .preferredContentSize
-            } else {
-                // Fallback on earlier versions
-            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+                // -------------------------------------------- 바꾸는 부분 ----------------------------------------------- //
+                self.chartHostingController.view.snp.removeConstraints()
+                self.chartHostingController = UIHostingController(rootView:  TradingChartView(dailyData: self.dayDomesticClosePrice, weeklyData: self.weekDomesticClosePrice, monthlyData: self.monthDomesticClosePrice, startDate: self.dateFormatter.date(from: self.dayDomesticPrice.last!.stck_bsop_date)!, endDate: self.dateFormatter.date(from: self.dayDomesticPrice.first!.stck_bsop_date )!))
+    //            self.domesticHostingController.rootView = PortFolioPieChartView(values: [1300, 500, 300, 100, 200], colors: [Color.blue, Color.green, Color.orange, Color.red, Color.cyan], names: ["Rent", "Transport", "Education", "1", "2"], backgroundColor: Color(red: 21 / 255, green: 24 / 255, blue: 30 / 255, opacity: 1.0), innerRadiusFraction: 0.6)
+                
+                if #available(iOS 16.0, *) {
+                    self.chartHostingController.sizingOptions = .preferredContentSize
+                } else {
+                    // Fallback on earlier versions
+                }
 
-            self.addChild(self.chartHostingController)
-            self.chartHostingController.view.translatesAutoresizingMaskIntoConstraints = false
-            
-//            self.domesticHostingController.view.snp.removeConstraints()
-    
-            self.tradingChartViewUIView.addSubview(self.chartHostingController.view)
-            
-            self.chartHostingController.view.snp.makeConstraints{
-                $0.edges.equalToSuperview()
+                self.addChild(self.chartHostingController)
+                self.chartHostingController.view.translatesAutoresizingMaskIntoConstraints = false
+                
+    //            self.domesticHostingController.view.snp.removeConstraints()
+        
+                self.tradingChartViewUIView.addSubview(self.chartHostingController.view)
+                
+                self.chartHostingController.view.snp.makeConstraints{
+                    $0.edges.equalToSuperview()
+                }
+                // -------------------------------------------- 바꾸는 부분 ----------------------------------------------- //
             }
-            // -------------------------------------------- 바꾸는 부분 ----------------------------------------------- //
+        }else{
+            self.nowTicker = searchBar.text ?? "TSLA"
+            requestAPI_OverseasPrice()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+                self.chartHostingController.view.snp.removeConstraints()
+                self.chartHostingController = UIHostingController(rootView:  TradingChartView(dailyData: self.dayOverseasClosePrice, weeklyData: self.dayOverseasClosePrice, monthlyData: self.dayOverseasClosePrice, startDate: self.dateFormatter.date(from: self.dayOverseasPrice.last!.stck_bsop_date)!, endDate: self.dateFormatter.date(from: self.dayDomesticPrice.first!.stck_bsop_date )!))
+
+                
+                if #available(iOS 16.0, *) {
+                    self.chartHostingController.sizingOptions = .preferredContentSize
+                } else {
+                    // Fallback on earlier versions
+                }
+
+                self.addChild(self.chartHostingController)
+                self.chartHostingController.view.translatesAutoresizingMaskIntoConstraints = false
+                
+                self.tradingChartViewUIView.addSubview(self.chartHostingController.view)
+                
+                self.chartHostingController.view.snp.makeConstraints{
+                    $0.edges.equalToSuperview()
+                }
+            }
         }
-        
-        
+       
     }
-}
-
-
-
-// 키보드 내리기 위한 코드
-extension TradingSearchViewController {
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-            self.view.endEditing(true)
-        }
 }
 
 extension TradingSearchViewController {
@@ -558,10 +1021,317 @@ extension TradingSearchViewController {
                     
                     self.domesticNowPrice = DomesticNowPrice(rprs_mrkt_kor_name: data.output.rprs_mrkt_kor_name , bstp_kor_isnm: data.output.bstp_kor_isnm, prdy_vrss: data.output.prdy_vrss, prdy_vrss_sign: data.output.prdy_vrss_sign, prdy_ctrt: data.output.prdy_ctrt, acml_vol: data.output.acml_vol, stck_oprc: data.output.stck_oprc, stck_hgpr: data.output.stck_hgpr, stck_lwpr: data.output.stck_lwpr, stck_mxpr: data.output.stck_mxpr, stck_llam: data.output.stck_llam, frgn_ntby_qty: data.output.frgn_ntby_qty, aspr_unit: data.output.aspr_unit, w52_hgpr: data.output.w52_hgpr, w52_lwpr: data.output.w52_lwpr)
                     
-                    self.headerView.setup(jongmok: jongmokName, market: data.output.rprs_mrkt_kor_name, sector: data.output.bstp_kor_isnm, prdy_vrss: data.output.prdy_vrss, prdy_vrss_sign: data.output.prdy_vrss_sign, prdy_ctrt: data.output.prdy_ctrt, acml_vol: data.output.acml_vol, stck_oprc: data.output.stck_oprc, stck_hgpr: data.output.stck_hgpr, stck_lwpr: data.output.stck_lwpr, stck_mxpr: data.output.stck_mxpr, stck_llam: data.output.stck_llam, frgn_ntby_qty: data.output.frgn_ntby_qty)
-                    //보유종목 부분 update
-//                    self.securityNameCollectionView.reloadData()
-//                    self.securityCollectionView.reloadData()
+                    self.headerView.setup(jongmok: jongmokName, market: data.output.rprs_mrkt_kor_name, sector: data.output.bstp_kor_isnm, prdy_vrss: data.output.prdy_vrss, prdy_vrss_sign: data.output.prdy_vrss_sign, prdy_ctrt: data.output.prdy_ctrt, acml_vol: data.output.acml_vol, stck_oprc: data.output.stck_oprc, stck_hgpr: data.output.stck_hgpr, stck_lwpr: data.output.stck_lwpr, stck_mxpr: data.output.stck_mxpr, stck_llam: data.output.stck_llam, frgn_ntby_qty: data.output.frgn_ntby_qty, isDomestic: true)
+                    
+                    self.securityTextField.text = self.nowTicker
+                    self.tickerTextField.text = self.nowTicker
+                    self.securityTextField.isEnabled = false
+                    self.tickerTextField.isEnabled = false
         }.resume()
     }
+}
+
+
+
+
+extension TradingSearchViewController{
+    // 국내주식 매수
+    private func domesticBuyStock(){
+        
+        //여기서 먼저 비어있는 란이 없는지, 즉, 종목코드 혹은 수량 등 입력해야할 필수정보를 입력안한 것이 있는지 체크하고 알림을 띄움
+        
+        //종목명이 입력되지 않았을 경우
+        if self.securityTextField.text == nil || self.securityTextField.text == ""{
+            print("종목명를 입력해주세요 ")
+            return
+        }
+        //종목명이 입력되지 않았을 경우
+        if self.tickerTextField.text == nil || self.tickerTextField.text == ""{
+            print("종목코드를 입력해주세요 ")
+            return
+        }
+        //수량이 입력되지 않았을 경우
+        if self.quantityTextField.text == nil || self.quantityTextField.text == ""{
+            print("수량을 입력해주세요 ")
+            return
+        }
+        
+        
+        let url = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/trading/order-cash"
+        var request = URLRequest(url: URL(string: url)!)
+        request.httpMethod = "POST"
+        request.setValue("application/json; charset=UTF-8", forHTTPHeaderField: "Content-Type")
+        request.setValue(UserDefaults.standard.string(forKey: "accessToken")!, forHTTPHeaderField: "authorization")
+        request.setValue(UserDefaults.standard.string(forKey: "appkey")!, forHTTPHeaderField: "appkey")
+        request.setValue(UserDefaults.standard.string(forKey: "appsecret")!, forHTTPHeaderField: "appsecret")
+        request.setValue("TTTC0802U", forHTTPHeaderField: "tr_id")
+        request.timeoutInterval = 10
+        // POST 로 보낼 정보
+        // 항상 바뀌는 곳 2가지: PDNO - 종목코드, ORD_QTY - 주문수량  ... 나중에 시장가 / 지정가는 ORD_DVSN
+        let now_ticker: String = self.tickerTextField.text!
+        let now_quantity: String = self.quantityTextField.text!
+        let params = ["CANO":"73085780", "ACNT_PRDT_CD":"01", "PDNO": now_ticker, "ORD_DVSN":"01", "ORD_QTY": now_quantity, "ORD_UNPR":"0"] as Dictionary
+
+        // httpBody 에 parameters 추가
+        do {
+            try request.httpBody = JSONSerialization.data(withJSONObject: params, options: [])
+        } catch {
+            print("http Body Error")
+        }
+        
+        AF.request(request).response(){ [weak self] response in
+            guard
+                let self = self,
+                case .success(let data) = response.result else { return }
+            //str이, 받아온 json을 형태 그대로 STring으로 만든 것이다.
+            print("받은 응답 = ")
+            let str = String(decoding: data!, as: UTF8.self)
+            print(str)
+            self.dismiss(animated: true)
+        }
+        .resume()
+    }
+    // 국내주식 매도
+    private func domesticSellStock(){
+        //여기서 먼저 비어있는 란이 없는지, 즉, 종목코드 혹은 수량 등 입력해야할 필수정보를 입력안한 것이 있는지 체크하고 알림을 띄움
+        
+        //종목명이 입력되지 않았을 경우
+        if self.securityTextField.text == nil || self.securityTextField.text == ""{
+            print("종목명를 입력해주세요 ")
+            return
+        }
+        //종목명이 입력되지 않았을 경우
+        if self.tickerTextField.text == nil || self.tickerTextField.text == ""{
+            print("종목코드를 입력해주세요 ")
+            return
+        }
+        //수량이 입력되지 않았을 경우
+        if self.quantityTextField.text == nil || self.quantityTextField.text == ""{
+            print("수량을 입력해주세요 ")
+            return
+        }
+        
+        
+        let url = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/trading/order-cash"
+        var request = URLRequest(url: URL(string: url)!)
+        request.httpMethod = "POST"
+        request.setValue("application/json; charset=UTF-8", forHTTPHeaderField: "Content-Type")
+        request.setValue(UserDefaults.standard.string(forKey: "accessToken")!, forHTTPHeaderField: "authorization")
+        request.setValue(UserDefaults.standard.string(forKey: "appkey")!, forHTTPHeaderField: "appkey")
+        request.setValue(UserDefaults.standard.string(forKey: "appsecret")!, forHTTPHeaderField: "appsecret")
+        request.setValue("TTTC0801U", forHTTPHeaderField: "tr_id")
+        request.timeoutInterval = 10
+        // POST 로 보낼 정보
+        // 항상 바뀌는 곳 2가지: PDNO - 종목코드, ORD_QTY - 주문수량  ... 나중에 시장가 / 지정가는 ORD_DVSN
+        let now_ticker: String = self.tickerTextField.text!
+        let now_quantity: String = self.quantityTextField.text!
+        let params = ["CANO":"73085780", "ACNT_PRDT_CD":"01", "PDNO": now_ticker, "ORD_DVSN":"01", "ORD_QTY": now_quantity, "ORD_UNPR":"0"] as Dictionary
+
+        // httpBody 에 parameters 추가
+        do {
+            try request.httpBody = JSONSerialization.data(withJSONObject: params, options: [])
+        } catch {
+            print("http Body Error")
+        }
+        
+        AF.request(request).response(){ [weak self] response in
+            guard
+                let self = self,
+                case .success(let data) = response.result else { return }
+            //str이, 받아온 json을 형태 그대로 STring으로 만든 것이다.
+            print("받은 응답 = ")
+            let str = String(decoding: data!, as: UTF8.self)
+            print(str)
+            self.dismiss(animated: true)
+        }
+        .resume()
+    }
+    
+    // 해외주식 매수
+    private func overSeasBuyStock(){
+        
+        //종목명이 입력되지 않았을 경우
+        if self.securityTextField.text == nil || self.securityTextField.text == ""{
+            print("종목명를 입력해주세요 ")
+            return
+        }
+        //종목명이 입력되지 않았을 경우
+        if self.tickerTextField.text == nil || self.tickerTextField.text == ""{
+            print("종목코드를 입력해주세요 ")
+            return
+        }
+        //수량이 입력되지 않았을 경우
+        if self.quantityTextField.text == nil || self.quantityTextField.text == ""{
+            print("수량을 입력해주세요 ")
+            return
+        }
+        
+        
+        let url = "https://openapi.koreainvestment.com:9443/uapi/overseas-stock/v1/trading/order"
+        var request = URLRequest(url: URL(string: url)!)
+        request.httpMethod = "POST"
+        request.setValue("application/json; charset=UTF-8", forHTTPHeaderField: "Content-Type")
+        request.setValue(UserDefaults.standard.string(forKey: "accessToken")!, forHTTPHeaderField: "authorization")
+        request.setValue(UserDefaults.standard.string(forKey: "appkey")!, forHTTPHeaderField: "appkey")
+        request.setValue(UserDefaults.standard.string(forKey: "appsecret")!, forHTTPHeaderField: "appsecret")
+        request.setValue("JTTT1002U", forHTTPHeaderField: "tr_id")
+        request.timeoutInterval = 10
+        // POST 로 보낼 정보
+        //
+//        let now_ticker: String = self.tickerTextField.text!
+        let now_ticker: String = "MRIN"
+        let now_quantity: String = self.quantityTextField.text!
+        let now_market_name: String = "NYSE"
+        let now_order_danga: String = "1.2"
+        let params = ["CANO":"73085780", "ACNT_PRDT_CD":"01", "OVRS_EXCG_CD" : now_market_name, "PDNO": now_ticker, "ORD_QTY": now_quantity, "OVRS_ORD_UNPR": now_order_danga, "ORD_SVR_DVSN_CD": "0", "ORD_DVSN": "00"] as Dictionary
+
+        // httpBody 에 parameters 추가
+        do {
+            try request.httpBody = JSONSerialization.data(withJSONObject: params, options: [])
+        } catch {
+            print("http Body Error")
+        }
+        
+        AF.request(request).response(){ [weak self] response in
+            guard
+                let self = self,
+                case .success(let data) = response.result else { return }
+            //str이, 받아온 json을 형태 그대로 STring으로 만든 것이다.
+            print("받은 응답 = ")
+            let str = String(decoding: data!, as: UTF8.self)
+            print(str)
+            self.dismiss(animated: true)
+        }
+        .resume()
+    }
+    
+    // 해외주식 매도
+    private func overSeasSellStock(){
+        
+        //종목명이 입력되지 않았을 경우
+        if self.securityTextField.text == nil || self.securityTextField.text == ""{
+            print("종목명를 입력해주세요 ")
+            return
+        }
+        //종목명이 입력되지 않았을 경우
+        if self.tickerTextField.text == nil || self.tickerTextField.text == ""{
+            print("종목코드를 입력해주세요 ")
+            return
+        }
+        //수량이 입력되지 않았을 경우
+        if self.quantityTextField.text == nil || self.quantityTextField.text == ""{
+            print("수량을 입력해주세요 ")
+            return
+        }
+        
+        
+        let url = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/trading/order-cash"
+        var request = URLRequest(url: URL(string: url)!)
+        request.httpMethod = "POST"
+        request.setValue("application/json; charset=UTF-8", forHTTPHeaderField: "Content-Type")
+        request.setValue(UserDefaults.standard.string(forKey: "accessToken")!, forHTTPHeaderField: "authorization")
+        request.setValue(UserDefaults.standard.string(forKey: "appkey")!, forHTTPHeaderField: "appkey")
+        request.setValue(UserDefaults.standard.string(forKey: "appsecret")!, forHTTPHeaderField: "appsecret")
+        request.setValue("JTTT1006U", forHTTPHeaderField: "tr_id")
+        request.timeoutInterval = 10
+        // POST 로 보낼 정보
+        //
+//        let now_ticker: String = self.tickerTextField.text!
+        let now_ticker: String = "MRIN"
+        let now_quantity: String = self.quantityTextField.text!
+        let now_market_name: String = "NASD"
+        let now_order_danga: String = ""
+        let params = ["CANO":"73085780", "ACNT_PRDT_CD":"01", "OVRS_EXCG_CD" : now_market_name, "PDNO": now_ticker, "ORD_QTY": now_quantity, "OVRS_ORD_UNPR": now_order_danga, "ORD_SVR_DVSN_CD": "0", "ORD_DVSN": "00"] as Dictionary
+
+        // httpBody 에 parameters 추가
+        do {
+            try request.httpBody = JSONSerialization.data(withJSONObject: params, options: [])
+        } catch {
+            print("http Body Error")
+        }
+        
+        AF.request(request).response(){ [weak self] response in
+            guard
+                let self = self,
+                case .success(let data) = response.result else { return }
+            //str이, 받아온 json을 형태 그대로 STring으로 만든 것이다.
+            print("받은 응답 = ")
+            let str = String(decoding: data!, as: UTF8.self)
+            print(str)
+            self.dismiss(animated: true)
+        }
+        .resume()
+    }
+}
+
+
+extension TradingSearchViewController: UIPickerViewDelegate, UIPickerViewDataSource{
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return hogaList.count
+    }
+
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return hogaList[row]
+    }
+
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        print("select\(hogaList[row])")
+        self.selectedHoga = hogaList[row]
+        formulaTextField.text = hogaList[row]
+    }
+}
+
+
+extension TradingSearchViewController{
+    
+    private func requestAPI_OverseasPrice(){
+        
+        let url = "https://openapi.koreainvestment.com:9443/uapi/overseas-price/v1/quotations/inquire-daily-chartprice?FID_COND_MRKT_DIV_CODE=N&FID_INPUT_ISCD=\(self.nowTicker)&FID_INPUT_DATE_1=20221201&FID_INPUT_DATE_2=20230131&FID_PERIOD_DIV_CODE=D"
+        
+        AF.request(url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed.union( CharacterSet(["%"]))) ?? "",
+                   method: .get,
+                   headers: ["content-type": "application/json; charset=utf-8",
+                                             "authorization": UserDefaults.standard.string(forKey: "accessToken")!,
+                                             "appkey": UserDefaults.standard.string(forKey: "appkey")!,
+                                             "appsecret": UserDefaults.standard.string(forKey: "appsecret")!,
+                                             "tr_id": "FHKST03030100"]
+                   )
+                .responseDecodable(of: OverseasPriceTotalDto.self){ [weak self] response in
+                                // success 이외의 응답을 받으면, else문에 걸려 함수 종료
+                                guard
+                                    let self = self,
+                                    case .success(let data) = response.result else {
+                                    print("못함.... response는")
+                                    print(response)
+                                    return }
+                    
+                                //데이터 받아옴
+                    
+                    self.overseasNowPrice = OverseasNowPrice(ovrs_nmix_prdy_vrss: data.output1.ovrs_nmix_prdy_vrss, prdy_vrss_sign: data.output1.prdy_vrss_sign, prdy_ctrt: data.output1.prdy_ctrt, ovrs_nmix_prdy_clpr: data.output1.ovrs_nmix_prdy_clpr, acml_vol: data.output1.acml_vol, hts_kor_isnm: data.output1.hts_kor_isnm, ovrs_nmix_prpr: data.output1.ovrs_nmix_prpr, stck_shrn_iscd: data.output1.stck_shrn_iscd, ovrs_prod_oprc: data.output1.ovrs_prod_oprc, ovrs_prod_hgpr: data.output1.ovrs_prod_hgpr, ovrs_prod_lwpr: data.output1.ovrs_prod_lwpr)
+                    
+                    self.dayOverseasPrice = data.output2.map{ obj -> OverseasPrice in
+                        let now = OverseasPrice(stck_bsop_date: obj.stck_bsop_date, ovrs_nmix_prpr: obj.ovrs_nmix_prpr, ovrs_nmix_oprc: obj.ovrs_nmix_oprc, ovrs_nmix_hgpr: obj.ovrs_nmix_hgpr, ovrs_nmix_lwpr: obj.ovrs_nmix_lwpr, acml_vol: obj.acml_vol, mod_yn: obj.mod_yn)
+                        return now
+                    }
+                    self.dayOverseasClosePrice = data.output2.map{ obj -> Double in
+                        let now = Double(obj.ovrs_nmix_prpr) ?? 0.0
+                        return now
+                    }
+                    
+                    self.headerView.setup(jongmok: data.output1.hts_kor_isnm, market: data.output1.stck_shrn_iscd, sector: "", prdy_vrss: data.output1.ovrs_nmix_prdy_vrss, prdy_vrss_sign: data.output1.prdy_vrss_sign, prdy_ctrt: data.output1.prdy_ctrt, acml_vol: data.output1.acml_vol, stck_oprc: data.output1.ovrs_prod_oprc, stck_hgpr: data.output1.ovrs_prod_hgpr, stck_lwpr: data.output1.ovrs_prod_lwpr, stck_mxpr: "X", stck_llam: "X", frgn_ntby_qty: "", isDomestic: false)
+                    
+                    //보유종목 부분 update
+                    self.securityTextField.text = self.nowTicker
+                    self.tickerTextField.text = self.nowTicker
+                    self.securityTextField.isEnabled = false
+                    self.tickerTextField.isEnabled = false
+                    
+        }.resume()
+    }
+    
 }

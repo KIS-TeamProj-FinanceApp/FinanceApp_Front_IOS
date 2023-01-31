@@ -8,18 +8,10 @@
 import UIKit
 
 class TradingView: UIView {
-    
-    private lazy var label: UILabel = {
-        let label = UILabel()
-        
-        label.text = "this is Header"
-        return label
-    }()
-    
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .brown
+        self.backgroundColor = .white
 
         layout()
     }
@@ -29,14 +21,13 @@ class TradingView: UIView {
     }
     
     private func layout(){
-        [label].forEach{
+        [].forEach{
             self.addSubview($0)
         }
-        
-        label.snp.makeConstraints{
-            $0.centerY.centerX.equalToSuperview()
-        }
-        
+    }
+    //키보드 내리기
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+            self.endEditing(true)
     }
     
 }

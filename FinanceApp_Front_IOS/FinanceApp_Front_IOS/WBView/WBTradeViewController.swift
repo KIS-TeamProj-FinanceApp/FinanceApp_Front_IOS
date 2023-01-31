@@ -342,8 +342,6 @@ class WBTradeViewController: UIViewController {
         self.domesticButton.layer.borderColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0).cgColor
         self.securityTextField.isEnabled = false
         self.tickerTextField.isEnabled = false
-        
-        
     }
     
 
@@ -488,15 +486,6 @@ class WBTradeViewController: UIViewController {
 
 
 extension WBTradeViewController{
-    
-//    UserDefaults.standard.string(forKey: "appkey")!
-//    UserDefaults.standard.string(forKey: "appsecret")!
-//    UserDefaults.standard.string(forKey: "accessToken")!
-//
-//    UserDefaults.standard.set(self.name, forKey: "name")
-//    UserDefaults.standard.set(self.accountNoFront8, forKey: "acntNoFront")
-//    UserDefaults.standard.set(self.accountNoBack2, forKey: "acntNoBack")
-    
     // 국내주식 매수
     private func domesticBuyStock(){
         

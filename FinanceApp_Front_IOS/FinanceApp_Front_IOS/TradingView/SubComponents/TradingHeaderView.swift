@@ -172,12 +172,12 @@ class TradingHeaderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setup(jongmok: String, market: String, sector: String, prdy_vrss: String, prdy_vrss_sign: String, prdy_ctrt: String, acml_vol: String, stck_oprc: String, stck_hgpr: String, stck_lwpr: String, stck_mxpr: String, stck_llam: String, frgn_ntby_qty: String){
+    func setup(jongmok: String, market: String, sector: String, prdy_vrss: String, prdy_vrss_sign: String, prdy_ctrt: String, acml_vol: String, stck_oprc: String, stck_hgpr: String, stck_lwpr: String, stck_mxpr: String, stck_llam: String, frgn_ntby_qty: String, isDomestic: Bool){
         self.jongMokMyungLabel.text = jongmok
         self.daePyoSiJangLabel.text = market
         self.sectorLabel.text = sector
         self.prdy_ctrtLabel.text = prdy_ctrt + "%"
-        self.prdy_vrssLabel.text = prdy_vrss + "원"
+        self.prdy_vrssLabel.text = prdy_vrss
         
         self.acml_vol_value.text = acml_vol
         self.stck_oprc_value.text = stck_oprc
@@ -196,6 +196,12 @@ class TradingHeaderView: UIView {
         }else { // 하락
             self.prdy_ctrtLabel.textColor = .blue
             self.prdy_vrssLabel.textColor = .blue
+        }
+        
+        if isDomestic{
+            self.frgn_ntby_qtyLabel.text = "외국인 순매수 :"
+        }else{
+            self.frgn_ntby_qtyLabel.text = ""
         }
     }
     
