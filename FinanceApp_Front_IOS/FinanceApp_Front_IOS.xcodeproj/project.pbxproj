@@ -73,6 +73,7 @@
 		A5883813298939590093F5D8 /* OverseasPriceDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5883812298939590093F5D8 /* OverseasPriceDto.swift */; };
 		A5883815298939740093F5D8 /* OverseasPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5883814298939740093F5D8 /* OverseasPrice.swift */; };
 		A58838172989397C0093F5D8 /* OverseasNowPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58838162989397C0093F5D8 /* OverseasNowPrice.swift */; };
+		A58838192989DC460093F5D8 /* KeywordRankTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58838182989DC460093F5D8 /* KeywordRankTableViewCell.swift */; };
 		A5B77E2C2980B308006D754F /* MyAccountMoneyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E2B2980B308006D754F /* MyAccountMoneyView.swift */; };
 		A5B77E2E2980BF4D006D754F /* SecurityCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E2D2980BF4D006D754F /* SecurityCollectionViewCell.swift */; };
 		A5B77E302980C6A5006D754F /* SecurityNameCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E2F2980C6A5006D754F /* SecurityNameCollectionViewCell.swift */; };
@@ -169,6 +170,7 @@
 		A5883812298939590093F5D8 /* OverseasPriceDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverseasPriceDto.swift; sourceTree = "<group>"; };
 		A5883814298939740093F5D8 /* OverseasPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverseasPrice.swift; sourceTree = "<group>"; };
 		A58838162989397C0093F5D8 /* OverseasNowPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverseasNowPrice.swift; sourceTree = "<group>"; };
+		A58838182989DC460093F5D8 /* KeywordRankTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordRankTableViewCell.swift; sourceTree = "<group>"; };
 		A5B77E2B2980B308006D754F /* MyAccountMoneyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountMoneyView.swift; sourceTree = "<group>"; };
 		A5B77E2D2980BF4D006D754F /* SecurityCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityCollectionViewCell.swift; sourceTree = "<group>"; };
 		A5B77E2F2980C6A5006D754F /* SecurityNameCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityNameCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -711,6 +713,7 @@
 			isa = PBXGroup;
 			children = (
 				A5F143E629869E720013A365 /* KeywordChartView.swift */,
+				A58838182989DC460093F5D8 /* KeywordRankTableViewCell.swift */,
 			);
 			path = SubComponent;
 			sourceTree = "<group>";
@@ -879,6 +882,7 @@
 				A557E4352977ACCD00A40EEE /* ExchangeRate.swift in Sources */,
 				A557E4022977891B00A40EEE /* SceneDelegate.swift in Sources */,
 				A5B77E532982C154006D754F /* DomesticAgreementDetail.swift in Sources */,
+				A58838192989DC460093F5D8 /* KeywordRankTableViewCell.swift in Sources */,
 				A5B77E2C2980B308006D754F /* MyAccountMoneyView.swift in Sources */,
 				A557E4312977AC9600A40EEE /* ButtonListViewCell.swift in Sources */,
 				A5398BFD297E51190062A24A /* MyAccountHeaderView.swift in Sources */,

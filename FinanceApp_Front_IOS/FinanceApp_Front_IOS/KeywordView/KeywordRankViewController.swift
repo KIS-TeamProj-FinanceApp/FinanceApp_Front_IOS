@@ -29,7 +29,7 @@ class KeywordRankViewController: UIViewController {
 
     private let uiSc: UISearchController = {
         let searchController = UISearchController()
-        searchController.searchBar.placeholder = "요청 URL을 입력해주세요"
+        searchController.searchBar.placeholder = "KeyStock 검색"
         //화면 어두워지지 않도록 false 처리
         searchController.obscuresBackgroundDuringPresentation = false
         return searchController
@@ -67,7 +67,7 @@ class KeywordRankViewController: UIViewController {
     
     private func setNavigationItems(){
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.title = "오늘의 Keywords"
+        navigationItem.title = "Today's KeyStocks"
 //        let searchController = UISearchController()
 //        searchController.searchBar.placeholder = "요청 URL을 입력해주세요"
 //        //화면 어두워지지 않도록 false 처리
