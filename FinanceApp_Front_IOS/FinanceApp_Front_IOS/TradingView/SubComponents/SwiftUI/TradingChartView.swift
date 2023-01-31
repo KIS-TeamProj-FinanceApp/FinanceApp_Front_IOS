@@ -27,7 +27,7 @@ struct TradingChartView: View {
     @State private var percentage: CGFloat = 0
     
     
-    init(dailyData: [Double], weeklyData: [Double], monthlyData: [Double] ){
+    init(dailyData: [Double], weeklyData: [Double], monthlyData: [Double], startDate: Date, endDate: Date ){
         self.dailyData = dailyData
         self.weeklyData =  weeklyData
         self.monthlyData = monthlyData
@@ -37,10 +37,10 @@ struct TradingChartView: View {
         
         let priceChange = (dailyData.last ?? 0) - (dailyData.first ?? 0)
 //        lineColor = priceChange > 0 ? Color.pink : Color.red
-        lineColor = Color( uiColor: UIColor(red: 255.0 / 255.0, green: 165.0 / 255.0, blue: 195 / 255.0, alpha: 1.0))
-        
-        endingDate = Date()
-        startingData = endingDate.addingTimeInterval(-7*24*60*60)
+//        lineColor = Color( uiColor: UIColor(red: 255.0 / 255.0, green: 165.0 / 255.0, blue: 195 / 255.0, alpha: 1.0))
+        lineColor = Color( uiColor: UIColor.systemPink)
+        endingDate = endDate
+        startingData = startDate
     }
     
     var body: some View {
@@ -115,7 +115,7 @@ extension TradingChartView {
                 }
             }
             .trim(from: 0, to: percentage)
-            .stroke(Color(UIColor.blue), style: StrokeStyle(lineWidth: 2, lineCap: .round, lineJoin: .round) )
+            .stroke(Color( uiColor: UIColor(red: 225.0 / 255.0, green: 235.0 / 255.0, blue: 195 / 255.0, alpha: 1.0)), style: StrokeStyle(lineWidth: 2, lineCap: .round, lineJoin: .round) )
 //            .shadow(color: lineColor, radius: 10, x: 0.0, y: 10)
 //            .shadow(color: lineColor.opacity(0.5), radius: 10, x: 0.0, y: 20)
 //            .shadow(color: lineColor.opacity(0.2), radius: 10, x: 0.0, y: 30)
@@ -140,7 +140,7 @@ extension TradingChartView {
                 }
             }
             .trim(from: 0, to: percentage)
-            .stroke(Color(UIColor.black), style: StrokeStyle(lineWidth: 2, lineCap: .round, lineJoin: .round) )
+            .stroke(Color( uiColor: UIColor(red: 185.0 / 255.0, green: 205.0 / 255.0, blue: 245 / 255.0, alpha: 1.0)), style: StrokeStyle(lineWidth: 2, lineCap: .round, lineJoin: .round) )
 //            .shadow(color: Color(UIColor.black), radius: 10, x: 0.0, y: 10)
 //            .shadow(color: Color(UIColor.black).opacity(0.5), radius: 10, x: 0.0, y: 20)
 //            .shadow(color: Color(UIColor.black).opacity(0.2), radius: 10, x: 0.0, y: 30)
@@ -182,7 +182,7 @@ extension TradingChartView {
 }
 struct TradingChartView_Previews: PreviewProvider {
     static var previews: some View {
-        TradingChartView(dailyData: [100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2], weeklyData: [100.0, 105.2,101.0, 105.2,100.0, 105.2,100.0, 105.2,100.0, 105.2], monthlyData: [110.0, 115.2,111.0, 115.2,110.0, 125.2,120.0, 125.2,120.0, 125.2])
+        TradingChartView(dailyData: [100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2], weeklyData: [100.0, 105.2,101.0, 105.2,100.0, 105.2,100.0, 105.2,100.0, 105.2], monthlyData: [110.0, 115.2,111.0, 115.2,110.0, 125.2,120.0, 125.2,120.0, 125.2], startDate: Date(), endDate: Date())
 
     }
 }

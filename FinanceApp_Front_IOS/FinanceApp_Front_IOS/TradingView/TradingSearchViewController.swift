@@ -44,6 +44,8 @@ class TradingSearchViewController: UIViewController {
     
     private var domesticNowPrice: DomesticNowPrice? = nil
     
+    let dateFormatter = DateFormatter()
+    
     
     // ------------------------------------------------------- variables ------------------------------------------------------ //
     
@@ -155,7 +157,7 @@ class TradingSearchViewController: UIViewController {
     
     private lazy var chartHostingController: UIHostingController = {
         
-        let hostingController = UIHostingController( rootView: TradingChartView(dailyData: [100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2], weeklyData: [100.0, 105.2,101.0, 105.2,100.0, 105.2,100.0, 105.2,100.0, 105.2], monthlyData: [110.0, 115.2,111.0, 115.2,110.0, 125.2,120.0, 125.2,120.0, 125.2]) )
+        let hostingController = UIHostingController( rootView: TradingChartView(dailyData: [100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2], weeklyData: [100.0, 105.2,101.0, 105.2,100.0, 105.2,100.0, 105.2,100.0, 105.2], monthlyData: [110.0, 115.2,111.0, 115.2,110.0, 125.2,120.0, 125.2,120.0, 125.2], startDate: Date(), endDate: Date() ) )
         
         if #available(iOS 16.0, *) {
             hostingController.sizingOptions = .preferredContentSize
@@ -225,7 +227,9 @@ class TradingSearchViewController: UIViewController {
         self.scrollView.backgroundColor = .white
         self.contentView.backgroundColor = .blue
         self.stackView.backgroundColor = .cyan
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .white
+        dateFormatter.dateFormat = "yyyyMMdd"
+        dateFormatter.locale = Locale(identifier:"ko_KR")
         
     
     }
@@ -249,10 +253,11 @@ class TradingSearchViewController: UIViewController {
         requestAPI_DomesticPrice_former(dayWeekMonth: "W")
         requestAPI_DomesticPrice_former(dayWeekMonth: "M")
         
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 1){
-            
+            // -------------------------------------------- 바꾸는 부분 ----------------------------------------------- //
             self.chartHostingController.view.snp.removeConstraints()
-            self.chartHostingController = UIHostingController(rootView:  TradingChartView(dailyData: self.dayDomesticClosePrice, weeklyData: self.weekDomesticClosePrice, monthlyData: self.monthDomesticClosePrice))
+            self.chartHostingController = UIHostingController(rootView:  TradingChartView(dailyData: self.dayDomesticClosePrice, weeklyData: self.weekDomesticClosePrice, monthlyData: self.monthDomesticClosePrice, startDate: self.dateFormatter.date(from: self.dayDomesticPrice.last!.stck_bsop_date)!, endDate: self.dateFormatter.date(from: self.dayDomesticPrice.first!.stck_bsop_date )!))
 //            self.domesticHostingController.rootView = PortFolioPieChartView(values: [1300, 500, 300, 100, 200], colors: [Color.blue, Color.green, Color.orange, Color.red, Color.cyan], names: ["Rent", "Transport", "Education", "1", "2"], backgroundColor: Color(red: 21 / 255, green: 24 / 255, blue: 30 / 255, opacity: 1.0), innerRadiusFraction: 0.6)
             
             if #available(iOS 16.0, *) {
@@ -414,11 +419,36 @@ extension TradingSearchViewController: UISearchBarDelegate{
         //한국금융지주로 설정
         self.nowTicker = searchBar.text ?? "071050"
         // Header부분 업데이트
-        requestAPI_DomesticPrice_now(jongmokName: "한국금융지주")
+        requestAPI_DomesticPrice_now(jongmokName: self.nowTicker)
         requestAPI_DomesticPrice_former(dayWeekMonth: "D")
         requestAPI_DomesticPrice_former(dayWeekMonth: "W")
         requestAPI_DomesticPrice_former(dayWeekMonth: "M")
         // 여기서 모든 로직이 돌아가야함
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+            // -------------------------------------------- 바꾸는 부분 ----------------------------------------------- //
+            self.chartHostingController.view.snp.removeConstraints()
+            self.chartHostingController = UIHostingController(rootView:  TradingChartView(dailyData: self.dayDomesticClosePrice, weeklyData: self.weekDomesticClosePrice, monthlyData: self.monthDomesticClosePrice, startDate: self.dateFormatter.date(from: self.dayDomesticPrice.last!.stck_bsop_date)!, endDate: self.dateFormatter.date(from: self.dayDomesticPrice.first!.stck_bsop_date )!))
+//            self.domesticHostingController.rootView = PortFolioPieChartView(values: [1300, 500, 300, 100, 200], colors: [Color.blue, Color.green, Color.orange, Color.red, Color.cyan], names: ["Rent", "Transport", "Education", "1", "2"], backgroundColor: Color(red: 21 / 255, green: 24 / 255, blue: 30 / 255, opacity: 1.0), innerRadiusFraction: 0.6)
+            
+            if #available(iOS 16.0, *) {
+                self.chartHostingController.sizingOptions = .preferredContentSize
+            } else {
+                // Fallback on earlier versions
+            }
+
+            self.addChild(self.chartHostingController)
+            self.chartHostingController.view.translatesAutoresizingMaskIntoConstraints = false
+            
+//            self.domesticHostingController.view.snp.removeConstraints()
+    
+            self.tradingChartViewUIView.addSubview(self.chartHostingController.view)
+            
+            self.chartHostingController.view.snp.makeConstraints{
+                $0.edges.equalToSuperview()
+            }
+            // -------------------------------------------- 바꾸는 부분 ----------------------------------------------- //
+        }
         
         
     }
