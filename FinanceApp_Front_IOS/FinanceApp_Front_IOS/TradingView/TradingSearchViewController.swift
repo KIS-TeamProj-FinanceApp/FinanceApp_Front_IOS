@@ -55,17 +55,17 @@ class TradingSearchViewController: UIViewController {
     @objc func leftButtonClicked(){
         if self.isDomestic {
             self.isDomestic = false
-            self.rightButton.title = "해외"
+            self.leftButton.title = "해외"
         }else{
             self.isDomestic = true
-            self.rightButton.title = "국내"
+            self.leftButton.title = "국내"
         }
         print(self.isDomestic)
     }
     
     
     @objc func rightButtonClicked(){
-        print(rightButtonClicked)
+        print("rightButtonClicked")
     }
     
     
