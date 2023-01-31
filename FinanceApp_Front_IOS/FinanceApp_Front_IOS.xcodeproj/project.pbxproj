@@ -63,7 +63,6 @@
 		A557E499297D597C00A40EEE /* NowFutureLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E498297D597C00A40EEE /* NowFutureLabelView.swift */; };
 		A557E49B297D626200A40EEE /* SectorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E49A297D626200A40EEE /* SectorCollectionViewCell.swift */; };
 		A557E49E297D699500A40EEE /* WBTradeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E49D297D699500A40EEE /* WBTradeViewController.swift */; };
-		A557E4A0297D7E6300A40EEE /* TradingGraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557E49F297D7E6300A40EEE /* TradingGraphViewController.swift */; };
 		A58837FF298797C40093F5D8 /* DomesticSectorDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58837FE298797C40093F5D8 /* DomesticSectorDto.swift */; };
 		A5883802298797EF0093F5D8 /* DomesticSector.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5883801298797EF0093F5D8 /* DomesticSector.swift */; };
 		A58838052988899F0093F5D8 /* DomesticPriceDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58838042988899F0093F5D8 /* DomesticPriceDto.swift */; };
@@ -156,7 +155,6 @@
 		A557E498297D597C00A40EEE /* NowFutureLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowFutureLabelView.swift; sourceTree = "<group>"; };
 		A557E49A297D626200A40EEE /* SectorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectorCollectionViewCell.swift; sourceTree = "<group>"; };
 		A557E49D297D699500A40EEE /* WBTradeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WBTradeViewController.swift; sourceTree = "<group>"; };
-		A557E49F297D7E6300A40EEE /* TradingGraphViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingGraphViewController.swift; sourceTree = "<group>"; };
 		A58837FE298797C40093F5D8 /* DomesticSectorDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomesticSectorDto.swift; sourceTree = "<group>"; };
 		A5883801298797EF0093F5D8 /* DomesticSector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomesticSector.swift; sourceTree = "<group>"; };
 		A58838042988899F0093F5D8 /* DomesticPriceDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomesticPriceDto.swift; sourceTree = "<group>"; };
@@ -473,7 +471,6 @@
 			isa = PBXGroup;
 			children = (
 				A557E480297D024600A40EEE /* TradingSearchViewController.swift */,
-				A557E49F297D7E6300A40EEE /* TradingGraphViewController.swift */,
 				A5F143ED2987465E0013A365 /* SubComponents */,
 				A58838032988893D0093F5D8 /* Dto */,
 				A5F1440B298779BC0013A365 /* Entity */,
@@ -839,7 +836,6 @@
 				A5B77E532982C154006D754F /* DomesticAgreementDetail.swift in Sources */,
 				A5B77E2C2980B308006D754F /* MyAccountMoneyView.swift in Sources */,
 				A557E4312977AC9600A40EEE /* ButtonListViewCell.swift in Sources */,
-				A557E4A0297D7E6300A40EEE /* TradingGraphViewController.swift in Sources */,
 				A5398BFD297E51190062A24A /* MyAccountHeaderView.swift in Sources */,
 				A557E496297D568400A40EEE /* SecurityForRecommendDto.swift in Sources */,
 				A5B77E3E2981672F006D754F /* MyAccountTotalDto.swift in Sources */,

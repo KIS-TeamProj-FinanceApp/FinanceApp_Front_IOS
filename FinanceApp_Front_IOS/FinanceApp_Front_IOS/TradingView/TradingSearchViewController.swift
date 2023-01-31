@@ -35,6 +35,13 @@ class TradingSearchViewController: UIViewController {
     // 월간 이평선을 위해
     private var monthDomesticPrice: [DomesticPrice] = []
     
+    //일간 차트 종가
+    private var dayDomesticClosePrice: [Double] = []
+    // 주간 이평선 종가
+    private var weekDomesticClosePrice: [Double] = []
+    // 월간 이평선 종가
+    private var monthDomesticClosePrice: [Double] = []
+    
     private var domesticNowPrice: DomesticNowPrice? = nil
     
     
@@ -146,6 +153,24 @@ class TradingSearchViewController: UIViewController {
         return view
     }()
     
+    private lazy var chartHostingController: UIHostingController = {
+        
+        let hostingController = UIHostingController( rootView: TradingChartView(dailyData: [100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2], weeklyData: [100.0, 105.2,101.0, 105.2,100.0, 105.2,100.0, 105.2,100.0, 105.2], monthlyData: [110.0, 115.2,111.0, 115.2,110.0, 125.2,120.0, 125.2,120.0, 125.2]) )
+        
+        if #available(iOS 16.0, *) {
+            hostingController.sizingOptions = .preferredContentSize
+        } else {
+            // Fallback on earlier versions
+        }
+//        hostingController.modalPresentationStyle = .popover
+//        self.present(hostingController, animated: true)
+        addChild(hostingController)
+        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+
+        return hostingController
+    }()
+    
+    
     let blankView: UIView = {
         let v = UIView()
         v.backgroundColor = .white
@@ -156,25 +181,6 @@ class TradingSearchViewController: UIViewController {
 //    TradingChartView(chartData: [100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2])
     
     // ------------------------------------------------------- UI Components ------------------------------------------------------ //
-
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        navigationController?.navigationBar.prefersLargeTitles = false
-//        let ur = UserDefaults.standard.array(forKey: "urls") as? [String] ?? ["저장된 URL이 없음"]
-//        print(type(of: ur))
-//        print(ur)
-        self.uiSc.isActive = true
-        self.uiSc.isEditing = true
-        
-        self.tradingView.isHidden = false
-        self.tradingChartViewUIView.isHidden = true
-        
-        self.isDomestic = true
-        self.rightButton.title = "국내"
-        
-    }
     
     @objc func hogaButtonClicked(){
         self.isHoga = true
@@ -194,6 +200,12 @@ class TradingSearchViewController: UIViewController {
         
         self.tradingView.isHidden = true
         self.tradingChartViewUIView.isHidden = false
+        
+        self.tradingChartViewUIView.addSubview(self.chartHostingController.view)
+        
+        self.chartHostingController.view.snp.makeConstraints{
+            $0.edges.equalToSuperview()
+        }
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -209,33 +221,58 @@ class TradingSearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setNavigationItems()
-        
         self.scrollView.backgroundColor = .white
         self.contentView.backgroundColor = .blue
         self.stackView.backgroundColor = .cyan
-        
         view.backgroundColor = .systemBackground
         
-        
-        let hostingController = UIHostingController(rootView: TradingChartView(chartData: [100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2]) )
-        if #available(iOS 16.0, *) {
-            hostingController.sizingOptions = .preferredContentSize
-        } else {
-            // Fallback on earlier versions
-        }
-//        hostingController.modalPresentationStyle = .popover
-//        self.present(hostingController, animated: true)
-        addChild(hostingController)
-        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+    
+    }
+    //맨 처음 들어오면 한국금융지주로 보여주도록
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        navigationController?.navigationBar.prefersLargeTitles = false
 
-        self.tradingChartViewUIView.addSubview(hostingController.view)
-        hostingController.view.snp.makeConstraints{
-            $0.edges.equalToSuperview()
-        }
-
+        self.uiSc.isActive = true
+        self.uiSc.isEditing = true
         
+        self.tradingView.isHidden = false
+        self.tradingChartViewUIView.isHidden = true
+        
+        self.isDomestic = true
+        self.rightButton.title = "국내"
+        self.nowTicker = "071050"
+        // Header부분 업데이트
+        requestAPI_DomesticPrice_now(jongmokName: "한국금융지주")
+        requestAPI_DomesticPrice_former(dayWeekMonth: "D")
+        requestAPI_DomesticPrice_former(dayWeekMonth: "W")
+        requestAPI_DomesticPrice_former(dayWeekMonth: "M")
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+            
+            self.chartHostingController.view.snp.removeConstraints()
+            self.chartHostingController = UIHostingController(rootView:  TradingChartView(dailyData: self.dayDomesticClosePrice, weeklyData: self.weekDomesticClosePrice, monthlyData: self.monthDomesticClosePrice))
+//            self.domesticHostingController.rootView = PortFolioPieChartView(values: [1300, 500, 300, 100, 200], colors: [Color.blue, Color.green, Color.orange, Color.red, Color.cyan], names: ["Rent", "Transport", "Education", "1", "2"], backgroundColor: Color(red: 21 / 255, green: 24 / 255, blue: 30 / 255, opacity: 1.0), innerRadiusFraction: 0.6)
+            
+            if #available(iOS 16.0, *) {
+                self.chartHostingController.sizingOptions = .preferredContentSize
+            } else {
+                // Fallback on earlier versions
+            }
+
+            self.addChild(self.chartHostingController)
+            self.chartHostingController.view.translatesAutoresizingMaskIntoConstraints = false
+            
+//            self.domesticHostingController.view.snp.removeConstraints()
+    
+            self.tradingChartViewUIView.addSubview(self.chartHostingController.view)
+            
+            self.chartHostingController.view.snp.makeConstraints{
+                $0.edges.equalToSuperview()
+            }
+            // -------------------------------------------- 바꾸는 부분 ----------------------------------------------- //
+        }
         
     }
     
@@ -377,13 +414,11 @@ extension TradingSearchViewController: UISearchBarDelegate{
         //한국금융지주로 설정
         self.nowTicker = searchBar.text ?? "071050"
         // Header부분 업데이트
-        requestAPI_DomesticPrice_now()
-        
+        requestAPI_DomesticPrice_now(jongmokName: "한국금융지주")
+        requestAPI_DomesticPrice_former(dayWeekMonth: "D")
+        requestAPI_DomesticPrice_former(dayWeekMonth: "W")
+        requestAPI_DomesticPrice_former(dayWeekMonth: "M")
         // 여기서 모든 로직이 돌아가야함
-        //
-        
-        
-        
         
         
     }
@@ -402,7 +437,7 @@ extension TradingSearchViewController {
     // 국내 주식 일자별 검색
     private func requestAPI_DomesticPrice_former(dayWeekMonth: String){
         
-        let url = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/quotations/inquire-daily-price?FID_COND_MRKT_DIV_CODE=J&FID_INPUT_ISCD=" + self.nowTicker + "&FID_PERIOD_DIV_CODE=" + dayWeekMonth + "&FID_ORG_ADJ_PRC=0"
+        let url = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/quotations/inquire-daily-price?FID_COND_MRKT_DIV_CODE=J&FID_INPUT_ISCD=\(self.nowTicker)&FID_PERIOD_DIV_CODE=\(dayWeekMonth)&FID_ORG_ADJ_PRC=0"
         
         
         AF.request(url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed.union( CharacterSet(["%"]))) ?? "",
@@ -429,15 +464,32 @@ extension TradingSearchViewController {
                             let now = DomesticPrice(stck_bsop_date: obj.stck_bsop_date, stck_oprc: obj.stck_oprc, stck_hgpr: obj.stck_hgpr, stck_lwpr: obj.stck_lwpr, stck_clpr: obj.stck_clpr, acml_vol: obj.acml_vol, prdy_vrss_vol_rate: obj.prdy_vrss_vol_rate, prdy_vrss_sign: obj.prdy_vrss_sign, prdy_ctrt: obj.prdy_ctrt, frgn_ntby_qty: obj.frgn_ntby_qty)
                             return now
                         }
+                        
+                        self.dayDomesticClosePrice = data.output.map{ obj -> Double in
+                            let now = Double(obj.stck_clpr) ?? 0.0
+                            return now
+                        }
+                        
+                        
                     } else if dayWeekMonth == "W"{
                         self.weekDomesticPrice = data.output.map{ obj -> DomesticPrice in
                             let now = DomesticPrice(stck_bsop_date: obj.stck_bsop_date, stck_oprc: obj.stck_oprc, stck_hgpr: obj.stck_hgpr, stck_lwpr: obj.stck_lwpr, stck_clpr: obj.stck_clpr, acml_vol: obj.acml_vol, prdy_vrss_vol_rate: obj.prdy_vrss_vol_rate, prdy_vrss_sign: obj.prdy_vrss_sign, prdy_ctrt: obj.prdy_ctrt, frgn_ntby_qty: obj.frgn_ntby_qty)
+                            return now
+                        }
+                        
+                        self.weekDomesticClosePrice = data.output.map{ obj -> Double in
+                            let now = Double(obj.stck_clpr) ?? 0.0
                             return now
                         }
                     }
                     else{ // Month일 때
                         self.monthDomesticPrice = data.output.map{ obj -> DomesticPrice in
                             let now = DomesticPrice(stck_bsop_date: obj.stck_bsop_date, stck_oprc: obj.stck_oprc, stck_hgpr: obj.stck_hgpr, stck_lwpr: obj.stck_lwpr, stck_clpr: obj.stck_clpr, acml_vol: obj.acml_vol, prdy_vrss_vol_rate: obj.prdy_vrss_vol_rate, prdy_vrss_sign: obj.prdy_vrss_sign, prdy_ctrt: obj.prdy_ctrt, frgn_ntby_qty: obj.frgn_ntby_qty)
+                            return now
+                        }
+                        
+                        self.monthDomesticClosePrice = data.output.map{ obj -> Double in
+                            let now = Double(obj.stck_clpr) ?? 0.0
                             return now
                         }
                     }
@@ -451,7 +503,7 @@ extension TradingSearchViewController {
     
     
     // 국내 주식 현재가 검색
-    private func requestAPI_DomesticPrice_now(){
+    private func requestAPI_DomesticPrice_now(jongmokName: String){
         
         let url = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/quotations/inquire-price?FID_COND_MRKT_DIV_CODE=J&FID_INPUT_ISCD=\(self.nowTicker)"
         
@@ -476,11 +528,10 @@ extension TradingSearchViewController {
                     
                     self.domesticNowPrice = DomesticNowPrice(rprs_mrkt_kor_name: data.output.rprs_mrkt_kor_name , bstp_kor_isnm: data.output.bstp_kor_isnm, prdy_vrss: data.output.prdy_vrss, prdy_vrss_sign: data.output.prdy_vrss_sign, prdy_ctrt: data.output.prdy_ctrt, acml_vol: data.output.acml_vol, stck_oprc: data.output.stck_oprc, stck_hgpr: data.output.stck_hgpr, stck_lwpr: data.output.stck_lwpr, stck_mxpr: data.output.stck_mxpr, stck_llam: data.output.stck_llam, frgn_ntby_qty: data.output.frgn_ntby_qty, aspr_unit: data.output.aspr_unit, w52_hgpr: data.output.w52_hgpr, w52_lwpr: data.output.w52_lwpr)
                     
-                    self.headerView.setup(jongmok: "종목", market: data.output.rprs_mrkt_kor_name, sector: data.output.bstp_kor_isnm, prdy_vrss: data.output.prdy_vrss, prdy_vrss_sign: data.output.prdy_vrss_sign, prdy_ctrt: data.output.prdy_ctrt, acml_vol: data.output.acml_vol, stck_oprc: data.output.stck_oprc, stck_hgpr: data.output.stck_hgpr, stck_lwpr: data.output.stck_lwpr, stck_mxpr: data.output.stck_mxpr, stck_llam: data.output.stck_llam, frgn_ntby_qty: data.output.frgn_ntby_qty)
+                    self.headerView.setup(jongmok: jongmokName, market: data.output.rprs_mrkt_kor_name, sector: data.output.bstp_kor_isnm, prdy_vrss: data.output.prdy_vrss, prdy_vrss_sign: data.output.prdy_vrss_sign, prdy_ctrt: data.output.prdy_ctrt, acml_vol: data.output.acml_vol, stck_oprc: data.output.stck_oprc, stck_hgpr: data.output.stck_hgpr, stck_lwpr: data.output.stck_lwpr, stck_mxpr: data.output.stck_mxpr, stck_llam: data.output.stck_llam, frgn_ntby_qty: data.output.frgn_ntby_qty)
                     //보유종목 부분 update
 //                    self.securityNameCollectionView.reloadData()
 //                    self.securityCollectionView.reloadData()
-                    
         }.resume()
     }
 }

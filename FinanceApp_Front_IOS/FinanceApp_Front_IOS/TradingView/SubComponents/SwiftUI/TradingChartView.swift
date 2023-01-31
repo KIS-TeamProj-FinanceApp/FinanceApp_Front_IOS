@@ -11,9 +11,13 @@ import SwiftUI
 struct TradingChartView: View {
     
     
-    private let data: [Double]
-    //이평선을 위해
-    private let data2: [Double]
+    private let dailyData: [Double]
+    //주간 이평선을 위해
+    private let weeklyData: [Double]
+    //월간 이평선을 위해
+    private let monthlyData: [Double]
+    
+    
     //그래프에서 Y축 수치를 알아서  알맞은 사이즈로 그래프를 그리기 위해 Data에서 Y축값
     private let maxY: Double
     private let minY: Double
@@ -22,24 +26,22 @@ struct TradingChartView: View {
     private let endingDate: Date
     @State private var percentage: CGFloat = 0
     
-    init(chartData: [Double]){
-        self.data = chartData
-        self.data2 =  [100.0, 105.2,100.0, 105.2,100.0, 105.2,100.0, 105.2,100.0, 105.2]
-        maxY = data.max() ?? 0
-        minY = data.min() ?? 0
+    
+    init(dailyData: [Double], weeklyData: [Double], monthlyData: [Double] ){
+        self.dailyData = dailyData
+        self.weeklyData =  weeklyData
+        self.monthlyData = monthlyData
         
-        let priceChange = (data.last ?? 0) - (data.first ?? 0)
-        lineColor = priceChange > 0 ? Color.green : Color.red
+        maxY = max((dailyData.max() ?? 0), (weeklyData.max() ?? 0), (monthlyData.max() ?? 0) )
+        minY = min((dailyData.min() ?? Double(1e9)), (weeklyData.min() ?? Double(1e9)), (monthlyData.min() ?? Double(1e9)) )
+        
+        let priceChange = (dailyData.last ?? 0) - (dailyData.first ?? 0)
+//        lineColor = priceChange > 0 ? Color.pink : Color.red
+        lineColor = Color( uiColor: UIColor(red: 255.0 / 255.0, green: 165.0 / 255.0, blue: 195 / 255.0, alpha: 1.0))
         
         endingDate = Date()
         startingData = endingDate.addingTimeInterval(-7*24*60*60)
-        
-        
     }
-    
-    //300
-    //100
-    // 3
     
     var body: some View {
         
@@ -72,14 +74,15 @@ extension TradingChartView {
     
     private var keywordChartView: some View {
         GeometryReader { geometry in
+            
             Path{ path in
-                for index in data.indices {
+                for index in dailyData.indices {
                     
-                    let xPosition = geometry.size.width / CGFloat(data.count) * CGFloat(index + 1)
+                    let xPosition = geometry.size.width / CGFloat(dailyData.count) * CGFloat(index + 1)
                     //최대, 최솟값의 차를 y축 길이로
                     let yAxis = maxY - minY
                     //지금 data의 y축 위치 지정 (비율로), 그리고나서 전체 height곲해줌
-                    let yPosition = CGFloat((data[index] - minY) / yAxis) * geometry.size.height
+                    let yPosition = CGFloat((dailyData[index] - minY) / yAxis) * geometry.size.height
                     
                     if index == 0 {
                         path.move(to: CGPoint(x: xPosition, y: yPosition))
@@ -94,16 +97,17 @@ extension TradingChartView {
             .shadow(color: lineColor.opacity(0.2), radius: 10, x: 0.0, y: 30)
             .shadow(color: lineColor.opacity(0.1), radius: 10, x: 0.0, y: 40)
             
-            //두개의 그래프를 함께 그림
+//            두개의 그래프를 함께 그림
+//             주간 이평선
             Path{ path in
-                for index in data2.indices {
-                    
-                    let xPosition = geometry.size.width / CGFloat(data2.count) * CGFloat(index + 1)
+                for index in weeklyData.indices {
+
+                    let xPosition = geometry.size.width / CGFloat(weeklyData.count) * CGFloat(index + 1)
                     //최대, 최솟값의 차를 y축 길이로
                     let yAxis = maxY - minY
                     //지금 data의 y축 위치 지정 (비율로), 그리고나서 전체 height곲해줌
-                    let yPosition = CGFloat((data2[index] - minY) / yAxis) * geometry.size.height - 50
-                    
+                    let yPosition = CGFloat((weeklyData[index] - minY) / yAxis) * geometry.size.height
+
                     if index == 0 {
                         path.move(to: CGPoint(x: xPosition, y: yPosition))
                     }
@@ -112,10 +116,36 @@ extension TradingChartView {
             }
             .trim(from: 0, to: percentage)
             .stroke(Color(UIColor.blue), style: StrokeStyle(lineWidth: 2, lineCap: .round, lineJoin: .round) )
-            .shadow(color: lineColor, radius: 10, x: 0.0, y: 10)
-            .shadow(color: lineColor.opacity(0.5), radius: 10, x: 0.0, y: 20)
-            .shadow(color: lineColor.opacity(0.2), radius: 10, x: 0.0, y: 30)
-            .shadow(color: lineColor.opacity(0.1), radius: 10, x: 0.0, y: 40)
+//            .shadow(color: lineColor, radius: 10, x: 0.0, y: 10)
+//            .shadow(color: lineColor.opacity(0.5), radius: 10, x: 0.0, y: 20)
+//            .shadow(color: lineColor.opacity(0.2), radius: 10, x: 0.0, y: 30)
+//            .shadow(color: lineColor.opacity(0.1), radius: 10, x: 0.0, y: 40)
+            
+            
+           
+            // 월간 이평선
+            Path{ path in
+                for index in monthlyData.indices {
+
+                    let xPosition = geometry.size.width / CGFloat(monthlyData.count) * CGFloat(index + 1)
+                    //최대, 최솟값의 차를 y축 길이로
+                    let yAxis = maxY - minY
+                    //지금 data의 y축 위치 지정 (비율로), 그리고나서 전체 height곲해줌
+                    let yPosition = CGFloat((monthlyData[index] - minY) / yAxis) * geometry.size.height
+
+                    if index == 0 {
+                        path.move(to: CGPoint(x: xPosition, y: yPosition))
+                    }
+                    path.addLine(to: CGPoint(x: xPosition, y: yPosition))
+                }
+            }
+            .trim(from: 0, to: percentage)
+            .stroke(Color(UIColor.black), style: StrokeStyle(lineWidth: 2, lineCap: .round, lineJoin: .round) )
+//            .shadow(color: Color(UIColor.black), radius: 10, x: 0.0, y: 10)
+//            .shadow(color: Color(UIColor.black).opacity(0.5), radius: 10, x: 0.0, y: 20)
+//            .shadow(color: Color(UIColor.black).opacity(0.2), radius: 10, x: 0.0, y: 30)
+//            .shadow(color: Color(UIColor.black).opacity(0.1), radius: 10, x: 0.0, y: 40)
+ 
         }
         
     }
@@ -152,7 +182,7 @@ extension TradingChartView {
 }
 struct TradingChartView_Previews: PreviewProvider {
     static var previews: some View {
-        TradingChartView(chartData: [100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2])
+        TradingChartView(dailyData: [100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2,100.1, 103.2, 107.2, 102.1, 104.2, 108.2, 10.1, 101.2, 10.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2, 100.1, 103.2, 105.2], weeklyData: [100.0, 105.2,101.0, 105.2,100.0, 105.2,100.0, 105.2,100.0, 105.2], monthlyData: [110.0, 115.2,111.0, 115.2,110.0, 125.2,120.0, 125.2,120.0, 125.2])
 
     }
 }

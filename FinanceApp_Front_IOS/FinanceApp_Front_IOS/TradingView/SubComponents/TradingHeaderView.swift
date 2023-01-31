@@ -176,8 +176,8 @@ class TradingHeaderView: UIView {
         self.jongMokMyungLabel.text = jongmok
         self.daePyoSiJangLabel.text = market
         self.sectorLabel.text = sector
-        self.prdy_ctrtLabel.text = prdy_ctrt
-        self.prdy_vrssLabel.text = prdy_vrss
+        self.prdy_ctrtLabel.text = prdy_ctrt + "%"
+        self.prdy_vrssLabel.text = prdy_vrss + "원"
         
         self.acml_vol_value.text = acml_vol
         self.stck_oprc_value.text = stck_oprc
