@@ -35,7 +35,7 @@ class TradingSearchViewController: UIViewController {
     // 월간 이평선을 위해
     private var monthDomesticPrice: [DomesticPrice] = []
     
-   
+    private var domesticNowPrice: DomesticNowPrice? = nil
     
     
     // ------------------------------------------------------- variables ------------------------------------------------------ //
@@ -184,7 +184,17 @@ class TradingSearchViewController: UIViewController {
         self.tradingView.isHidden = true
         self.tradingChartViewUIView.isHidden = false
     }
-
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        
+        layout()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -214,7 +224,7 @@ class TradingSearchViewController: UIViewController {
             $0.edges.equalToSuperview()
         }
 
-        layout()
+        
         
     }
     
@@ -417,6 +427,41 @@ extension TradingSearchViewController {
                             return now
                         }
                     }
+                    
+                    //보유종목 부분 update
+//                    self.securityNameCollectionView.reloadData()
+//                    self.securityCollectionView.reloadData()
+                    
+        }.resume()
+    }
+    
+    
+    // 국내 주식 현재가 검색
+    private func requestAPI_DomesticPrice_now(){
+        
+        let url = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/quotations/inquire-price?FID_COND_MRKT_DIV_CODE=J&FID_INPUT_ISCD=\(self.nowTicker)"
+        
+        
+        AF.request(url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed.union( CharacterSet(["%"]))) ?? "",
+                   method: .get,
+                   headers: ["content-type": "application/json; charset=utf-8",
+                                             "authorization": UserDefaults.standard.string(forKey: "accessToken")!,
+                                             "appkey": UserDefaults.standard.string(forKey: "appkey")!,
+                                             "appsecret": UserDefaults.standard.string(forKey: "appsecret")!,
+                                             "tr_id": "FHKST01010100"]
+                   )
+                .responseDecodable(of: DomesticNowPriceTotalDto.self){ [weak self] response in
+                                // success 이외의 응답을 받으면, else문에 걸려 함수 종료
+                                guard
+                                    let self = self,
+                                    case .success(let data) = response.result else {
+                                    print("못함.... response는")
+                                    print(response)
+                                    return }
+                    
+                    
+                    self.domesticNowPrice = DomesticNowPrice(rprs_mrkt_kor_name: data.output.rprs_mrkt_kor_name , bstp_kor_isnm: data.output.bstp_kor_isnm, prdy_vrss: data.output.prdy_vrss, prdy_vrss_sign: data.output.prdy_vrss_sign, prdy_ctrt: data.output.prdy_ctrt, acml_vol: data.output.acml_vol, stck_oprc: data.output.stck_oprc, stck_hgpr: data.output.stck_hgpr, stck_lwpr: data.output.stck_lwpr, stck_mxpr: data.output.stck_mxpr, stck_llam: data.output.stck_llam, frgn_ntby_qty: data.output.frgn_ntby_qty, aspr_unit: data.output.aspr_unit, w52_hgpr: data.output.w52_hgpr, w52_lwpr: data.output.w52_lwpr)
+                    
                     
                     //보유종목 부분 update
 //                    self.securityNameCollectionView.reloadData()
