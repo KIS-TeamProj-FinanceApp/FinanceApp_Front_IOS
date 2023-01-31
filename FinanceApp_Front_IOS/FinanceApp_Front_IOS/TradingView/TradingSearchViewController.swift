@@ -40,13 +40,19 @@ class TradingSearchViewController: UIViewController {
     
     // ------------------------------------------------------- variables ------------------------------------------------------ //
     
-    
-    private lazy var rightButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(title: "국내", style: .plain, target: self, action: #selector(rightButtonClicked))
+    private lazy var leftButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(title: "국내", style: .plain, target: self, action: #selector(leftButtonClicked))
         return button
     }()
     
-    @objc func rightButtonClicked(){
+    
+    private lazy var rightButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(image: UIImage(systemName: "arrow.counterclockwise"), style: .plain, target: self, action: #selector(rightButtonClicked))
+        return button
+    }()
+    
+    
+    @objc func leftButtonClicked(){
         if self.isDomestic {
             self.isDomestic = false
             self.rightButton.title = "해외"
@@ -55,6 +61,11 @@ class TradingSearchViewController: UIViewController {
             self.rightButton.title = "국내"
         }
         print(self.isDomestic)
+    }
+    
+    
+    @objc func rightButtonClicked(){
+        print(rightButtonClicked)
     }
     
     
@@ -243,6 +254,7 @@ class TradingSearchViewController: UIViewController {
         uiSc.obscuresBackgroundDuringPresentation = false
         uiSc.searchBar.delegate = self
         self.navigationItem.rightBarButtonItem = self.rightButton
+        self.navigationItem.leftBarButtonItem = self.leftButton
         // embed UISearchController
         navigationItem.searchController = uiSc
     }
@@ -364,6 +376,8 @@ extension TradingSearchViewController: UISearchBarDelegate{
         print(searchBar.text)
         //한국금융지주로 설정
         self.nowTicker = searchBar.text ?? "071050"
+        // Header부분 업데이트
+        requestAPI_DomesticPrice_now()
         
         // 여기서 모든 로직이 돌아가야함
         //
@@ -462,7 +476,7 @@ extension TradingSearchViewController {
                     
                     self.domesticNowPrice = DomesticNowPrice(rprs_mrkt_kor_name: data.output.rprs_mrkt_kor_name , bstp_kor_isnm: data.output.bstp_kor_isnm, prdy_vrss: data.output.prdy_vrss, prdy_vrss_sign: data.output.prdy_vrss_sign, prdy_ctrt: data.output.prdy_ctrt, acml_vol: data.output.acml_vol, stck_oprc: data.output.stck_oprc, stck_hgpr: data.output.stck_hgpr, stck_lwpr: data.output.stck_lwpr, stck_mxpr: data.output.stck_mxpr, stck_llam: data.output.stck_llam, frgn_ntby_qty: data.output.frgn_ntby_qty, aspr_unit: data.output.aspr_unit, w52_hgpr: data.output.w52_hgpr, w52_lwpr: data.output.w52_lwpr)
                     
-                    
+                    self.headerView.setup(jongmok: "종목", market: data.output.rprs_mrkt_kor_name, sector: data.output.bstp_kor_isnm, prdy_vrss: data.output.prdy_vrss, prdy_vrss_sign: data.output.prdy_vrss_sign, prdy_ctrt: data.output.prdy_ctrt, acml_vol: data.output.acml_vol, stck_oprc: data.output.stck_oprc, stck_hgpr: data.output.stck_hgpr, stck_lwpr: data.output.stck_lwpr, stck_mxpr: data.output.stck_mxpr, stck_llam: data.output.stck_llam, frgn_ntby_qty: data.output.frgn_ntby_qty)
                     //보유종목 부분 update
 //                    self.securityNameCollectionView.reloadData()
 //                    self.securityCollectionView.reloadData()

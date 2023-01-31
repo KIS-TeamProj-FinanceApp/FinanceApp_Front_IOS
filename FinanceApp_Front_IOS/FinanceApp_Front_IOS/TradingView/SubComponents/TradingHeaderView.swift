@@ -172,12 +172,31 @@ class TradingHeaderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setup(jongmok: String, market: String, sector: String, prdy_vrss: String, prdy_vrss_sign: String, prdy_ctrt: String){
+    func setup(jongmok: String, market: String, sector: String, prdy_vrss: String, prdy_vrss_sign: String, prdy_ctrt: String, acml_vol: String, stck_oprc: String, stck_hgpr: String, stck_lwpr: String, stck_mxpr: String, stck_llam: String, frgn_ntby_qty: String){
         self.jongMokMyungLabel.text = jongmok
         self.daePyoSiJangLabel.text = market
         self.sectorLabel.text = sector
         self.prdy_ctrtLabel.text = prdy_ctrt
         self.prdy_vrssLabel.text = prdy_vrss
+        
+        self.acml_vol_value.text = acml_vol
+        self.stck_oprc_value.text = stck_oprc
+        self.stck_hgpr_value.text = stck_hgpr
+        self.stck_lwpr_value.text = stck_lwpr
+        self.stck_mxpr_value.text = stck_mxpr
+        self.stck_llam_value.text = stck_llam
+        self.frgn_ntby_qty_value.text = frgn_ntby_qty
+        
+        if prdy_vrss_sign == "1" || prdy_vrss_sign == "2" { //상승
+            self.prdy_ctrtLabel.textColor = .red
+            self.prdy_vrssLabel.textColor = .red
+        }else if prdy_vrss_sign == "3"{ // 보합
+            self.prdy_ctrtLabel.textColor = .black
+            self.prdy_vrssLabel.textColor = .black
+        }else { // 하락
+            self.prdy_ctrtLabel.textColor = .blue
+            self.prdy_vrssLabel.textColor = .blue
+        }
     }
     
     private func layout(){
