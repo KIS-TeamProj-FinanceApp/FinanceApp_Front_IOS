@@ -68,6 +68,8 @@
 		A5883802298797EF0093F5D8 /* DomesticSector.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5883801298797EF0093F5D8 /* DomesticSector.swift */; };
 		A58838052988899F0093F5D8 /* DomesticPriceDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58838042988899F0093F5D8 /* DomesticPriceDto.swift */; };
 		A5883807298889A90093F5D8 /* DomesticPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5883806298889A90093F5D8 /* DomesticPrice.swift */; };
+		A58838092988985E0093F5D8 /* DomesticNowPriceDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58838082988985E0093F5D8 /* DomesticNowPriceDto.swift */; };
+		A588380B298898970093F5D8 /* DomesticNowPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = A588380A298898970093F5D8 /* DomesticNowPrice.swift */; };
 		A5B77E2C2980B308006D754F /* MyAccountMoneyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E2B2980B308006D754F /* MyAccountMoneyView.swift */; };
 		A5B77E2E2980BF4D006D754F /* SecurityCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E2D2980BF4D006D754F /* SecurityCollectionViewCell.swift */; };
 		A5B77E302980C6A5006D754F /* SecurityNameCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E2F2980C6A5006D754F /* SecurityNameCollectionViewCell.swift */; };
@@ -159,6 +161,8 @@
 		A5883801298797EF0093F5D8 /* DomesticSector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomesticSector.swift; sourceTree = "<group>"; };
 		A58838042988899F0093F5D8 /* DomesticPriceDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomesticPriceDto.swift; sourceTree = "<group>"; };
 		A5883806298889A90093F5D8 /* DomesticPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomesticPrice.swift; sourceTree = "<group>"; };
+		A58838082988985E0093F5D8 /* DomesticNowPriceDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomesticNowPriceDto.swift; sourceTree = "<group>"; };
+		A588380A298898970093F5D8 /* DomesticNowPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomesticNowPrice.swift; sourceTree = "<group>"; };
 		A5B77E2B2980B308006D754F /* MyAccountMoneyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountMoneyView.swift; sourceTree = "<group>"; };
 		A5B77E2D2980BF4D006D754F /* SecurityCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityCollectionViewCell.swift; sourceTree = "<group>"; };
 		A5B77E2F2980C6A5006D754F /* SecurityNameCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityNameCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -552,6 +556,7 @@
 			isa = PBXGroup;
 			children = (
 				A58838042988899F0093F5D8 /* DomesticPriceDto.swift */,
+				A58838082988985E0093F5D8 /* DomesticNowPriceDto.swift */,
 			);
 			path = Dto;
 			sourceTree = "<group>";
@@ -699,6 +704,7 @@
 			children = (
 				A5F1440C298779D50013A365 /* DomesticSecurity.swift */,
 				A5883806298889A90093F5D8 /* DomesticPrice.swift */,
+				A588380A298898970093F5D8 /* DomesticNowPrice.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -820,6 +826,7 @@
 				A557E41A2977A87200A40EEE /* MainTabBarController.swift in Sources */,
 				A5F143EA2986AC570013A365 /* Date.swift in Sources */,
 				A557E4282977AB6C00A40EEE /* ShowDataViewCollectionViewCell.swift in Sources */,
+				A588380B298898970093F5D8 /* DomesticNowPrice.swift in Sources */,
 				A557E477297A7D3300A40EEE /* MainViewController.swift in Sources */,
 				A557E481297D024600A40EEE /* TradingSearchViewController.swift in Sources */,
 				A5B77E442981F941006D754F /* MyOverseasMoneyDto.swift in Sources */,
@@ -858,6 +865,7 @@
 				A557E44F2977B21500A40EEE /* SecurityResponse.swift in Sources */,
 				A557E42C2977AC4D00A40EEE /* ButtonListViewCellCell.swift in Sources */,
 				A557E4492977B03D00A40EEE /* SiteView.swift in Sources */,
+				A58838092988985E0093F5D8 /* DomesticNowPriceDto.swift in Sources */,
 				A557E44C2977B05E00A40EEE /* SwiftUIChartView.swift in Sources */,
 				A5883802298797EF0093F5D8 /* DomesticSector.swift in Sources */,
 				A557E493297D566C00A40EEE /* SecurityForRecommend.swift in Sources */,

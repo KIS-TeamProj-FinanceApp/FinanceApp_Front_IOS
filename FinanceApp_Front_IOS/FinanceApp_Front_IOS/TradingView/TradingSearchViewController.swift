@@ -24,6 +24,23 @@ class TradingSearchViewController: UIViewController {
     private var isHoga: Bool = true
     private var isDomestic: Bool = true
     
+    //한국금융지주로 설정해놓음
+    private var nowTicker: String = "071050"
+    
+    
+    //일간 차트
+    private var dayDomesticPrice: [DomesticPrice] = []
+    // 주간 이평선을 위해
+    private var weekDomesticPrice: [DomesticPrice] = []
+    // 월간 이평선을 위해
+    private var monthDomesticPrice: [DomesticPrice] = []
+    
+   
+    
+    
+    // ------------------------------------------------------- variables ------------------------------------------------------ //
+    
+    
     private lazy var rightButton: UIBarButtonItem = {
         let button = UIBarButtonItem(title: "국내", style: .plain, target: self, action: #selector(rightButtonClicked))
         return button
@@ -39,10 +56,6 @@ class TradingSearchViewController: UIViewController {
         }
         print(self.isDomestic)
     }
-    
-    
-    // ------------------------------------------------------- variables ------------------------------------------------------ //
-    
     
     
     // ------------------------------------------------------- UI Components ------------------------------------------------------ //
@@ -339,23 +352,16 @@ extension TradingSearchViewController: UISearchBarDelegate{
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         print("searchButton clicked!!")
         print(searchBar.text)
+        //한국금융지주로 설정
+        self.nowTicker = searchBar.text ?? "071050"
         
-//        searchKeyword(searchWord: searchBar.text ?? "")
-        print("여기까지 됨")
-        //검색을 했을 시, 지역 변수 배열 두가지에 검색한 url에 대하여 값을 append하고, 이를 UserDefaults에도 갱신해준다.
-        // OK쪽 콜백으로 옮김
-//        self.urlsArr.append(searchBar.text ?? "")
-//        self.urlsAlias.append("새로 검색한 url")
-//
-//        self.urlsArr[0] = ""
-//        self.urlsAlias[0] = "별칭"
-//        //UserDefaults에도 값 갱신
-//        UserDefaults.standard.set(urlsArr, forKey: "urls")
-//        UserDefaults.standard.set(urlsAlias, forKey: "urlAlias")
-//        let url = searchBar.text?.trimmingCharacters(in: .whitespaces) ?? ""
-//        let vc = ShowDataViewController()
-//        vc.setup(apiUrl: url)
-//        navigationController?.pushViewController(vc, animated: true)
+        // 여기서 모든 로직이 돌아가야함
+        //
+        
+        
+        
+        
+        
     }
 }
 
@@ -368,3 +374,54 @@ extension TradingSearchViewController {
         }
 }
 
+extension TradingSearchViewController {
+    // 국내 주식 일자별 검색
+    private func requestAPI_DomesticPrice_former(dayWeekMonth: String){
+        
+        let url = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/quotations/inquire-daily-price?FID_COND_MRKT_DIV_CODE=J&FID_INPUT_ISCD=" + self.nowTicker + "&FID_PERIOD_DIV_CODE=" + dayWeekMonth + "&FID_ORG_ADJ_PRC=0"
+        
+        
+        AF.request(url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed.union( CharacterSet(["%"]))) ?? "",
+                   method: .get,
+                   headers: ["content-type": "application/json; charset=utf-8",
+                                             "authorization": UserDefaults.standard.string(forKey: "accessToken")!,
+                                             "appkey": UserDefaults.standard.string(forKey: "appkey")!,
+                                             "appsecret": UserDefaults.standard.string(forKey: "appsecret")!,
+                                             "tr_id": "FHKST01010400"]
+                   )
+                .responseDecodable(of: DomesticPriceTotalDto.self){ [weak self] response in
+                                // success 이외의 응답을 받으면, else문에 걸려 함수 종료
+                                guard
+                                    let self = self,
+                                    case .success(let data) = response.result else {
+                                    print("못함.... response는")
+                                    print(response)
+                                    return }
+                    
+                    
+                    //
+                    if dayWeekMonth == "D"{
+                        self.dayDomesticPrice = data.output.map{ obj -> DomesticPrice in
+                            let now = DomesticPrice(stck_bsop_date: obj.stck_bsop_date, stck_oprc: obj.stck_oprc, stck_hgpr: obj.stck_hgpr, stck_lwpr: obj.stck_lwpr, stck_clpr: obj.stck_clpr, acml_vol: obj.acml_vol, prdy_vrss_vol_rate: obj.prdy_vrss_vol_rate, prdy_vrss_sign: obj.prdy_vrss_sign, prdy_ctrt: obj.prdy_ctrt, frgn_ntby_qty: obj.frgn_ntby_qty)
+                            return now
+                        }
+                    } else if dayWeekMonth == "W"{
+                        self.weekDomesticPrice = data.output.map{ obj -> DomesticPrice in
+                            let now = DomesticPrice(stck_bsop_date: obj.stck_bsop_date, stck_oprc: obj.stck_oprc, stck_hgpr: obj.stck_hgpr, stck_lwpr: obj.stck_lwpr, stck_clpr: obj.stck_clpr, acml_vol: obj.acml_vol, prdy_vrss_vol_rate: obj.prdy_vrss_vol_rate, prdy_vrss_sign: obj.prdy_vrss_sign, prdy_ctrt: obj.prdy_ctrt, frgn_ntby_qty: obj.frgn_ntby_qty)
+                            return now
+                        }
+                    }
+                    else{ // Month일 때
+                        self.monthDomesticPrice = data.output.map{ obj -> DomesticPrice in
+                            let now = DomesticPrice(stck_bsop_date: obj.stck_bsop_date, stck_oprc: obj.stck_oprc, stck_hgpr: obj.stck_hgpr, stck_lwpr: obj.stck_lwpr, stck_clpr: obj.stck_clpr, acml_vol: obj.acml_vol, prdy_vrss_vol_rate: obj.prdy_vrss_vol_rate, prdy_vrss_sign: obj.prdy_vrss_sign, prdy_ctrt: obj.prdy_ctrt, frgn_ntby_qty: obj.frgn_ntby_qty)
+                            return now
+                        }
+                    }
+                    
+                    //보유종목 부분 update
+//                    self.securityNameCollectionView.reloadData()
+//                    self.securityCollectionView.reloadData()
+                    
+        }.resume()
+    }
+}

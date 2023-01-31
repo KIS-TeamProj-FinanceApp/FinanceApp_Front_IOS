@@ -7,6 +7,17 @@
 
 import Foundation
 
+
+struct DomesticPriceTotalDto: Decodable {
+    
+    let output: [DomesticPriceDto]
+    
+    enum CodingKeys: String, CodingKey{
+        case output = "output"
+    }
+}
+
+
 struct DomesticPriceDto: Decodable {    
     // 영업일자
     let stck_bsop_date: String
@@ -28,7 +39,6 @@ struct DomesticPriceDto: Decodable {
     let prdy_ctrt: String
     // 외국인 순매수 수량
     let frgn_ntby_qty: String
-    
     
     enum CodingKeys: String, CodingKey{
         case stck_bsop_date = "stck_bsop_date"

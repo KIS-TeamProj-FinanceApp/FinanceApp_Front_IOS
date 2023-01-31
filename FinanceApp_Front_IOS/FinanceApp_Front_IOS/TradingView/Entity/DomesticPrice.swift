@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct DomesticPriceDto {
+struct DomesticPrice {
     // 영업일자
     let stck_bsop_date: String
     // 시가
