@@ -1584,7 +1584,8 @@ extension MyAccountViewController {
     private func requestAPI_DomesticSector(){
 //        var dict: [String: Double] = [:]
         
-        for i in myAccountSecurities{
+        for i in
+                myAccountSecurities{
             print(i.pdno, i.evlu_amt)
         
             let url = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/quotations/inquire-price?FID_COND_MRKT_DIV_CODE=J&FID_INPUT_ISCD=\(i.pdno)"

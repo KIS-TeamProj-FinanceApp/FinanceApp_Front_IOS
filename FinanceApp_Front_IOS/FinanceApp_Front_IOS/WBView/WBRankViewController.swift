@@ -22,9 +22,7 @@ class WBRankViewController: UIViewController {
         SecurityForRecommend(securityName: "현재 7위", sector: "업종1"),
         SecurityForRecommend(securityName: "현재 8위", sector: "업종2"),
         SecurityForRecommend(securityName: "현재 9위", sector: "업종5"),
-        SecurityForRecommend(securityName: "현재 10위", sector: "업종6"),
-        SecurityForRecommend(securityName: "현재 11위", sector: "업종7"),
-        SecurityForRecommend(securityName: "현재 12위", sector: "업종4"),
+        SecurityForRecommend(securityName: "현재 10위", sector: "업종6")
         ]
     
     // 투자자'S Future에 들어갈 Data를 담을 배열
@@ -38,9 +36,8 @@ class WBRankViewController: UIViewController {
         SecurityForRecommend(securityName: "Future 7위", sector: "업종1"),
         SecurityForRecommend(securityName: "Future 8위", sector: "업종3"),
         SecurityForRecommend(securityName: "Future 9위", sector: "업종4"),
-        SecurityForRecommend(securityName: "Future 10위", sector: "업종6"),
-        SecurityForRecommend(securityName: "Future 11위", sector: "업종7"),
-        SecurityForRecommend(securityName: "Future 12위", sector: "업종5")]
+        SecurityForRecommend(securityName: "Future 10위", sector: "업종6")
+    ]
     
     private var sectorArr: [String] = ["업종1", "업종2", "업종3", "업종4", "업종5", "업종6", "업종7"]
     private var sectorCheckArr: [Bool] = [true, true, true, true, true, true, true]
@@ -232,14 +229,14 @@ extension WBRankViewController: UITableViewDataSource {
         // 왼쪽 tableView
         if tableView.tag == 0 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "WBRankTableViewCell", for: indexPath) as? WBRankTableViewCell else { return UITableViewCell() }
-            cell.setup(rank: String(indexPath.row), securityName: nowTop12[indexPath.row].securityName)
+            cell.setup(rank: String(indexPath.row + 1), securityName: nowTop12[indexPath.row].securityName)
             cell.selectionStyle = .none
             return cell
         }
         //오른쪽 tableView
         else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "WBRankTableViewCell", for: indexPath) as? WBRankTableViewCell else { return UITableViewCell() }
-            cell.setup(rank: String(indexPath.row), securityName: futureTop12[indexPath.row].securityName)
+            cell.setup(rank: String(indexPath.row + 1), securityName: futureTop12[indexPath.row].securityName)
             cell.selectionStyle = .none
             return cell
         }

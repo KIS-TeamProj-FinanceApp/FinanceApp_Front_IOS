@@ -23,7 +23,7 @@ class MainTabBarController: UITabBarController{
     
     private lazy var secondViewController: UIViewController = {
         let vc = KeywordRankViewController()
-        let tabBarItem = UITabBarItem(title: "Keywords", image: UIImage(systemName: "character"), tag: 0)
+        let tabBarItem = UITabBarItem(title: "KeyStocks", image: UIImage(systemName: "character"), tag: 0)
         
         vc.tabBarItem = tabBarItem
         return vc

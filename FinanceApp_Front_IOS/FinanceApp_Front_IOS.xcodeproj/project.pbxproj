@@ -77,6 +77,7 @@
 		A588381D2989E5A00093F5D8 /* KeywordDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A588381C2989E5A00093F5D8 /* KeywordDetailViewController.swift */; };
 		A588381F2989ED550093F5D8 /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A588381E2989ED550093F5D8 /* NewsTableViewCell.swift */; };
 		A58838222989F2530093F5D8 /* KeywordChartSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58838212989F2530093F5D8 /* KeywordChartSwiftUIView.swift */; };
+		A5883824298A2AD10093F5D8 /* MainCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5883823298A2AD10093F5D8 /* MainCollectionViewCell.swift */; };
 		A5B77E2C2980B308006D754F /* MyAccountMoneyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E2B2980B308006D754F /* MyAccountMoneyView.swift */; };
 		A5B77E2E2980BF4D006D754F /* SecurityCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E2D2980BF4D006D754F /* SecurityCollectionViewCell.swift */; };
 		A5B77E302980C6A5006D754F /* SecurityNameCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E2F2980C6A5006D754F /* SecurityNameCollectionViewCell.swift */; };
@@ -177,6 +178,7 @@
 		A588381C2989E5A00093F5D8 /* KeywordDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordDetailViewController.swift; sourceTree = "<group>"; };
 		A588381E2989ED550093F5D8 /* NewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
 		A58838212989F2530093F5D8 /* KeywordChartSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordChartSwiftUIView.swift; sourceTree = "<group>"; };
+		A5883823298A2AD10093F5D8 /* MainCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionViewCell.swift; sourceTree = "<group>"; };
 		A5B77E2B2980B308006D754F /* MyAccountMoneyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountMoneyView.swift; sourceTree = "<group>"; };
 		A5B77E2D2980BF4D006D754F /* SecurityCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityCollectionViewCell.swift; sourceTree = "<group>"; };
 		A5B77E2F2980C6A5006D754F /* SecurityNameCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityNameCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -456,6 +458,7 @@
 			isa = PBXGroup;
 			children = (
 				A557E476297A7D3300A40EEE /* MainViewController.swift */,
+				A5883823298A2AD10093F5D8 /* MainCollectionViewCell.swift */,
 			);
 			path = MainView;
 			sourceTree = "<group>";
@@ -922,6 +925,7 @@
 				A557E4652977D12400A40EEE /* AccountExistenceViewController.swift in Sources */,
 				A5B77E3429810C20006D754F /* MyAccountSecuritiesDto.swift in Sources */,
 				A5B77E3A29810D66006D754F /* MyAccountMoney.swift in Sources */,
+				A5883824298A2AD10093F5D8 /* MainCollectionViewCell.swift in Sources */,
 				A5B77E502982C126006D754F /* DomesticAgreementDetailDto.swift in Sources */,
 				A557E4692978226900A40EEE /* AppkeyInputViewController.swift in Sources */,
 				A5B77E5D2982C296006D754F /* DomesticAgreementTotalDto.swift in Sources */,

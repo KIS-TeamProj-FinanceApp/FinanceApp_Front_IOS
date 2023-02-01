@@ -28,6 +28,7 @@ class TradingSearchViewController: UIViewController {
     
     //일간 차트
     private var dayDomesticPrice: [DomesticPrice] = []
+    
     // 주간 이평선을 위해
     private var weekDomesticPrice: [DomesticPrice] = []
     // 월간 이평선을 위해

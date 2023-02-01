@@ -25,7 +25,7 @@ class KeywordRankViewController: UIViewController {
     
     
     
-    private var keywordRankArr: [String] = ["keyword 1", "keyword 2", "keyword 3", "keyword 4", "keyword 5", "keyword 6", "keyword 7", "keyword 8", "keyword 9", "keyword 10"]
+    private var keywordRankArr: [String] = ["KeyStock 1", "KeyStock 2", "KeyStock 3", "KeyStock 4", "KeyStock 5", "KeyStock 6", "KeyStock 7", "KeyStock 8", "KeyStock 9", "KeyStock 10"]
 
     private let uiSc: UISearchController = {
         let searchController = UISearchController()
