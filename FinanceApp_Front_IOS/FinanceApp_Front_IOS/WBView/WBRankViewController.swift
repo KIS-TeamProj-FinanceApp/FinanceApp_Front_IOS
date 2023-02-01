@@ -112,7 +112,7 @@ class WBRankViewController: UIViewController {
         tableView.tag = 0
         tableView.rowHeight = 60
 //        tableView.backgroundColor = UIColor(red: 223/255.0, green: 156/255.0, blue: 50/255.0, alpha: 1.0)
-        tableView.backgroundColor = .cyan
+        tableView.backgroundColor = .white
         tableView.showsVerticalScrollIndicator = false
         return tableView
     }()
@@ -126,7 +126,7 @@ class WBRankViewController: UIViewController {
         tableView.tag = 1
         tableView.rowHeight = 60
         tableView.showsVerticalScrollIndicator = false
-        tableView.backgroundColor = .lightGray
+        tableView.backgroundColor = .white
         return tableView
     }()
     
@@ -232,14 +232,14 @@ extension WBRankViewController: UITableViewDataSource {
         // 왼쪽 tableView
         if tableView.tag == 0 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "WBRankTableViewCell", for: indexPath) as? WBRankTableViewCell else { return UITableViewCell() }
-            cell.setup(rank: indexPath.row, securityName: nowTop12[indexPath.row].securityName)
+            cell.setup(rank: String(indexPath.row), securityName: nowTop12[indexPath.row].securityName)
             cell.selectionStyle = .none
             return cell
         }
         //오른쪽 tableView
         else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "WBRankTableViewCell", for: indexPath) as? WBRankTableViewCell else { return UITableViewCell() }
-            cell.setup(rank: indexPath.row, securityName: futureTop12[indexPath.row].securityName)
+            cell.setup(rank: String(indexPath.row), securityName: futureTop12[indexPath.row].securityName)
             cell.selectionStyle = .none
             return cell
         }

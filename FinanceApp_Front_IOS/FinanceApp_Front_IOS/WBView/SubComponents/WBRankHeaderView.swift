@@ -26,7 +26,7 @@ class WBRankHeaderView: UIView {
     private lazy var investorTextField: UITextField = {
         let tf = UITextField()
         tf.layer.borderWidth = 3.0
-        tf.layer.borderColor = UIColor(red: 0/255, green: 192/255, blue: 235/255, alpha: 1).cgColor
+        tf.layer.borderColor = UIColor(red: 233/255.0, green: 16/255.0, blue: 166/255.0, alpha: 1.0)).cgColor
         tf.layer.cornerRadius = 10.0
         tf.backgroundColor = .systemBackground
         tf.placeholder = "투자자 선택"

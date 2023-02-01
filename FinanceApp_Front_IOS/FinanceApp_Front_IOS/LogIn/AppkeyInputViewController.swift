@@ -23,7 +23,7 @@ final class AppkeyInputViewController: UIViewController {
         let tv = UITextField()
         
         tv.text = "appkey와 appservicekey를"
-        tv.font = .systemFont(ofSize: 26.0, weight: .bold)
+        tv.font = .systemFont(ofSize: 22.0, weight: .semibold)
 //        tv.textAlignment = .natural
         return tv
     }()
@@ -31,7 +31,7 @@ final class AppkeyInputViewController: UIViewController {
         let tv = UITextField()
         
         tv.text = "입력해주세요"
-        tv.font = .systemFont(ofSize: 26.0, weight: .semibold)
+        tv.font = .systemFont(ofSize: 22.0, weight: .semibold)
 //        tv.textAlignment = .natural
         return tv
     }()

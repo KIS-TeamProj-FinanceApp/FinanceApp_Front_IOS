@@ -87,10 +87,30 @@ class KeywordDetailViewController: UIViewController {
         return label
     }()
     
+    private lazy var wordCloudLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Word Cloud"
+        label.font = .systemFont(ofSize: 30.0, weight: .heavy)
+        label.textColor = .black
+        return label
+    }()
+    
+    private lazy var wordCloudImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.layer.cornerRadius = 4.0
+        imageView.layer.borderWidth = 1
+        imageView.layer.borderColor = UIColor(red: 243/255.0, green: 176/255.0, blue: 186/255.0, alpha: 1.0).cgColor
+        imageView.image = UIImage(named: "splash")
+        imageView.contentMode = .scaleAspectFill
+        //테두리 안쪽의 image만 표현되도록!
+        imageView.clipsToBounds = true
+        return imageView
+    }()
+    
     
     private lazy var newsLabel: UILabel = {
         let label = UILabel()
-        label.text = "뉴스기사"
+        label.text = "News"
         label.font = .systemFont(ofSize: 30.0, weight: .heavy)
         label.textColor = .black
         return label
@@ -198,7 +218,7 @@ class KeywordDetailViewController: UIViewController {
             $0.edges.equalToSuperview()
         }
         
-        [ issueScoreLabel, graphUIView, pnLabel1, pnStackView, newsLabel, newsTableView].forEach{
+        [ issueScoreLabel, graphUIView, pnLabel1, pnStackView, wordCloudLabel, wordCloudImageView, newsLabel, newsTableView].forEach{
 //            view.addSubview($0)
             stackView.addArrangedSubview($0)
         }
@@ -249,6 +269,18 @@ class KeywordDetailViewController: UIViewController {
         pnLabel5.snp.makeConstraints{
             $0.top.bottom.equalToSuperview()
             $0.leading.equalTo(pnLabel4.snp.trailing)
+        }
+        
+        wordCloudLabel.snp.makeConstraints{
+            
+            $0.leading.equalToSuperview().inset(20)
+            $0.height.equalTo(80)
+        }
+        
+        wordCloudImageView.snp.makeConstraints{
+            
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(wordCloudImageView.snp.width)
         }
         
         newsLabel.snp.makeConstraints{

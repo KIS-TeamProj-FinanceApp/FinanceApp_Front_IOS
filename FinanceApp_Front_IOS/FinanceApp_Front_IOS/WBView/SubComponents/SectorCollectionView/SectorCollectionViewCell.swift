@@ -28,10 +28,11 @@ class SectorCollectionViewCell: UICollectionViewCell{
     private func attribute(){
         titleButton.setTitleColor(.black, for: .normal)
         titleButton.titleLabel?.font = .systemFont(ofSize: 13.0, weight: .bold)
-        titleButton.backgroundColor = UIColor(red: 230 / 255.0, green: 230 / 255.0, blue: 230 / 255.0, alpha: 1.0)
+        titleButton.backgroundColor = .lightGray
         //        titleButton.layer.cornerRadius = 12.0
         titleButton.layer.borderWidth = 1.0
         titleButton.layer.borderColor = UIColor.lightGray.cgColor
+        titleButton.layer.cornerRadius = 6.0
         titleButton.addTarget(self, action: #selector(btnClicked), for: .touchUpInside)
         //        titleButton.isEnabled = false
     }
@@ -46,10 +47,10 @@ class SectorCollectionViewCell: UICollectionViewCell{
     
     @objc func btnClicked(){
         if self.isClicked{
-            self.titleButton.backgroundColor = UIColor(red: 230 / 255.0, green: 230 / 255.0, blue: 230 / 255.0, alpha: 1.0)
+            self.titleButton.backgroundColor = UIColor(red: 253/255.0, green: 166/255.0, blue: 186/255.0, alpha: 1.0)
         }
         else{
-            self.titleButton.backgroundColor = UIColor(red: 153 / 460.0, green: 280 / 460.0, blue: 459 / 460.0, alpha: 1.0)
+            self.titleButton.backgroundColor = .lightGray
         }
         self.isClicked = !self.isClicked
         
@@ -71,10 +72,10 @@ class SectorCollectionViewCell: UICollectionViewCell{
         self.isClicked = isClicked
         // 클릭 상태면 파란색으로
         if isClicked{
-            titleButton.backgroundColor = UIColor(red: 153 / 460.0, green: 280 / 460.0, blue: 459 / 460.0, alpha: 1.0)
+            titleButton.backgroundColor = UIColor(red: 253/255.0, green: 166/255.0, blue: 186/255.0, alpha: 1.0)
         }//클릭 X 상태면 밝은 회색
         else{
-            titleButton.backgroundColor = UIColor(red: 230 / 255.0, green: 230 / 255.0, blue: 230 / 255.0, alpha: 1.0)
+            titleButton.backgroundColor = .lightGray
         }
         
     }
