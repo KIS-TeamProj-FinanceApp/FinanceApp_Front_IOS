@@ -15,8 +15,24 @@ final class AccountExistenceViewController: UIViewController {
     private lazy var questionLabel: UILabel = {
         let qLabel = UILabel()
         
-        qLabel.text = "한국투자증권 계좌를 갖고계신가요?"
-        qLabel.font = UIFont.systemFont(ofSize: 22)
+        qLabel.text = "한국투자증권 계좌"
+        qLabel.font = .systemFont(ofSize: 32.0, weight: .bold)
+        return qLabel
+    }()
+    
+    private lazy var questionLabel2: UILabel = {
+        let qLabel = UILabel()
+        
+        qLabel.text = "를"
+        qLabel.font = .systemFont(ofSize: 26.0, weight: .semibold)
+        return qLabel
+    }()
+    
+    private lazy var questionLabel3: UILabel = {
+        let qLabel = UILabel()
+        
+        qLabel.text = "갖고계신가요?"
+        qLabel.font = .systemFont(ofSize: 26.0, weight: .semibold)
         return qLabel
     }()
     
@@ -25,8 +41,8 @@ final class AccountExistenceViewController: UIViewController {
        
         button.setTitle("계좌 있음", for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.backgroundColor = UIColor(red: 195/255.0, green: 222/255.0, blue: 194/255.0, alpha: 1.0)
-        button.layer.borderColor = UIColor(red: 153/255.0, green: 76/255.0, blue: 0/255.0, alpha: 1.0).cgColor
+        button.backgroundColor = UIColor(red: 253/255.0, green: 156/255.0, blue: 156/255.0, alpha: 1.0)
+        button.layer.borderColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0).cgColor
         button.layer.borderWidth = 1.0
         button.layer.cornerRadius = 8.0
         button.addTarget(self, action: #selector(yesAccount), for: .touchUpInside)
@@ -37,8 +53,8 @@ final class AccountExistenceViewController: UIViewController {
         let button = UIButton()
         button.setTitle("계좌 없음", for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.backgroundColor = UIColor(red: 195/255.0, green: 222/255.0, blue: 194/255.0, alpha: 1.0)
-        button.layer.borderColor = UIColor(red: 153/255.0, green: 76/255.0, blue: 0/255.0, alpha: 1.0).cgColor
+        button.backgroundColor = UIColor(red: 253/255.0, green: 156/255.0, blue: 156/255.0, alpha: 1.0)
+        button.layer.borderColor = UIColor(red: 233/255.0, green: 186/255.0, blue: 186/255.0, alpha: 1.0).cgColor
         button.layer.borderWidth = 1.0
         button.layer.cornerRadius = 8.0
         button.addTarget(self, action: #selector(noAccount), for: .touchUpInside)
@@ -90,7 +106,7 @@ final class AccountExistenceViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .cyan
+        view.backgroundColor = .white
         
     }
     
@@ -101,23 +117,34 @@ final class AccountExistenceViewController: UIViewController {
     
     private func layout(){
         
-        [questionLabel, accountYesButton, accountNoButton].forEach{
+        [questionLabel, questionLabel2, questionLabel3, accountYesButton, accountNoButton].forEach{
             view.addSubview($0)
         }
         
         questionLabel.snp.makeConstraints{
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(50)
+            $0.leading.equalToSuperview().inset(30)
+        }
+        questionLabel2.snp.makeConstraints{
+            $0.bottom.equalTo(questionLabel.snp.bottom)
+            $0.leading.equalTo(questionLabel.snp.trailing).offset(2)
+        }
+        
+        questionLabel3.snp.makeConstraints{
+            $0.top.equalTo(questionLabel.snp.bottom).offset(6)
             $0.leading.trailing.equalToSuperview().inset(30)
         }
         
         accountYesButton.snp.makeConstraints{
-            $0.top.equalTo(questionLabel.snp.bottom).offset(50)
-            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.top.equalTo(questionLabel3.snp.bottom).offset(80)
+            $0.height.equalTo(50)
+            $0.leading.trailing.equalToSuperview().inset(40)
         }
         
         accountNoButton.snp.makeConstraints{
             $0.top.equalTo(accountYesButton.snp.bottom).offset(20)
-            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.height.equalTo(50)
+            $0.leading.trailing.equalToSuperview().inset(40)
         }
     }
 }

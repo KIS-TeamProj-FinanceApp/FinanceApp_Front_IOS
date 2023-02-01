@@ -57,8 +57,8 @@ final class AppkeyExistenceViewController: UIViewController {
        
         button.setTitle("발급 받으러 가기", for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.backgroundColor = UIColor(red: 195/255.0, green: 222/255.0, blue: 194/255.0, alpha: 1.0)
-        button.layer.borderColor = UIColor(red: 153/255.0, green: 76/255.0, blue: 0/255.0, alpha: 1.0).cgColor
+        button.backgroundColor = UIColor(red: 253/255.0, green: 176/255.0, blue: 176/255.0, alpha: 1.0)
+        button.layer.borderColor = UIColor(red: 253/255.0, green: 176/255.0, blue: 176/255.0, alpha: 1.0).cgColor
         button.layer.borderWidth = 1.0
         button.layer.cornerRadius = 8.0
         button.addTarget(self, action: #selector(goKISDevelopers), for: .touchUpInside)
@@ -69,8 +69,8 @@ final class AppkeyExistenceViewController: UIViewController {
         let button = UIButton()
         button.setTitle("발급 받았음", for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.backgroundColor = UIColor(red: 195/255.0, green: 222/255.0, blue: 194/255.0, alpha: 1.0)
-        button.layer.borderColor = UIColor(red: 153/255.0, green: 76/255.0, blue: 0/255.0, alpha: 1.0).cgColor
+        button.backgroundColor = UIColor(red: 253/255.0, green: 176/255.0, blue: 176/255.0, alpha: 1.0)
+        button.layer.borderColor = UIColor(red: 253/255.0, green: 176/255.0, blue: 176/255.0, alpha: 1.0).cgColor
         button.layer.borderWidth = 1.0
         button.layer.cornerRadius = 8.0
         button.addTarget(self, action: #selector(alreadyDid), for: .touchUpInside)
@@ -94,9 +94,7 @@ final class AppkeyExistenceViewController: UIViewController {
         self.questionTextField.isEnabled = false
         self.questionTextField2.isEnabled = false
         self.questionTextField3.isEnabled = false
-        self.questionTextField.backgroundColor = .cyan
-        self.questionTextField2.backgroundColor = .cyan
-        self.questionTextField3.backgroundColor = .cyan
+        
         layout()
     }
     
@@ -105,7 +103,7 @@ final class AppkeyExistenceViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .cyan
+        view.backgroundColor = .white
         
     }
     
@@ -146,19 +144,22 @@ final class AppkeyExistenceViewController: UIViewController {
         
         
         appServiceKeyLabel.snp.makeConstraints{
-            $0.top.equalTo(appKeyLabel.snp.bottom).offset(50)
+            $0.top.equalTo(appKeyLabel.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(30)
         }
         
         
         accountYesButton.snp.makeConstraints{
             $0.top.equalTo(appServiceKeyLabel.snp.bottom).offset(50)
-            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.height.equalTo(50)
+            $0.leading.trailing.equalToSuperview().inset(40)
+           
         }
         
         accountNoButton.snp.makeConstraints{
             $0.top.equalTo(accountYesButton.snp.bottom).offset(20)
-            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.height.equalTo(50)
+            $0.leading.trailing.equalToSuperview().inset(40)
         }
     }
 }

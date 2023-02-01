@@ -23,7 +23,7 @@ final class AppkeyInputViewController: UIViewController {
         let tv = UITextField()
         
         tv.text = "appkey와 appservicekey를"
-        tv.font = UIFont.systemFont(ofSize: 22)
+        tv.font = .systemFont(ofSize: 26.0, weight: .bold)
 //        tv.textAlignment = .natural
         return tv
     }()
@@ -31,7 +31,7 @@ final class AppkeyInputViewController: UIViewController {
         let tv = UITextField()
         
         tv.text = "입력해주세요"
-        tv.font = UIFont.systemFont(ofSize: 20)
+        tv.font = .systemFont(ofSize: 26.0, weight: .semibold)
 //        tv.textAlignment = .natural
         return tv
     }()
@@ -39,15 +39,15 @@ final class AppkeyInputViewController: UIViewController {
     private lazy var appKeyLabel: UILabel = {
         let label = UILabel()
         label.text = "AppKey"
-        label.font = UIFont.systemFont(ofSize: 22)
+        label.font = .systemFont(ofSize: 26.0, weight: .bold)
         return label
     }()
     
     private lazy var appKeyTextField: UITextField = {
         let tf = UITextField()
         tf.layer.borderWidth = 2.0
-        tf.layer.borderColor = UIColor(red: 0/255, green: 192/255, blue: 210/255, alpha: 1).cgColor
-        tf.layer.cornerRadius = 4.0
+        tf.layer.borderColor = UIColor(red: 253/255.0, green: 176/255.0, blue: 176/255.0, alpha: 1.0).cgColor
+        tf.layer.cornerRadius = 8.0
         tf.backgroundColor = .systemBackground
         tf.placeholder = "AppKey 입력"
         //textField 앞에 inset을 줘서 text가 자연스럽게 보이도록
@@ -61,7 +61,7 @@ final class AppkeyInputViewController: UIViewController {
     private lazy var appServiceKeyLabel: UILabel = {
         let label = UILabel()
         label.text = "AppServiceKey"
-        label.font = UIFont.systemFont(ofSize: 22)
+        label.font = .systemFont(ofSize: 26.0, weight: .bold)
         return label
     }()
     
@@ -69,8 +69,8 @@ final class AppkeyInputViewController: UIViewController {
     private lazy var appServiceKeyTextField: UITextField = {
         let tf = UITextField()
         tf.layer.borderWidth = 2.0
-        tf.layer.borderColor = UIColor(red: 0/255, green: 192/255, blue: 210/255, alpha: 1).cgColor
-        tf.layer.cornerRadius = 4.0
+        tf.layer.borderColor = UIColor(red: 253/255.0, green: 176/255.0, blue: 176/255.0, alpha: 1.0).cgColor
+        tf.layer.cornerRadius = 8.0
         tf.backgroundColor = .systemBackground
         tf.placeholder = "AppServiceKey 입력"
         //textField 앞에 inset을 줘서 text가 자연스럽게 보이도록
@@ -82,27 +82,27 @@ final class AppkeyInputViewController: UIViewController {
     
     private lazy var sendButton: UIButton = {
         let button = UIButton()
-        button.setTitle("OAuth 접근토큰 발급", for: .normal)
+        button.setTitle("로그인 토큰 발급", for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.backgroundColor = UIColor(red: 195/255.0, green: 222/255.0, blue: 194/255.0, alpha: 1.0)
-        button.layer.borderColor = UIColor(red: 153/255.0, green: 76/255.0, blue: 0/255.0, alpha: 1.0).cgColor
+        button.backgroundColor = UIColor(red: 253/255.0, green: 176/255.0, blue: 176/255.0, alpha: 1.0)
+        button.layer.borderColor = UIColor(red: 253/255.0, green: 136/255.0, blue: 136/255.0, alpha: 1.0).cgColor
         button.layer.borderWidth = 1.0
         button.layer.cornerRadius = 8.0
         button.addTarget(self, action: #selector(getToken), for: .touchUpInside)
         return button
     }()
     
-    private lazy var nosendButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("두가지key 채우기", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.backgroundColor = UIColor(red: 255/255.0, green: 222/255.0, blue: 194/255.0, alpha: 1.0)
-        button.layer.borderColor = UIColor(red: 153/255.0, green: 76/255.0, blue: 0/255.0, alpha: 1.0).cgColor
-        button.layer.borderWidth = 1.0
-        button.layer.cornerRadius = 8.0
-        button.addTarget(self, action: #selector(fillTextField), for: .touchUpInside)
-        return button
-    }()
+//    private lazy var nosendButton: UIButton = {
+//        let button = UIButton()
+//        button.setTitle("두가지key 채우기", for: .normal)
+//        button.setTitleColor(.black, for: .normal)
+//        button.backgroundColor = UIColor(red: 255/255.0, green: 222/255.0, blue: 194/255.0, alpha: 1.0)
+//        button.layer.borderColor = UIColor(red: 153/255.0, green: 76/255.0, blue: 0/255.0, alpha: 1.0).cgColor
+//        button.layer.borderWidth = 1.0
+//        button.layer.cornerRadius = 8.0
+//        button.addTarget(self, action: #selector(fillTextField), for: .touchUpInside)
+//        return button
+//    }()
     
     
     private lazy var textfield: UITextField = {
@@ -117,6 +117,8 @@ final class AppkeyInputViewController: UIViewController {
     
     @objc func getToken(){
         print("토큰 발급받기")
+        self.appKeyTextField.text = self.appKey
+        self.appServiceKeyTextField.text = self.appSecretKey
         postTest()
         
         print("화면 띄우기 전")
@@ -146,7 +148,7 @@ final class AppkeyInputViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .cyan
+        view.backgroundColor = .white
         
     }
     
@@ -157,7 +159,7 @@ final class AppkeyInputViewController: UIViewController {
     
     private func layout(){
         
-        [questionTextField, questionTextField2, appKeyLabel, appKeyTextField, appServiceKeyLabel, appServiceKeyTextField, sendButton, nosendButton].forEach{
+        [questionTextField, questionTextField2, appKeyLabel, appKeyTextField, appServiceKeyLabel, appServiceKeyTextField, sendButton].forEach{
             view.addSubview($0)
         }
         
@@ -173,42 +175,38 @@ final class AppkeyInputViewController: UIViewController {
         
         appKeyLabel.snp.makeConstraints{
             $0.top.equalTo(questionTextField2.snp.bottom).offset(50)
-            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.leading.trailing.equalToSuperview().inset(40)
         }
         
         appKeyTextField.snp.makeConstraints{
             $0.top.equalTo(appKeyLabel.snp.bottom).offset(10)
-            $0.height.equalTo(30)
-            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.height.equalTo(50)
+            $0.leading.trailing.equalToSuperview().inset(40)
         }
         
         
         appServiceKeyLabel.snp.makeConstraints{
             $0.top.equalTo(appKeyTextField.snp.bottom).offset(20)
-            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.leading.trailing.equalToSuperview().inset(40)
         }
         
         appServiceKeyTextField.snp.makeConstraints{
             $0.top.equalTo(appServiceKeyLabel.snp.bottom).offset(10)
-            $0.height.equalTo(30)
-            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.height.equalTo(50)
+            $0.leading.trailing.equalToSuperview().inset(40)
         }
         
         sendButton.snp.makeConstraints{
-            $0.top.equalTo(appServiceKeyTextField.snp.bottom).offset(20)
-            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.top.equalTo(appServiceKeyTextField.snp.bottom).offset(50)
+            $0.height.equalTo(36)
+            $0.leading.trailing.equalToSuperview().inset(40)
         }
         
-        nosendButton.snp.makeConstraints{
-            $0.top.equalTo(sendButton.snp.bottom).offset(20)
-            $0.leading.trailing.equalToSuperview().inset(30)
-        }
-//
-//        textfield.snp.makeConstraints{
+//        nosendButton.snp.makeConstraints{
 //            $0.top.equalTo(sendButton.snp.bottom).offset(20)
-//            $0.height.equalTo(300)
 //            $0.leading.trailing.equalToSuperview().inset(30)
 //        }
+
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -258,33 +256,14 @@ extension AppkeyInputViewController {
                 
                 
                 print("저장 시작 UserDefaults")
-                //AccessToken을 UserDefaults에 저장한다.
-                //appkey, appServiceKey를 UserDefaults에 저장함
-//                let now_appkey: String = self.appKeyTextField.text ?? ""
-//                let now_appsecret: String = self.appServiceKeyTextField.text ?? ""
+
                 UserDefaults.standard.set(self.appKey, forKey: "appkey")
                 UserDefaults.standard.set(self.appSecretKey, forKey: "appsecret")
                 
                 UserDefaults.standard.set("Bearer " + (self.accessToken?.access_token ?? ""), forKey: "accessToken")
                 
                 print("저장 끝 UserDefaults")
-//                DispatchQueue.main.asyncAfter(deadline: .now() + 3){
-//                    print("정보 다 받아왔나?")
-//                    print("차트 조회 버튼 클릭")
-//                    // SwiftUI View를 출력하려면 UIHostingController로 감싸서 띄워야한다.
-//
-//                    let hostingController = UIHostingController(rootView: SwiftUIChartView(title: self.itemNmTextField.text ?? "종목 이름 오류", securityArr: self.securityInfoArr, mkpInfoArr: self.mkpInfoArr, clprInfoArr: self.clprInfoArr, hiprInfoArr: self.hiprInfoArr, loprInfoArr: self.loprInfoArr))
-//                    if #available(iOS 16.0, *) {
-//                        hostingController.sizingOptions = .preferredContentSize
-//                    } else {
-//                        // Fallback on earlier versions
-//                    }
-//                    hostingController.modalPresentationStyle = .popover
-//                    self.present(hostingController, animated: true)
-//                }
 
-                
-//                self.textfield.text = (self.accessToken?.access_token ?? "no access_token\n token_type = \n") + (self.accessToken?.token_type ?? "no token_type!")
                 
             }.resume()
     

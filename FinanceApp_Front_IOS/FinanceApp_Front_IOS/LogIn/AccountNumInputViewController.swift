@@ -41,7 +41,7 @@ final class AccountNumInputViewController: UIViewController {
     private lazy var nameTextField: UITextField = {
         let tf = UITextField()
         tf.layer.borderWidth = 2.0
-        tf.layer.borderColor = UIColor(red: 0/255, green: 192/255, blue: 210/255, alpha: 1).cgColor
+        tf.layer.borderColor = UIColor(red: 253/255.0, green: 176/255.0, blue: 176/255.0, alpha: 1.0).cgColor
         tf.layer.cornerRadius = 8.0
         tf.backgroundColor = .systemBackground
         tf.placeholder = "이름 입력"
@@ -64,7 +64,7 @@ final class AccountNumInputViewController: UIViewController {
     private lazy var accountNumFrontTextField: UITextField = {
         let tf = UITextField()
         tf.layer.borderWidth = 2.0
-        tf.layer.borderColor = UIColor(red: 0/255, green: 192/255, blue: 210/255, alpha: 1).cgColor
+        tf.layer.borderColor = UIColor(red: 253/255.0, green: 176/255.0, blue: 176/255.0, alpha: 1.0).cgColor
         tf.layer.cornerRadius = 8.0
         tf.backgroundColor = .systemBackground
         tf.placeholder = "계좌번호 앞 8자리 입력"
@@ -87,7 +87,7 @@ final class AccountNumInputViewController: UIViewController {
     private lazy var accountNumBackTextField: UITextField = {
         let tf = UITextField()
         tf.layer.borderWidth = 2.0
-        tf.layer.borderColor = UIColor(red: 0/255, green: 192/255, blue: 210/255, alpha: 1).cgColor
+        tf.layer.borderColor = UIColor(red: 253/255.0, green: 176/255.0, blue: 176/255.0, alpha: 1.0).cgColor
         tf.layer.cornerRadius = 8.0
         tf.backgroundColor = .systemBackground
         tf.placeholder = "계좌번호 뒷 2자리 입력"
@@ -104,7 +104,7 @@ final class AccountNumInputViewController: UIViewController {
         let button = UIButton()
         button.setTitle("계좌 불러오기", for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.backgroundColor = UIColor(red: 195/255.0, green: 222/255.0, blue: 194/255.0, alpha: 1.0)
+        button.backgroundColor = UIColor(red: 253/255.0, green: 176/255.0, blue: 176/255.0, alpha: 1.0)
         button.layer.borderColor = UIColor(red: 153/255.0, green: 76/255.0, blue: 0/255.0, alpha: 1.0).cgColor
         button.layer.borderWidth = 1.0
         button.layer.cornerRadius = 8.0
@@ -112,17 +112,17 @@ final class AccountNumInputViewController: UIViewController {
         return button
     }()
     
-    private lazy var nosendButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("계좌정보 채우기", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.backgroundColor = UIColor(red: 255/255.0, green: 222/255.0, blue: 194/255.0, alpha: 1.0)
-        button.layer.borderColor = UIColor(red: 153/255.0, green: 76/255.0, blue: 0/255.0, alpha: 1.0).cgColor
-        button.layer.borderWidth = 1.0
-        button.layer.cornerRadius = 8.0
-        button.addTarget(self, action: #selector(fillInfo), for: .touchUpInside)
-        return button
-    }()
+//    private lazy var nosendButton: UIButton = {
+//        let button = UIButton()
+//        button.setTitle("계좌정보 채우기", for: .normal)
+//        button.setTitleColor(.black, for: .normal)
+//        button.backgroundColor = UIColor(red: 255/255.0, green: 222/255.0, blue: 194/255.0, alpha: 1.0)
+//        button.layer.borderColor = UIColor(red: 153/255.0, green: 76/255.0, blue: 0/255.0, alpha: 1.0).cgColor
+//        button.layer.borderWidth = 1.0
+//        button.layer.cornerRadius = 8.0
+//        button.addTarget(self, action: #selector(fillInfo), for: .touchUpInside)
+//        return button
+//    }()
     
     
 //    private lazy var textfield: UITextField = {
@@ -137,7 +137,9 @@ final class AccountNumInputViewController: UIViewController {
     
     @objc func getToken(){
         print("토큰 발급받기")
-
+        self.nameTextField.text = self.name
+        self.accountNumFrontTextField.text = self.accountNoFront8
+        self.accountNumBackTextField.text = self.accountNoBack2
         requestAPI()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -146,11 +148,11 @@ final class AccountNumInputViewController: UIViewController {
             windowScene.windows.first?.rootViewController = vc
         }
     }
-    @objc func fillInfo(){
-        self.nameTextField.text = self.name
-        self.accountNumFrontTextField.text = self.accountNoFront8
-        self.accountNumBackTextField.text = self.accountNoBack2
-    }
+//    @objc func fillInfo(){
+//        self.nameTextField.text = self.name
+//        self.accountNumFrontTextField.text = self.accountNoFront8
+//        self.accountNumBackTextField.text = self.accountNoBack2
+//    }
     
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -172,8 +174,7 @@ final class AccountNumInputViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .cyan
-        
+        view.backgroundColor = .white
         //navigation 이름설정
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "계좌번호 & 이름 입력"
@@ -189,7 +190,7 @@ final class AccountNumInputViewController: UIViewController {
     
     private func layout(){
         
-        [nameLabel, nameTextField, accountNumFrontLabel, accountNumFrontTextField, accountNumBackLabel, accountNumBackTextField, sendButton, nosendButton].forEach{
+        [nameLabel, nameTextField, accountNumFrontLabel, accountNumFrontTextField, accountNumBackLabel, accountNumBackTextField, sendButton].forEach{
             view.addSubview($0)
         }
         
@@ -199,54 +200,44 @@ final class AccountNumInputViewController: UIViewController {
 //        }
         
         nameLabel.snp.makeConstraints{
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(8)
-            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(50)
+            $0.leading.trailing.equalToSuperview().inset(40)
         }
         
         nameTextField.snp.makeConstraints{
             $0.top.equalTo(nameLabel.snp.bottom).offset(8)
-            $0.height.equalTo(30)
-            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.height.equalTo(50)
+            $0.leading.trailing.equalToSuperview().inset(40)
         }
         
         
         accountNumFrontLabel.snp.makeConstraints{
             $0.top.equalTo(nameTextField.snp.bottom).offset(20)
-            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.leading.trailing.equalToSuperview().inset(40)
         }
         
         accountNumFrontTextField.snp.makeConstraints{
             $0.top.equalTo(accountNumFrontLabel.snp.bottom).offset(8)
-            $0.height.equalTo(30)
-            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.height.equalTo(50)
+            $0.leading.trailing.equalToSuperview().inset(40)
         }
         
         accountNumBackLabel.snp.makeConstraints{
-            $0.top.equalTo(accountNumFrontTextField.snp.bottom).offset(8)
-            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.top.equalTo(accountNumFrontTextField.snp.bottom).offset(20)
+            $0.leading.trailing.equalToSuperview().inset(40)
         }
         
         accountNumBackTextField.snp.makeConstraints{
             $0.top.equalTo(accountNumBackLabel.snp.bottom).offset(8)
-            $0.height.equalTo(30)
-            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.height.equalTo(50)
+            $0.leading.trailing.equalToSuperview().inset(40)
         }
         
         sendButton.snp.makeConstraints{
-            $0.top.equalTo(accountNumBackTextField.snp.bottom).offset(20)
-            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.top.equalTo(accountNumBackTextField.snp.bottom).offset(50)
+            $0.height.equalTo(36)
+            $0.leading.trailing.equalToSuperview().inset(40)
         }
-        
-        nosendButton.snp.makeConstraints{
-            $0.top.equalTo(sendButton.snp.bottom).offset(20)
-            $0.leading.trailing.equalToSuperview().inset(30)
-        }
-        
-//        textfield.snp.makeConstraints{
-//            $0.top.equalTo(nosendButton.snp.bottom).offset(20)
-//            $0.height.equalTo(300)
-//            $0.leading.trailing.equalToSuperview().inset(30)
-//        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
