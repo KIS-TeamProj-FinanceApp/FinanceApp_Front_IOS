@@ -74,6 +74,9 @@
 		A5883815298939740093F5D8 /* OverseasPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5883814298939740093F5D8 /* OverseasPrice.swift */; };
 		A58838172989397C0093F5D8 /* OverseasNowPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58838162989397C0093F5D8 /* OverseasNowPrice.swift */; };
 		A58838192989DC460093F5D8 /* KeywordRankTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58838182989DC460093F5D8 /* KeywordRankTableViewCell.swift */; };
+		A588381D2989E5A00093F5D8 /* KeywordDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A588381C2989E5A00093F5D8 /* KeywordDetailViewController.swift */; };
+		A588381F2989ED550093F5D8 /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A588381E2989ED550093F5D8 /* NewsTableViewCell.swift */; };
+		A58838222989F2530093F5D8 /* KeywordChartSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58838212989F2530093F5D8 /* KeywordChartSwiftUIView.swift */; };
 		A5B77E2C2980B308006D754F /* MyAccountMoneyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E2B2980B308006D754F /* MyAccountMoneyView.swift */; };
 		A5B77E2E2980BF4D006D754F /* SecurityCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E2D2980BF4D006D754F /* SecurityCollectionViewCell.swift */; };
 		A5B77E302980C6A5006D754F /* SecurityNameCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B77E2F2980C6A5006D754F /* SecurityNameCollectionViewCell.swift */; };
@@ -171,6 +174,9 @@
 		A5883814298939740093F5D8 /* OverseasPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverseasPrice.swift; sourceTree = "<group>"; };
 		A58838162989397C0093F5D8 /* OverseasNowPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverseasNowPrice.swift; sourceTree = "<group>"; };
 		A58838182989DC460093F5D8 /* KeywordRankTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordRankTableViewCell.swift; sourceTree = "<group>"; };
+		A588381C2989E5A00093F5D8 /* KeywordDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordDetailViewController.swift; sourceTree = "<group>"; };
+		A588381E2989ED550093F5D8 /* NewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
+		A58838212989F2530093F5D8 /* KeywordChartSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordChartSwiftUIView.swift; sourceTree = "<group>"; };
 		A5B77E2B2980B308006D754F /* MyAccountMoneyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountMoneyView.swift; sourceTree = "<group>"; };
 		A5B77E2D2980BF4D006D754F /* SecurityCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityCollectionViewCell.swift; sourceTree = "<group>"; };
 		A5B77E2F2980C6A5006D754F /* SecurityNameCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityNameCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -458,6 +464,7 @@
 			isa = PBXGroup;
 			children = (
 				A557E47A297D020900A40EEE /* KeywordRankViewController.swift */,
+				A588381C2989E5A00093F5D8 /* KeywordDetailViewController.swift */,
 				A557E488297D0B0C00A40EEE /* KeywordScoreGraphViewController.swift */,
 				A5F143E329869E480013A365 /* SubComponent */,
 				A5F143E82986AC490013A365 /* Extensions */,
@@ -605,6 +612,14 @@
 			path = Overseas;
 			sourceTree = "<group>";
 		};
+		A58838202989F23B0093F5D8 /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				A58838212989F2530093F5D8 /* KeywordChartSwiftUIView.swift */,
+			);
+			path = SwiftUI;
+			sourceTree = "<group>";
+		};
 		A5B77E3129810BEC006D754F /* Dto */ = {
 			isa = PBXGroup;
 			children = (
@@ -712,8 +727,10 @@
 		A5F143E329869E480013A365 /* SubComponent */ = {
 			isa = PBXGroup;
 			children = (
+				A58838202989F23B0093F5D8 /* SwiftUI */,
 				A5F143E629869E720013A365 /* KeywordChartView.swift */,
 				A58838182989DC460093F5D8 /* KeywordRankTableViewCell.swift */,
+				A588381E2989ED550093F5D8 /* NewsTableViewCell.swift */,
 			);
 			path = SubComponent;
 			sourceTree = "<group>";
@@ -863,6 +880,7 @@
 				A557E475297A529500A40EEE /* MyAccount.swift in Sources */,
 				A557E47B297D020900A40EEE /* KeywordRankViewController.swift in Sources */,
 				A557E45A2977B2AA00A40EEE /* SettingsViewController.swift in Sources */,
+				A58838222989F2530093F5D8 /* KeywordChartSwiftUIView.swift in Sources */,
 				A557E46F297A215400A40EEE /* AccessTokenDto.swift in Sources */,
 				A557E46B297A18C500A40EEE /* AccessToken.swift in Sources */,
 				A5883807298889A90093F5D8 /* DomesticPrice.swift in Sources */,
@@ -875,6 +893,7 @@
 				A557E477297A7D3300A40EEE /* MainViewController.swift in Sources */,
 				A557E481297D024600A40EEE /* TradingSearchViewController.swift in Sources */,
 				A5B77E442981F941006D754F /* MyOverseasMoneyDto.swift in Sources */,
+				A588381F2989ED550093F5D8 /* NewsTableViewCell.swift in Sources */,
 				A5398C00297E5E1F0062A24A /* GainsAndLossesView.swift in Sources */,
 				A5F143EF298746790013A365 /* TradingHeaderView.swift in Sources */,
 				A557E4332977ACB500A40EEE /* ButtonListViewLayout.swift in Sources */,
@@ -897,6 +916,7 @@
 				A5B77E462981F951006D754F /* MyOverseasTotalDto.swift in Sources */,
 				A58838052988899F0093F5D8 /* DomesticPriceDto.swift in Sources */,
 				A557E45C2977B2BB00A40EEE /* ProfileDataView.swift in Sources */,
+				A588381D2989E5A00093F5D8 /* KeywordDetailViewController.swift in Sources */,
 				A557E47E297D023000A40EEE /* WBRankViewController.swift in Sources */,
 				A557E4672978201900A40EEE /* AppkeyExistenceViewController.swift in Sources */,
 				A557E4652977D12400A40EEE /* AccountExistenceViewController.swift in Sources */,

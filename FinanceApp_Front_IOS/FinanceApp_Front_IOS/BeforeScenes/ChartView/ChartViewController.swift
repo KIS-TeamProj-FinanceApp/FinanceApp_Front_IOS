@@ -254,114 +254,7 @@ class ChartViewController: UIViewController {
         return btn
     }()
     
-    
-//    let purchaseDateLabel: UILabel = {
-//        let label = UILabel()
-//        label.backgroundColor = .systemBackground
-//        label.text = "매수 시점"
-//        label.font = UIFont.systemFont(ofSize: 14)
-//        return label
-//    }()
-//
-//    let purchaseDateTextField: UITextField = {
-//        let tf = UITextField()
-//        tf.layer.borderWidth = 2.0
-//        tf.layer.borderColor = UIColor(red: 0/255, green: 192/255, blue: 210/255, alpha: 1).cgColor
-//        tf.layer.cornerRadius = 12.0
-//        tf.backgroundColor = .systemBackground
-//        //textField 앞에 inset을 줘서 text가 자연스럽게 보이도록
-//        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: tf.frame.height))
-//        tf.leftView = paddingView
-//        tf.leftViewMode = .always
-//        return tf
-//    }()
-//
-//    let sellDateLabel: UILabel = {
-//        let label = UILabel()
-//        label.backgroundColor = .systemBackground
-//        label.text = "매도 시점"
-//        label.font = UIFont.systemFont(ofSize: 14)
-//        return label
-//    }()
-//    let sellDateTextField: UITextField = {
-//        let tf = UITextField()
-//        tf.layer.borderWidth = 2.0
-//        tf.layer.borderColor = UIColor(red: 0/255, green: 192/255, blue: 210/255, alpha: 1).cgColor
-//        tf.layer.cornerRadius = 12.0
-//        tf.backgroundColor = .systemBackground
-//        //textField 앞에 inset을 줘서 text가 자연스럽게 보이도록
-//        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: tf.frame.height))
-//        tf.leftView = paddingView
-//        tf.leftViewMode = .always
-//        return tf
-//    }()
-//
-//    let profitLabel: UILabel = {
-//        let label = UILabel()
-//        label.backgroundColor = .systemBackground
-//        label.text = "이익 (원)"
-//        label.font = UIFont.systemFont(ofSize: 14)
-//        return label
-//    }()
-//    let profitTextField: UITextField = {
-//        let tf = UITextField()
-//        tf.layer.borderWidth = 2.0
-//        tf.layer.borderColor = UIColor(red: 0/255, green: 192/255, blue: 210/255, alpha: 1).cgColor
-//        tf.layer.cornerRadius = 12.0
-//        tf.backgroundColor = .systemBackground
-//        //textField 앞에 inset을 줘서 text가 자연스럽게 보이도록
-//        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: tf.frame.height))
-//        tf.leftView = paddingView
-//        tf.leftViewMode = .always
-//        return tf
-//    }()
-//
-//    let topProfitDateLabel: UILabel = {
-//        let label = UILabel()
-//        label.backgroundColor = .systemBackground
-//        label.text = "최고 수익일"
-//        label.font = UIFont.systemFont(ofSize: 14)
-//        return label
-//    }()
-//    let topProfitDateTextField: UITextField = {
-//        let tf = UITextField()
-//        tf.layer.borderWidth = 2.0
-//        tf.layer.borderColor = UIColor(red: 0/255, green: 192/255, blue: 210/255, alpha: 1).cgColor
-//        tf.layer.cornerRadius = 12.0
-//        tf.backgroundColor = .systemBackground
-//        //textField 앞에 inset을 줘서 text가 자연스럽게 보이도록
-//        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: tf.frame.height))
-//        tf.leftView = paddingView
-//        tf.leftViewMode = .always
-//        return tf
-//    }()
-//
-//    let worstProfitDateLabel: UILabel = {
-//        let label = UILabel()
-//        label.backgroundColor = .systemBackground
-//        label.text = "최저 수익일"
-//        label.font = UIFont.systemFont(ofSize: 14)
-//        return label
-//    }()
-//    let worstProfitDateTextField: UITextField = {
-//        let tf = UITextField()
-//        tf.layer.borderWidth = 2.0
-//        tf.layer.borderColor = UIColor(red: 0/255, green: 192/255, blue: 210/255, alpha: 1).cgColor
-//        tf.layer.cornerRadius = 12.0
-//        tf.backgroundColor = .systemBackground
-//        //textField 앞에 inset을 줘서 text가 자연스럽게 보이도록
-//        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: tf.frame.height))
-//        tf.leftView = paddingView
-//        tf.leftViewMode = .always
-//        return tf
-//    }()
-    
-//    private var jsonResultArr: [[String]] = [[]]
-//    private var isClickedArr_row: [Bool] = []
-//    private var isClickedArr_col: [Bool] = []
-    //선택을 했는지 여부 동기화를 위한 배열
-//    private var isClickedArr_row: [Bool] = Array(repeating: false, count: 20)
-//    private var isClickedArr_col: [Bool] = Array(repeating: false, count: 12)
+
     
 
     
@@ -699,28 +592,9 @@ class ChartViewController: UIViewController {
 //            view.addSubview($0)
             stackView.addArrangedSubview($0)
         }
-//        barGraphView.snp.makeConstraints{
-////            $0.top.equalTo(view.safeAreaLayoutGuide)
-//            $0.top.equalToSuperview()
-//            $0.leading.trailing.equalToSuperview().inset(20)
-//            $0.height.equalTo(300)
-//        }
-//        candleGraphView.snp.makeConstraints{
-//            $0.leading.trailing.equalToSuperview().inset(20)
-//            $0.height.equalTo(300)
-//        }
-//
-//        tempTextView.snp.makeConstraints{
-////            $0.top.equalToSuperview()
-//            $0.leading.trailing.equalToSuperview().inset(20)
-//            $0.height.equalTo(100)
-//        }
-        
         
         
         itemNmLabel.snp.makeConstraints{
-//            $0.top.equalTo(barGraphView.snp.bottom).offset(30)
-//            $0.leading.equalToSuperview().inset(10)
             $0.height.equalTo(34)
             $0.width.equalTo(80)
         }
@@ -731,21 +605,7 @@ class ChartViewController: UIViewController {
             $0.height.equalTo(34)
             $0.trailing.equalToSuperview().inset(20)
         }
-        
-//        strategyLabel.snp.makeConstraints{
-////            $0.top.equalTo(barGraphView.snp.bottom).offset(30)
-////            $0.leading.equalToSuperview().inset(10)
-//            $0.height.equalTo(34)
-//            $0.width.equalTo(80)
-//        }
-//
-//        strategyTextField.snp.makeConstraints{
-////            $0.top.equalTo(itemNmLabel.snp.bottom).offset(30)
-//            $0.leading.equalTo(itemNmLabel.snp.trailing).offset(10)
-//            $0.height.equalTo(34)
-//            $0.trailing.equalToSuperview().inset(20)
-//        }
-        
+ 
         startDateLabel.snp.makeConstraints{
 //            $0.top.equalTo(tickerTextField.snp.bottom).offset(30)
             $0.leading.equalToSuperview().inset(10)
@@ -802,65 +662,6 @@ class ChartViewController: UIViewController {
             $0.trailing.equalToSuperview().inset(20)
         }
         
-//        purchaseDateLabel.snp.makeConstraints{
-//            $0.leading.equalToSuperview().inset(10)
-//            $0.height.equalTo(34)
-//            $0.width.equalTo(80)
-//        }
-//
-//        purchaseDateTextField.snp.makeConstraints{
-//            $0.leading.equalTo(itemNmLabel.snp.trailing).offset(10)
-//            $0.height.equalTo(34)
-//            $0.trailing.equalToSuperview().inset(20)
-//        }
-//        sellDateLabel.snp.makeConstraints{
-//            $0.leading.equalToSuperview().inset(10)
-//            $0.height.equalTo(34)
-//            $0.width.equalTo(80)
-//        }
-//
-//        sellDateTextField.snp.makeConstraints{
-//            $0.leading.equalTo(itemNmLabel.snp.trailing).offset(10)
-//            $0.height.equalTo(34)
-//            $0.trailing.equalToSuperview().inset(20)
-//        }
-//
-//        profitLabel.snp.makeConstraints{
-//            $0.leading.equalToSuperview().inset(10)
-//            $0.height.equalTo(34)
-//            $0.width.equalTo(80)
-//        }
-//
-//        profitTextField.snp.makeConstraints{
-//            $0.leading.equalTo(itemNmLabel.snp.trailing).offset(10)
-//            $0.height.equalTo(34)
-//            $0.trailing.equalToSuperview().inset(20)
-//        }
-//
-//        topProfitDateLabel.snp.makeConstraints{
-//            $0.leading.equalToSuperview().inset(10)
-//            $0.height.equalTo(34)
-//            $0.width.equalTo(80)
-//        }
-//
-//        topProfitDateTextField.snp.makeConstraints{
-//            $0.leading.equalTo(itemNmLabel.snp.trailing).offset(10)
-//            $0.height.equalTo(34)
-//            $0.trailing.equalToSuperview().inset(20)
-//        }
-//
-//        worstProfitDateLabel.snp.makeConstraints{
-//            $0.leading.equalToSuperview().inset(10)
-//            $0.height.equalTo(34)
-//            $0.width.equalTo(80)
-//        }
-//
-//        worstProfitDateTextField.snp.makeConstraints{
-//            $0.leading.equalTo(itemNmLabel.snp.trailing).offset(10)
-//            $0.height.equalTo(34)
-//            $0.trailing.equalToSuperview().inset(20)
-//        }
-        
         blankView.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview().offset(10)
             $0.height.equalTo(50)
@@ -878,26 +679,6 @@ extension ChartViewController: UITextFieldDelegate{
     }
     
 }
-
-//extension ChartViewController: UIPickerViewDelegate, UIPickerViewDataSource{
-//    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-//        return 1
-//    }
-//
-//    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-//        return strategyList.count
-//    }
-//
-//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-//        return strategyList[row]
-//    }
-//
-//    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-//        print("selece\(strategyList[row])")
-//        self.strategyValye = strategyList[row]
-//        strategyTextField.text = strategyList[row]
-//    }
-//}
 
 // MARK: 여기는 DatePicker관련 4가지
 
@@ -954,11 +735,7 @@ extension ChartViewController{
         self.endDateDatePicker.locale = Locale(identifier: "ko-KR")
         //dateTextField를 눌렀을 때, keyboard가 아닌 datePicker가 나오게 된다!
         self.endDateTextField.inputView = self.endDateDatePicker
-//        self.endDateTextField.inputView = self.startDateDatePicker
-//        self.purchaseDateTextField.inputView = self.startDateDatePicker
-//        self.sellDateTextField.inputView = self.startDateDatePicker
-//        self.topProfitTextField.inputView = self.startDateDatePicker
-//        self.worstProfitTextField.inputView = self.startDateDatePicker
+
     }
     //datePicker 선택값이 달라지면 호출될 메서드
     @objc func endDateDatePickerValueDidChange(_ datePicker: UIDatePicker){
@@ -972,135 +749,7 @@ extension ChartViewController{
         // 다른 날짜를 선택해도,키보드로 텍스트를 입력받은 것이 아니기 때문에 dateTextFieldDidChange가 #selector에서 정상적으로 호출되지 않는다. 따라서 pick한 날짜가 변하면, .editingChanged 이벤트를 인위적으로 발생시켜준다.
         self.endDateTextField.sendActions(for: .editingChanged)
     }
-    
-//    private func setupPurchaseDateDatePicker(){
-//        //날짜만 나오게 ( 시간 제외 )
-//        self.purchaseDateDatePicker.datePickerMode = .date
-//        self.purchaseDateDatePicker.preferredDatePickerStyle = .inline
-//        //for에는 어떤 event가 일어났을 때 action에 정의한 메서드를 호출할 것인지
-//        // 첫 번째 parameter에는 target
-//        self.purchaseDateDatePicker.addTarget(
-//            self,
-//            action: #selector(purchaseDateDatePickerValueDidChange(_:) ),
-//            for: .valueChanged
-//        )
-//        //연-월-일 순으로 + 한글
-//        self.purchaseDateDatePicker.locale = Locale(identifier: "ko-KR")
-//        //dateTextField를 눌렀을 때, keyboard가 아닌 datePicker가 나오게 된다!
-////        self.endDateTextField.inputView = self.endDateDatePicker
-////        self.endDateTextField.inputView = self.startDateDatePicker
-//        self.purchaseDateTextField.inputView = self.purchaseDateDatePicker
-////        self.sellDateTextField.inputView = self.startDateDatePicker
-////        self.topProfitTextField.inputView = self.startDateDatePicker
-////        self.worstProfitTextField.inputView = self.startDateDatePicker
-//    }
-//    @objc func purchaseDateDatePickerValueDidChange(_ datePicker: UIDatePicker){
-//        //날짜, text를 반환해주는 역할
-//        let formatter = DateFormatter()
-//        formatter.dateFormat = "yyyy 년 MM월 dd일(EEEEE)"
-//        formatter.locale = Locale(identifier: "ko_KR")
-//
-//        self.purchaseDate = datePicker.date
-//        self.purchaseDateTextField.text = formatter.string(from: datePicker.date)
-//        // 다른 날짜를 선택해도,키보드로 텍스트를 입력받은 것이 아니기 때문에 dateTextFieldDidChange가 #selector에서 정상적으로 호출되지 않는다. 따라서 pick한 날짜가 변하면, .editingChanged 이벤트를 인위적으로 발생시켜준다.
-//        self.purchaseDateTextField.sendActions(for: .editingChanged)
-//    }
-//    private func setupSellDateDatePicker(){
-//        //날짜만 나오게 ( 시간 제외 )
-//        self.sellDateDatePicker.datePickerMode = .date
-//        self.sellDateDatePicker.preferredDatePickerStyle = .inline
-//        //for에는 어떤 event가 일어났을 때 action에 정의한 메서드를 호출할 것인지
-//        // 첫 번째 parameter에는 target
-//        self.sellDateDatePicker.addTarget(
-//            self,
-//            action: #selector(sellDateDatePickerValueDidChange(_:) ),
-//            for: .valueChanged
-//        )
-//        //연-월-일 순으로 + 한글
-//        self.sellDateDatePicker.locale = Locale(identifier: "ko-KR")
-//        //dateTextField를 눌렀을 때, keyboard가 아닌 datePicker가 나오게 된다!
-////        self.endDateTextField.inputView = self.endDateDatePicker
-////        self.endDateTextField.inputView = self.startDateDatePicker
-////        self.purchaseDateTextField.inputView = self.purchaseDateDatePicker
-//        self.sellDateTextField.inputView = self.startDateDatePicker
-////        self.topProfitTextField.inputView = self.startDateDatePicker
-////        self.worstProfitTextField.inputView = self.startDateDatePicker
-//    }
-//    @objc func sellDateDatePickerValueDidChange(_ datePicker: UIDatePicker){
-//        //날짜, text를 반환해주는 역할
-//        let formatter = DateFormatter()
-//        formatter.dateFormat = "yyyy 년 MM월 dd일(EEEEE)"
-//        formatter.locale = Locale(identifier: "ko_KR")
-//
-//        self.sellDate = datePicker.date
-//        self.sellDateTextField.text = formatter.string(from: datePicker.date)
-//        // 다른 날짜를 선택해도,키보드로 텍스트를 입력받은 것이 아니기 때문에 dateTextFieldDidChange가 #selector에서 정상적으로 호출되지 않는다. 따라서 pick한 날짜가 변하면, .editingChanged 이벤트를 인위적으로 발생시켜준다.
-//        self.sellDateTextField.sendActions(for: .editingChanged)
-//    }
-//    private func setupTopProfitDateDatePicker(){
-//        //날짜만 나오게 ( 시간 제외 )
-//        self.topProfitDateDatePicker.datePickerMode = .date
-//        self.topProfitDateDatePicker.preferredDatePickerStyle = .inline
-//        //for에는 어떤 event가 일어났을 때 action에 정의한 메서드를 호출할 것인지
-//        // 첫 번째 parameter에는 target
-//        self.topProfitDateDatePicker.addTarget(
-//            self,
-//            action: #selector(topProfitDateDatePickerValueDidChange(_:) ),
-//            for: .valueChanged
-//        )
-//        //연-월-일 순으로 + 한글
-//        self.topProfitDateDatePicker.locale = Locale(identifier: "ko-KR")
-//        //dateTextField를 눌렀을 때, keyboard가 아닌 datePicker가 나오게 된다!
-////        self.endDateTextField.inputView = self.endDateDatePicker
-////        self.endDateTextField.inputView = self.startDateDatePicker
-//        self.topProfitDateTextField.inputView = self.topProfitDateDatePicker
-////        self.sellDateTextField.inputView = self.startDateDatePicker
-////        self.topProfitTextField.inputView = self.startDateDatePicker
-////        self.worstProfitTextField.inputView = self.startDateDatePicker
-//    }
-//    @objc func topProfitDateDatePickerValueDidChange(_ datePicker: UIDatePicker){
-//        //날짜, text를 반환해주는 역할
-//        let formatter = DateFormatter()
-//        formatter.dateFormat = "yyyy 년 MM월 dd일(EEEEE)"
-//        formatter.locale = Locale(identifier: "ko_KR")
-//
-//        self.topProfitDate = datePicker.date
-//        self.topProfitDateTextField.text = formatter.string(from: datePicker.date)
-//        // 다른 날짜를 선택해도,키보드로 텍스트를 입력받은 것이 아니기 때문에 dateTextFieldDidChange가 #selector에서 정상적으로 호출되지 않는다. 따라서 pick한 날짜가 변하면, .editingChanged 이벤트를 인위적으로 발생시켜준다.
-//        self.topProfitDateTextField.sendActions(for: .editingChanged)
-//    }
-//    private func setupWorstProfitDateDatePicker(){
-//        //날짜만 나오게 ( 시간 제외 )
-//        self.worstProfitDateDatePicker.datePickerMode = .date
-//        self.worstProfitDateDatePicker.preferredDatePickerStyle = .inline
-//        //for에는 어떤 event가 일어났을 때 action에 정의한 메서드를 호출할 것인지
-//        // 첫 번째 parameter에는 target
-//        self.worstProfitDateDatePicker.addTarget(
-//            self,
-//            action: #selector(worstProfitDateDatePickerValueDidChange(_:) ),
-//            for: .valueChanged
-//        )
-//        //연-월-일 순으로 + 한글
-//        self.worstProfitDateDatePicker.locale = Locale(identifier: "ko-KR")
-//        //dateTextField를 눌렀을 때, keyboard가 아닌 datePicker가 나오게 된다!
-////        self.endDateTextField.inputView = self.endDateDatePicker
-////        self.endDateTextField.inputView = self.startDateDatePicker
-//        self.worstProfitDateTextField.inputView = self.worstProfitDateDatePicker
-////        self.sellDateTextField.inputView = self.startDateDatePicker
-////        self.topProfitTextField.inputView = self.startDateDatePicker
-////        self.worstProfitTextField.inputView = self.startDateDatePicker
-//    }
-//    @objc func worstProfitDateDatePickerValueDidChange(_ datePicker: UIDatePicker){
-//        //날짜, text를 반환해주는 역할
-//        let formatter = DateFormatter()
-//        formatter.dateFormat = "yyyy 년 MM월 dd일(EEEEE)"
-//        formatter.locale = Locale(identifier: "ko_KR")
-//
-//        self.worstProfitDate = datePicker.date
-//        self.worstProfitDateTextField.text = formatter.string(from: datePicker.date)
-//        // 다른 날짜를 선택해도,키보드로 텍스트를 입력받은 것이 아니기 때문에 dateTextFieldDidChange가 #selector에서 정상적으로 호출되지 않는다. 따라서 pick한 날짜가 변하면, .editingChanged 이벤트를 인위적으로 발생시켜준다.
-//        self.worstProfitDateTextField.sendActions(for: .editingChanged)
-//    }
+
 }
 
 extension ChartViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{

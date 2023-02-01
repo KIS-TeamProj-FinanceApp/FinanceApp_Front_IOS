@@ -30,7 +30,7 @@ final class KeywordRankTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+        self.selectionStyle = .none
         layout()
     }
     
@@ -61,19 +61,23 @@ final class KeywordRankTableViewCell: UITableViewCell {
         
         if rank == "1"{
             self.rankLabel.textColor = .red
-            self.rankLabel.font = .systemFont(ofSize: 28.0, weight: .bold)
+            self.rankLabel.font = .systemFont(ofSize: 32.0, weight: .heavy)
+            self.stockLabel.font = .systemFont(ofSize: 30.0, weight: .heavy)
         }
         else if rank == "2"{
             self.rankLabel.textColor = .orange
-            self.rankLabel.font = .systemFont(ofSize: 28.0, weight: .semibold)
+            self.rankLabel.font = .systemFont(ofSize: 30.0, weight: .bold)
+            self.stockLabel.font = .systemFont(ofSize: 28.0, weight: .heavy)
         }
         else if rank == "3"{
             self.rankLabel.textColor = .blue
-            self.rankLabel.font = .systemFont(ofSize: 28.0, weight: .heavy)
+            self.rankLabel.font = .systemFont(ofSize: 28.0, weight: .semibold)
+            self.stockLabel.font = .systemFont(ofSize: 26.0, weight: .heavy)
         }
         else{
             self.rankLabel.textColor = .black
-            self.rankLabel.font = .systemFont(ofSize: 28.0, weight: .medium)
+            self.rankLabel.font = .systemFont(ofSize: 26.0, weight: .semibold)
+            self.stockLabel.font = .systemFont(ofSize: 24.0, weight: .medium)
         }
     }
 }
