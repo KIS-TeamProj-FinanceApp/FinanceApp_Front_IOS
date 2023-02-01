@@ -222,7 +222,7 @@ extension WBRankViewController {
 //TableView에 대한 delegate설정
 extension WBRankViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return 12
+            return 10
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
